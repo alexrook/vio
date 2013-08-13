@@ -12,7 +12,7 @@
     <modules>
         <module>vio-mo</module>
         <module>vio-wi</module>
-	<module>vio-se</module>    
+        <module>vio-se</module>    
         <module>vio-ap</module>
     </modules>
 
@@ -66,8 +66,12 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.14.1</version>
                     <configuration>
-			<disableXmlReport>true</disableXmlReport>
+                        <disableXmlReport>true</disableXmlReport>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-ejb-plugin</artifactId>
+                    <version>2.3</version>
                 </plugin>
             </plugins>
         </pluginManagement>
