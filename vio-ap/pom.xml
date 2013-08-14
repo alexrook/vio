@@ -13,5 +13,38 @@
     <packaging>ear</packaging>
 
     <name>vio-ap</name>
-
+    <profiles>
+        <profile>
+            <id>openshift</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-ear-plugin</artifactId>
+                        <configuration>
+                            <outputDirectory>deployments</outputDirectory>
+                            <fileNameMapping>no-version</fileNameMapping>
+                            <defaultJavaBundleDir>lib/</defaultJavaBundleDir>
+                            <skinnyWars>true</skinnyWars>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <dependencies>
+        <dependency>
+            <groupId>vio</groupId>
+            <artifactId>vio-se</artifactId>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>vio</groupId>
+            <artifactId>vio-mo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>vio</groupId>
+            <artifactId>vio-wi</artifactId>
+            <type>war</type>
+        </dependency>
+    </dependencies>
 </project>

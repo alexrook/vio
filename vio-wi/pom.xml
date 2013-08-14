@@ -13,5 +13,30 @@
     <packaging>war</packaging>
 
     <name>vio-wi</name>
-
+    <dependencies>
+        
+        <dependency>
+            <groupId>vio</groupId>
+            <artifactId>vio-se</artifactId>
+            <type>ejb</type>
+            <scope>provided</scope>
+           
+        </dependency>
+        
+        <dependency>
+            <groupId>vio</groupId>
+            <artifactId>vio-mo</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
+    </dependencies>
+    
+    <profiles>
+        <profile>
+            <id>openshift</id>
+            <build>
+                <finalName>ROOT</finalName>
+            </build>
+        </profile>
+    </profiles>
 </project>
