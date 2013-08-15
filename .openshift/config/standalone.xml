@@ -112,8 +112,8 @@
                     	<background-validation>true</background-validation>
                 	</validation>
                 	<pool>
-						<flush-strategy>IdleConnections</flush-strategy>
-					</pool>
+				<flush-strategy>IdleConnections</flush-strategy>
+			</pool>
                 </datasource>
                 <datasource jndi-name="java:jboss/datasources/PostgreSQLDS" enabled="${postgresql.enabled}" use-java-context="true" pool-name="PostgreSQLDS" use-ccm="true">
                     <connection-url>jdbc:postgresql://${env.OPENSHIFT_POSTGRESQL_DB_HOST}:${env.OPENSHIFT_POSTGRESQL_DB_PORT}/${env.OPENSHIFT_APP_NAME}</connection-url>
@@ -127,8 +127,8 @@
                     	<background-validation>true</background-validation>
                 	</validation>
                 	<pool>
-						<flush-strategy>IdleConnections</flush-strategy>
-					</pool>
+				<flush-strategy>IdleConnections</flush-strategy>
+			</pool>
                 </datasource>
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
@@ -268,7 +268,7 @@
         <subsystem xmlns="urn:jboss:domain:jgroups:1.0" default-stack="tcp">
             <stack name="tcp">
                 <transport type="TCP" socket-binding="jgroups-tcp"> 
-                	<property name="external_addr">${env.OPENSHIFT_GEAR_DNS}</property>
+		    <property name="external_addr">${env.OPENSHIFT_GEAR_DNS}</property>
                     <property name="external_port">${env.OPENSHIFT_JBOSSAS_CLUSTER_PROXY_PORT}</property>
                     <property name="bind_port">${env.OPENSHIFT_JBOSSAS_CLUSTER_PORT}</property>
                     <property name="bind_addr">${env.OPENSHIFT_JBOSSAS_IP}</property>

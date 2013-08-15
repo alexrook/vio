@@ -12,5 +12,43 @@
     <artifactId>vio-mo</artifactId>
 
     <name>vio-mo</name>
+    <repositories>
+        <repository>
+            <url>http://download.eclipse.org/rt/eclipselink/maven.repo/</url>
+            <id>eclipselink</id>
+            <layout>default</layout>
+            <name>Repository for library EclipseLink (JPA 2.1)</name>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>4.2.3.Final</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>4.2.3.Final</version>
+            <scope>test</scope>
+        </dependency>
+        
+    </dependencies>
 
 </project>

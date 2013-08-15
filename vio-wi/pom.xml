@@ -13,6 +13,7 @@
     <packaging>war</packaging>
 
     <name>vio-wi</name>
+    
     <dependencies>
         
         <dependency>
@@ -20,7 +21,6 @@
             <artifactId>vio-se</artifactId>
             <type>ejb</type>
             <scope>provided</scope>
-           
         </dependency>
         
         <dependency>

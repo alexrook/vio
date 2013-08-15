@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+    <!--$Id: persistence.xml 6 2010-11-08 08:02:52Z moroz $-->
+    <!-- hsqldb inmemory testing - openjpa.apache.org -->
+    <persistence-unit name="InMemoryTestDB-Hibernate">
+        <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+        <non-jta-data-source/>
+        <class>vio.model.doc.Document</class>
+        <class>vio.model.doc.Color</class>
+        <class>vio.model.doc.DocumentType</class>
+        <class>vio.model.doc.Format</class>
+        <class>vio.model.doc.Theme</class>
+          <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="openjpa.ConnectionUserName" value="sa"/>
+            <property name="openjpa.ConnectionPassword" value=""/>
+            <property name="openjpa.ConnectionURL" value="jdbc:hsqldb:mem:unit-testing-jpa"/>
+            <property name="openjpa.ConnectionDriverName" value="org.hsqldb.jdbcDriver"/>
+            <property name="openjpa.ConnectionFactoryProperties" value="PrettyPrint=true, PrettyPrintLineLength=80"/>
+            <!--
+                    OpenJPA provides configurable channel-based logging,
+                    as described in the chapter on Logging.
+                    The simplest example of enabling verbose logging
+                    is by using the following property in your persistence.xml file:
+            -->
+            <property name="openjpa.Log" value="log4j"/>
+            <!--
+              <property name="openjpa.Log" value="SQL=TRACE"/>
+            -->
+            <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
+            <!--
+                          By default, OpenJPA does not create foreign key constraints on new tables that gets created
+                          according to O-R mapping annotation/descriptors.
+                          You can change this default behavior via following configuration property
+            -->
+            <property name="openjpa.jdbc.MappingDefaults" value="ForeignKeyDeleteAction=restrict, JoinForeignKeyDeleteAction=restrict"/>
+        </properties>
+    </persistence-unit>
+    
+    <persistence-unit name="PostgreTestDB-Hibernate" transaction-type="RESOURCE_LOCAL">
+        <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+        <class>vio.model.doc.Document</class>
+        <class>vio.model.doc.Color</class>
+        <class>vio.model.doc.DocumentType</class>
+        <class>vio.model.doc.Format</class>
+        <class>vio.model.doc.Theme</class>
+          <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+        </properties>
+    </persistence-unit>
+    
+    
+
+
+</persistence>
