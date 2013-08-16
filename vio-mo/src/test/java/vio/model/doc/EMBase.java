@@ -1,6 +1,3 @@
-/*
- * $Id: EMBase.java 2 2010-11-01 12:48:09Z moroz $
- */
 package vio.model.doc;
 
 import vio.test.model.TestUtils;

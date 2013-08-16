@@ -1,6 +1,3 @@
-/*
- * $Id: Postgre_Test.java 2 2010-11-01 12:48:09Z moroz $
- */
 package vio.model.doc;
 
 import java.io.FileNotFoundException;
@@ -52,30 +49,6 @@ public class Postgre_Test extends EMBase {
         if (connectinfo.emf != null) {
             connectinfo.emf.close();
         }
-        /*
-         try {
-         Statement stmt = connectinfo.connection.createStatement();
-         stmt.addBatch(
-         "drop table abstractdoclocation cascade;" +
-         "drop table basedoclocation cascade;" +
-         "drop table color cascade;" +
-         "drop table document cascade;" +
-         "drop table docthemes cascade;" +
-         "drop table documenttype cascade;" +
-         "drop table format cascade;" +
-         "drop table innerdoclocation cascade;" +
-         "drop table openjpa_sequence_table cascade;" +
-         "drop table person cascade;" +
-         "drop table subscribe cascade;" +
-         "drop table theme cascade;");
-         stmt.executeBatch();
-         } catch (SQLException ex) {
-         logger.info(
-         "error while drop tables in postgree schema\n"
-         + ex.getMessage() + "\n"
-         + ex.getNextException().getMessage());
-         }
-         */
         logger.info("closing database connection");
         try {
             connectinfo.connection.close();
