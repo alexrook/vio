@@ -1,6 +1,3 @@
-/**
- * $Id: EMInMemoryTest.java 2 2010-11-01 12:48:09Z moroz $
- */
 package vio.model.doc;
 
 import vio.test.model.TestUtils;
@@ -8,14 +5,20 @@ import javax.persistence.EntityManager;
 import org.apache.log4j.Logger; 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
-public class EMInMemoryTest extends EMBase {
+public class H2_Memory_Test extends EMBase {
 
-    private static Logger logger = Logger.getLogger("Model.ent.test.JPAInMemoryTest"); //
-    private static String UNIT_NAME = "InMemoryTestDB-OpenJPA";
+    private static Logger logger = Logger.getLogger("vio.model.doc.H2_Memory_Test"); 
+    private static String UNIT_NAME = "H2-Memory-TEST";
     private static TestUtils.ConnectionInfo connectinfo;
 
+    @Test
+    public void dummy(){
+        assertTrue(true);
+    }
+    
     @Override
     protected Logger getTestLog() {
         return logger;

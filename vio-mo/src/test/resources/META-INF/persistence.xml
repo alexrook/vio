@@ -1,57 +1,47 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence"
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
-    <!--$Id: persistence.xml 6 2010-11-08 08:02:52Z moroz $-->
-    <!-- hsqldb inmemory testing - openjpa.apache.org -->
-    <persistence-unit name="InMemoryTestDB-Hibernate">
-        <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
-        <non-jta-data-source/>
-        <class>vio.model.doc.Document</class>
-        <class>vio.model.doc.Color</class>
-        <class>vio.model.doc.DocumentType</class>
-        <class>vio.model.doc.Format</class>
-        <class>vio.model.doc.Theme</class>
-          <exclude-unlisted-classes>true</exclude-unlisted-classes>
-        <properties>
-            <property name="openjpa.ConnectionUserName" value="sa"/>
-            <property name="openjpa.ConnectionPassword" value=""/>
-            <property name="openjpa.ConnectionURL" value="jdbc:hsqldb:mem:unit-testing-jpa"/>
-            <property name="openjpa.ConnectionDriverName" value="org.hsqldb.jdbcDriver"/>
-            <property name="openjpa.ConnectionFactoryProperties" value="PrettyPrint=true, PrettyPrintLineLength=80"/>
-            <!--
-                    OpenJPA provides configurable channel-based logging,
-                    as described in the chapter on Logging.
-                    The simplest example of enabling verbose logging
-                    is by using the following property in your persistence.xml file:
-            -->
-            <property name="openjpa.Log" value="log4j"/>
-            <!--
-              <property name="openjpa.Log" value="SQL=TRACE"/>
-            -->
-            <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
-            <!--
-                          By default, OpenJPA does not create foreign key constraints on new tables that gets created
-                          according to O-R mapping annotation/descriptors.
-                          You can change this default behavior via following configuration property
-            -->
-            <property name="openjpa.jdbc.MappingDefaults" value="ForeignKeyDeleteAction=restrict, JoinForeignKeyDeleteAction=restrict"/>
-        </properties>
-    </persistence-unit>
-    
-    <persistence-unit name="PostgreTestDB-Hibernate" transaction-type="RESOURCE_LOCAL">
-        <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
-        <class>vio.model.doc.Document</class>
-        <class>vio.model.doc.Color</class>
-        <class>vio.model.doc.DocumentType</class>
-        <class>vio.model.doc.Format</class>
-        <class>vio.model.doc.Theme</class>
-          <exclude-unlisted-classes>true</exclude-unlisted-classes>
-        <properties>
-        </properties>
-    </persistence-unit>
-    
-    
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
 
+    <persistence-unit name="H2-Memory-TEST">
+   
+        <class>vio.model.doc.Color</class>
+        <class>vio.model.doc.Document</class>
+        <class>vio.model.doc.DocumentType</class>
+        <class>vio.model.doc.Format</class>
+        <class>vio.model.doc.Theme</class>
+        
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1;MVCC=TRUE" />
+            <property name="javax.persistence.jdbc.user" value="sa" />
+            <property name="javax.persistence.jdbc.password" value="" />
+
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+        </properties>
+
+    </persistence-unit>
+    
+    
+    <persistence-unit name="Postgre-TEST">
+        
+        <class>vio.model.doc.Color</class>
+        <class>vio.model.doc.Document</class>
+        <class>vio.model.doc.DocumentType</class>
+        <class>vio.model.doc.Format</class>
+        <class>vio.model.doc.Theme</class>
+        
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://${postgresql.hostname}/viodb" />
+            <property name="javax.persistence.jdbc.user" value="vio" />
+            <property name="javax.persistence.jdbc.password" value="" />
+
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+        </properties>
+
+    </persistence-unit>
 
 </persistence>
