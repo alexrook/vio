@@ -1,7 +1,5 @@
-
 package vio.model.doc;
 
-// <editor-fold defaultstate="collapsed" desc="imports">
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Entity;
@@ -11,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-// </editor-fold>
+
 
 
 @Entity
@@ -24,13 +22,19 @@ public class Theme implements Serializable {
     private int id;
 
     private String val;
+    
+    @ManyToMany
+    @JoinTable(name="docthemes",
+    joinColumns={@JoinColumn(name="themeId")},
+            inverseJoinColumns={@JoinColumn(name="docId")})
+    private Collection<Document> docs;
 
     public Theme(){
 
     }
 
     public Theme(String val){
-        setVal(val);
+        this.val=val;
     }
 
     public String getVal() {
@@ -41,11 +45,15 @@ public class Theme implements Serializable {
         this.val = val;
     }
 
-    @ManyToMany
-    @JoinTable(name="docthemes",
-    joinColumns={@JoinColumn(name="themeId")},
-            inverseJoinColumns={@JoinColumn(name="docId")})
-    private Collection<Document> docs;
+    
+
+    public void setDocs(Collection<Document> docs) {
+        this.docs = docs;
+    }
+
+    public Collection<Document> getDocs() {
+        return docs;
+    }
 
     public int getId() {
         return id;

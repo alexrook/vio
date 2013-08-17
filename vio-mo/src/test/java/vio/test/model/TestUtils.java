@@ -101,7 +101,7 @@ public abstract class TestUtils {
         result.emf = Persistence.createEntityManagerFactory(unitname);
 
         try {
-            //TODO: jaxb here to direct access to persistence.xml
+            //TODO: jaxb here (or some else) to direct access to persistence.xml
             Map<String, Object> factoryProps = result.emf.getProperties();
             logger.info("старт соединения с URL:// " + factoryProps.get("javax.persistence.jdbc.url"));
 
@@ -110,7 +110,7 @@ public abstract class TestUtils {
                     factoryProps.get("javax.persistence.jdbc.url").toString(),
                     factoryProps.get("javax.persistence.jdbc.user").toString(),
                     //DH:javax.persistence.jdbc.password =>**** on runtime
-                   /* factoryProps.get("javax.persistence.jdbc.password").toString()*/"");
+                    /* factoryProps.get("javax.persistence.jdbc.password").toString()*/ "");
         } catch (Exception e) {
             logger.error("error instantinating coonection:", e);
         }
@@ -118,10 +118,8 @@ public abstract class TestUtils {
         runBatchSQL(result.connection, preEntityManagerBatch, logger);
 
         result.em = result.emf.createEntityManager();
-
+        logger.info(" successful setup connection and run batch sql");
+        
         return result;
     }
-    
-   
 }
-

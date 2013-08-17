@@ -1,15 +1,14 @@
 package vio.model.doc;
 
-
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
 /**
  * Цвет документа
+ *
  * @author moroz
  */
 @Entity
@@ -21,15 +20,16 @@ public class Color implements Serializable {
     private int id;
     private String val;
 
-    public Color(){
-        
+    public Color() {
     }
+
     /**
- * @param val строковое предстваление цвета ('белый','красный' и т.п)
- */
+     * @param val строковое предстваление цвета ('белый','красный' и т.п)
+     */
     public Color(String val) {
         setVal(val);
     }
+
     public String getVal() {
         return val;
     }
@@ -62,12 +62,12 @@ public class Color implements Serializable {
                 return false;
             }
             Color other = (Color) object;
-            if ((this.id == other.getId()) &&
-                    (this.getVal().equals(other.getVal()))) {
+            if ((this.id == other.getId())
+                    && (this.getVal().equals(other.getVal()))) {
                 return true;
             }
             return false;
-            
+
         } catch (Exception e) {
             return false;
         }
@@ -75,7 +75,7 @@ public class Color implements Serializable {
 
     @Override
     public String toString() {
-        return this.getClass().getPackage().getName()+"[id=" + id +", value="+val+ "]";
+        return this.getClass().getPackage().getName() + "[id=" + id + ", value=" + val + "]";
     }
 // </editor-fold>
 }
