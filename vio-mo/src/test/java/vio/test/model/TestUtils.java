@@ -98,7 +98,7 @@ public abstract class TestUtils {
 
         logger.info("creating JPA EntityManager for unit tests");
         result.emf = Persistence.createEntityManagerFactory(unitname);
-   
+        
         try {
             Map<String, Object> factoryProps = result.emf.getProperties();
             logger.info("старт соединения с URL:// " + factoryProps.get("javax.persistence.jdbc.url")

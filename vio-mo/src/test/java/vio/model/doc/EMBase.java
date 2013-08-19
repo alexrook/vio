@@ -3,7 +3,6 @@ package vio.model.doc;
 import vio.test.model.TestUtils;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import org.apache.log4j.Appender;
 import org.junit.Before;
 import org.junit.Test;
