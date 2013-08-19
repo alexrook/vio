@@ -86,13 +86,14 @@
     <profiles>
         
         <profile>
-            <id>test-h2</id>
+            <id>test-hs</id>
             <build>
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <test>H2_Memory_Test</test>
+                            <test>HSQLDB_Memory_Test</test>
+                            <skipTests>false</skipTests>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -106,6 +107,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <test>Postgre_Test</test>
+                            <skipTests>false</skipTests>
                         </configuration>
                     </plugin>
                 </plugins>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-  <persistence-unit name="vio" transaction-type="JTA">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <!-- this ds declared in ./openshift/config/statndalone.xml jboss cobfig file -->
-    <jta-data-source>java:jboss/datasources/PostgreSQLDS</jta-data-source>
-  </persistence-unit>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <persistence-unit name="vio" transaction-type="JTA">
+        <!-- this ds declared in ./openshift/config/statndalone.xml jboss config file -->
+        <jta-data-source>java:jboss/datasources/PostgreSQLDS</jta-data-source>
+    </persistence-unit>
 </persistence>

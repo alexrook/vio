@@ -18,7 +18,12 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.jboss.bom>1.0.6.Final</version.jboss.bom>
+        <!--
+            I spent some searching in the Maven repository and found that the latest version 
+            of the boom that includes version.org.jboss.as.arquillian.container = 7.1.1
+            is 1.0.3.Final
+        -->
+        <version.jboss.bom>1.0.3.Final</version.jboss.bom>
     </properties>
 
     <repositories>

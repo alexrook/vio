@@ -3,7 +3,7 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0">
 
-    <persistence-unit name="H2-Memory-TEST">
+    <persistence-unit name="HSQLDB-Memory-TEST">
    
         <class>vio.model.doc.Color</class>
         <class>vio.model.doc.Document</class>
