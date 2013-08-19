@@ -73,7 +73,14 @@
                 </includes>
             </testResource>
         </testResources>
-    
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
     
     <profiles>
