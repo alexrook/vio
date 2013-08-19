@@ -3,6 +3,7 @@ package vio.service.doc;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import javax.ejb.EJB;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -21,6 +22,9 @@ import vio.service.AbstractFacade;
  */
 @RunWith(Arquillian.class)
 public class ThemeFacadeTest {
+
+    @EJB
+    ThemeFacade themeFacade_1;
 
     public ThemeFacadeTest() {
     }
@@ -45,5 +49,17 @@ public class ThemeFacadeTest {
     @Test
     public void dummy() {
         assertTrue(true);
+    }
+
+    @Test
+    public void test_st_1_CreateAndGet() {
+        assertNotNull("error:injected service ThemeFacade is null", themeFacade_1);
+
+        Theme t1 = new Theme("theme 1");
+        themeFacade_1.create(t1);
+        assertNotNull("error:id of theme after persist is null",t1.getId());
+        Theme t1_act = themeFacade_1.get(t1.getId());
+        assertNotNull("error:method ThemeFacade.get return null", t1_act);
+        assertEquals(t1.getVal(), t1_act.getVal());
     }
 }
