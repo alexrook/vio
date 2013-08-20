@@ -2,20 +2,21 @@ package vio.service.doc;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.util.List;
 import javax.ejb.EJB;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
-import org.jboss.shrinkwrap.api.formatter.Formatters;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import vio.model.doc.Theme;
 import vio.service.AbstractFacade;
+import org.apache.log4j.Logger;
+import vio.test.TestHelperBean;
 
 /**
  * @author moroz
@@ -23,8 +24,18 @@ import vio.service.AbstractFacade;
 @RunWith(Arquillian.class)
 public class ThemeFacadeTest {
 
+    public static Logger log = Logger.getLogger("vio.service.doc.ThemeFacadeTest");
+    /* 
+     * arquillian not support PersistenceContext injection in jboss-containers
+     @PersistenceContext
+     EntityManager em;
+     */
+    //
     @EJB
     ThemeFacade themeFacade_1;
+    //
+    @EJB
+    TestHelperBean testHelper;
 
     public ThemeFacadeTest() {
     }
@@ -36,6 +47,7 @@ public class ThemeFacadeTest {
                 .addPackage(ThemeFacadeTest.class.getPackage())
                 .addPackage(AbstractFacade.class.getPackage())
                 .addPackage(Theme.class.getPackage())
+                .addPackage(TestHelperBean.class.getPackage()) //to access to the EntityManager functionality
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                 .addAsResource("test-ds.xml", "test-ds.xml")
                 .addAsResource("log4j.properties", "log4j.properties");
@@ -47,19 +59,43 @@ public class ThemeFacadeTest {
     }
 
     @Test
-    public void dummy() {
-        assertTrue(true);
-    }
-
-    @Test
     public void test_st_1_CreateAndGet() {
+        log.info("------------------>CreateAndGet");
         assertNotNull("error:injected service ThemeFacade is null", themeFacade_1);
 
-        Theme t1 = new Theme("theme 1");
+        Theme t1 = new Theme("CreateAndGet::theme _" + Math.random() * 100);
         themeFacade_1.create(t1);
-        assertNotNull("error:id of theme after persist is null",t1.getId());
+        assertNotNull("error:id of theme after persist is null", t1.getId());
         Theme t1_act = themeFacade_1.get(t1.getId());
         assertNotNull("error:method ThemeFacade.get return null", t1_act);
         assertEquals(t1.getVal(), t1_act.getVal());
+        log.info("CreateAndGet<------------------");
+    }
+
+    @Test
+    public void test_st_2_Edit() {
+        log.info("------------------>test_st_2_Edit");
+        test_st_1_CreateAndGet();
+        List<Theme> t_list = themeFacade_1.list();
+        assertNotNull("error:list of themes is null", t_list);
+        assertTrue("error:list of themes is empty", !t_list.isEmpty());
+        log.info("list of themes size:" + t_list.size());//lists may be different size
+        for (Theme t : t_list) {
+            // log.info(t.getVal());
+        }
+        Theme t1 = t_list.get(0);
+        assertNotNull("error:theme(0) in list is null", t1);
+        String val = "Edit::theme new name:" + Math.random() * 100;
+        t1.setVal(val);
+        themeFacade_1.save(t1);
+        /*
+         * select value natively to avoid some JPA machinery
+         */
+        String val_act = testHelper.<String>executeNativeQueryWithSingleResult(
+                "select  t.val from Theme t where t.id="
+                + t1.getId());
+        assertNotNull("error:val of theme after native query is null:" + t1.getId(), val_act);
+        assertEquals("error:val of theme after native query and t1 not same", t1.getVal(), val_act);
+        log.info("test_st_2_Edit<------------------");
     }
 }

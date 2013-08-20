@@ -30,7 +30,7 @@ public abstract class AbstractFacade<T> {
     }
 
     public T save(T entity) {
-      return edit(entity);
+        return edit(entity);
     }
 
     public void remove(T entity) {
@@ -87,4 +87,5 @@ public abstract class AbstractFacade<T> {
         Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
+    
 }
