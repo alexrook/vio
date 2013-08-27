@@ -91,6 +91,10 @@
                 </dependency>
             </dependencies>
             <build>
+            <filters>
+    	        <filter>local.properties</filter>
+	    </filters>
+
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
@@ -106,9 +110,6 @@
     </profiles>
     
     <build>
-        <filters>
-            <filter>local.properties</filter>
-        </filters>
         
         <testResources>
             <testResource>
