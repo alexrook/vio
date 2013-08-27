@@ -59,10 +59,7 @@
         
     </dependencies>
     <build>
-        <filters>
-            <filter>local.properties</filter>
-        </filters>
-        
+              
         <testResources>
             <testResource>
                 <directory>src/test/resources/</directory>
@@ -88,7 +85,7 @@
         <profile>
             <id>test-hs</id>
             <build>
-                <plugins>
+               <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
@@ -102,6 +99,9 @@
         <profile>
             <id>test-postgre</id>
             <build>
+                <filters>
+                    <filter>local.properties</filter>
+                </filters>
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
