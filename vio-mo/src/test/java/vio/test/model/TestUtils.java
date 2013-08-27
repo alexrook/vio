@@ -58,7 +58,8 @@ public abstract class TestUtils {
         if (result != null) {
             return result;
         } else {
-            throw new Exception("could not  instantiate JDBC logger because EntityManagerFactory implementation unknown");
+            throw new Exception("could not  instantiate JDBC logger "
+                    + "because EntityManagerFactory implementation unknown");
         }
     }
 
@@ -98,17 +99,18 @@ public abstract class TestUtils {
 
         logger.info("creating JPA EntityManager for unit tests");
         result.emf = Persistence.createEntityManagerFactory(unitname);
-        
+
         try {
+            //TODO: jaxb here (or some else) to direct access to persistence.xml
             Map<String, Object> factoryProps = result.emf.getProperties();
-            logger.info("старт соединения с URL:// " + factoryProps.get("javax.persistence.jdbc.url")
-                    + "|" + factoryProps.get("hibernate.connection.url"));
+            logger.info("старт соединения с URL:// " + factoryProps.get("javax.persistence.jdbc.url"));
 
             Class.forName(factoryProps.get("javax.persistence.jdbc.driver").toString());
             result.connection = DriverManager.getConnection(
                     factoryProps.get("javax.persistence.jdbc.url").toString(),
                     factoryProps.get("javax.persistence.jdbc.user").toString(),
-                    factoryProps.get("javax.persistence.jdbc.password").toString());
+                    //DH:javax.persistence.jdbc.password =>**** on runtime
+                    /* factoryProps.get("javax.persistence.jdbc.password").toString()*/ "");
         } catch (Exception e) {
             logger.error("error instantinating coonection:", e);
         }
@@ -116,7 +118,8 @@ public abstract class TestUtils {
         runBatchSQL(result.connection, preEntityManagerBatch, logger);
 
         result.em = result.emf.createEntityManager();
-
+        logger.info(" successful setup connection and run batch sql");
+        
         return result;
     }
 }

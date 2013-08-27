@@ -12,17 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
- * Вид документа
- * нормативный
- *      -> стандарты гос-е
- *      -> стандарты отраслевые
- *      -> тех. условия
- *     ->  ...
- * технический 
- *   ->справочники
- *     -> учебники
- * конструкторский
- * .....
+ * Вид документа нормативный -> стандарты гос-е -> стандарты отраслевые -> тех.
+ * условия -> ... технический ->справочники -> учебники конструкторский .....
+ *
  * @author moroz
  *
  */
@@ -48,9 +40,9 @@ public class DocumentType implements Serializable {
     }
 
     public DocumentType(String val) {
-        setVal(val);
+        this.val = val;
     }
-    
+
     public DocumentType getParentDocType() {
         return parentDocType;
     }
@@ -82,7 +74,7 @@ public class DocumentType implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="Override Object's methods">
     @Override
     public int hashCode() {

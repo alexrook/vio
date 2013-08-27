@@ -329,8 +329,6 @@ public abstract class EMBase extends TestUtils {
         getEm().persist(designType);
         getEm().getTransaction().commit();
 
-        //http://www.youtube.com/watch?v=QsDCfrGpyJ8&feature=related
-        //http://korrespondent.net/video/ukraine/961514
         getTestLog().info("DocumentType Entity::find & compare");
         DocumentType exp_design = getEm().find(DocumentType.class, designType.getId());
         assertEquals(designType, exp_design);
@@ -695,7 +693,4 @@ public abstract class EMBase extends TestUtils {
 
         getTestLog().info("Document Entity::testDocument_CascadeDM::End");
     }
-
-  
-  
 }

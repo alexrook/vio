@@ -6,19 +6,14 @@ import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import static org.junit.Assert.*;
-import org.junit.Test;
 
-public class H2_Memory_Test extends EMBase {
+public class HSQLDB_Memory_Test extends EMBase {
 
-    private static Logger logger = Logger.getLogger("vio.model.doc.H2_Memory_Test"); 
-    private static String UNIT_NAME = "H2-Memory-TEST";
+    private static Logger logger = Logger.getLogger("vio.model.doc.HSQLDB_Memory_Test"); 
+    private static String UNIT_NAME = "HSQLDB-Memory-TEST";
     private static TestUtils.ConnectionInfo connectinfo;
 
-    @Test
-    public void dummy(){
-        assertTrue(true);
-    }
-    
+        
     @Override
     protected Logger getTestLog() {
         return logger;
