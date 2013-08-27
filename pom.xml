@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <url>http://vio-crimsec.openshift.com</url>
+    <url>http://vio-crimsec.rhcloud.com/</url>
     <modules>
         <module>vio-mo</module>
         <module>vio-wi</module>
