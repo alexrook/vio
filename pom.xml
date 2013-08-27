@@ -129,6 +129,7 @@
                     <version>2.14.1</version>
                     <configuration>
                         <disableXmlReport>true</disableXmlReport>
+                        <skipTests>true</skipTests>
                     </configuration>
                 </plugin>
                 <plugin>

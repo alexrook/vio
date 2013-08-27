@@ -15,6 +15,24 @@
     <name>vio-wi</name>
     
     <dependencies>
+       
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+       
+        <dependency>
+            <groupId>org.jboss.spec.javax.ws.rs</groupId>
+            <artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
         
         <dependency>
             <groupId>vio</groupId>
@@ -33,9 +51,35 @@
     
     <profiles>
         <profile>
-            <id>openshift</id>
+            <id>build-test-war</id>
+            <dependencies>
+                <!-- remove 'scope' tags in deps to build whole fat war for testing purposes-->
+                <dependency>
+                    <groupId>vio</groupId>
+                    <artifactId>vio-se</artifactId>
+                    <type>ejb</type>
+                </dependency>
+                
+                <dependency>
+                    <groupId>vio</groupId>
+                    <artifactId>vio-mo</artifactId>
+                </dependency>
+                
+            </dependencies>
             <build>
-                <finalName>ROOT</finalName>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <configuration>
+                            <webResources>
+                                <resource>
+                                    <directory>src/wfw/resources</directory> 
+                                    <filtering>true</filtering>
+                                </resource>   
+                            </webResources>
+                        </configuration>
+                    </plugin>
+                </plugins>
             </build>
         </profile>
     </profiles>

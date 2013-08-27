@@ -62,9 +62,7 @@ public class ThemeFacadeTest {
     public void test_st_1_CreateAndGet() {
         log.info("------------------>CreateAndGet");
         assertNotNull("error:injected service ThemeFacade is null", themeFacade_1);
-
-        Theme t1 = new Theme("CreateAndGet::theme _" + Math.random() * 100);
-        themeFacade_1.create(t1);
+        Theme t1 = createTheme("CreateAndGet");
         assertNotNull("error:id of theme after persist is null", t1.getId());
         Theme t1_act = themeFacade_1.get(t1.getId());
         assertNotNull("error:method ThemeFacade.get return null", t1_act);
@@ -75,14 +73,11 @@ public class ThemeFacadeTest {
     @Test
     public void test_st_2_Edit() {
         log.info("------------------>test_st_2_Edit");
-        test_st_1_CreateAndGet();
+        createTheme("test_st_2_Edit");
         List<Theme> t_list = themeFacade_1.list();
         assertNotNull("error:list of themes is null", t_list);
         assertTrue("error:list of themes is empty", !t_list.isEmpty());
-        log.info("list of themes size:" + t_list.size());//lists may be different size
-        for (Theme t : t_list) {
-            // log.info(t.getVal());
-        }
+        log.info("list of themes size:" + t_list.size());//lists maybe different size
         Theme t1 = t_list.get(0);
         assertNotNull("error:theme(0) in list is null", t1);
         String val = "Edit::theme new name:" + Math.random() * 100;
@@ -97,5 +92,11 @@ public class ThemeFacadeTest {
         assertNotNull("error:val of theme after native query is null:" + t1.getId(), val_act);
         assertEquals("error:val of theme after native query and t1 not same", t1.getVal(), val_act);
         log.info("test_st_2_Edit<------------------");
+    }
+
+    private Theme createTheme(String namePrefix) {
+        Theme t = new Theme(namePrefix + "::theme_" + Math.random() * 100);
+        themeFacade_1.create(t);
+        return t;
     }
 }

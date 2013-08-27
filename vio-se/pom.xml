@@ -22,10 +22,11 @@
             <scope>provided</scope>
         </dependency>
        
-        <!-- 
-            JPA 2.0 specification is 
-            added as transitive dependencies 
-        -->
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <scope>provided</scope>
+        </dependency>  
         
         <dependency>
             <groupId>vio</groupId>
@@ -124,6 +125,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        
     </build>
 
 </project>
