@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html data-ng-app>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+        <script type="text/javascript">
+            function TodoCtrl($scope) {
+                $scope.todos = [
+                    {text: 'learn angular', done: true},
+                    {text: 'build an angular app', done: false}];
+
+                $scope.addTodo = function() {
+                    $scope.todos.push({text: $scope.todoText, done: false});
+                    $scope.todoText = '';
+                };
+
+                $scope.remaining = function() {
+                    var count = 0;
+                    angular.forEach($scope.todos, function(todo) {
+                        count += todo.done ? 0 : 1;
+                    });
+                    return count;
+                };
+
+                $scope.archive = function() {
+                    var oldTodos = $scope.todos;
+                    $scope.todos = [];
+                    angular.forEach(oldTodos, function(todo) {
+                        if (!todo.done)
+                            $scope.todos.push(todo);
+                    });
+                };
+            }
+        </script>
+        <style type="text/css">
+            .done-true {
+                background-color: green;
+            }
+            .done-false {
+                background-color:red;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <label>Name:</label>
+            <input type="text" data-ng-model="yourName" placeholder="Enter a name here">
+            <hr>
+            <h1>Hello {{yourName}}!</h1>
+            <hr>
+            <div data-ng-controller="TodoCtrl">
+                <ul>
+                    <li data-ng-repeat="todo in todos">
+                        <span class="done-{{todo.done}}">{{todo.text}}</span>
+                        <input type="checkbox" data-ng-model="todo.done"/>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </body>
+</html>

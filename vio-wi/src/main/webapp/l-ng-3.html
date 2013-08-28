@@ -37,9 +37,6 @@
                             $scope.todos.push(todo);
                     });
                 };
-                $scope.inlineTodo = function(todo) {
-                    return todo.text+' is '+todo.done;
-                };
             }
         </script>
         <style type="text/css">
@@ -63,7 +60,6 @@
                             <th>TODO</th>
                             <th>is done ?</th>
                             <th>c</th>
-                             <th>in</th>
                         </tr>
                     </thead>
 
@@ -74,9 +70,6 @@
                             <td>
                                 <input type="checkbox" 
                                        data-ng-model="todo.done"/>
-                            </td>
-                            <td>
-                               {{inlineTodo(todo)}}
                             </td>
                         </tr>
                     </tbody>
