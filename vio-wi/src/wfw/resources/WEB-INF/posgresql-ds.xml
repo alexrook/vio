@@ -2,7 +2,7 @@
 <datasources xmlns="http://www.jboss.org/ironjacamar/schema">
 
     <datasource jndi-name="java:jboss/datasources/PostgreSQLDS" pool-name="PostgreSQLDS">
-        <connection-url>jdbc:postgresql://devhelper/viodb</connection-url>
+        <connection-url>${postgresql.db.url}</connection-url>
         <driver>postgresql</driver>
         <security>
             <user-name>vio</user-name>

@@ -67,6 +67,9 @@
                 
             </dependencies>
             <build>
+                <filters>
+                    <filter>l.properties</filter>
+                </filters>
                 <plugins>
                     <plugin>
                         <!-- 

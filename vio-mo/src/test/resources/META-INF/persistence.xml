@@ -39,6 +39,7 @@
 
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.hbm2ddl.auto" value="create" />
+            <!--property name="hibernate.hbm2ddl.import_files" value="import_file_name_in_root_classpath.sql" /-->
         </properties>
 
     </persistence-unit>
