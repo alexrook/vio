@@ -1,0 +1,10 @@
+
+Соответствие таблиц Oracle(left) и PostgreSQL(right)
+
+OPISAN ---> document
+CLFAVORITE,FAVORITE(увязка m<->m doc) --> theme
+clviddoc, clpodvid --> documenttype
+COLORDOC --> Color
+FORMATDOC --> Format
+CLLOCATION ---> not implemented now
+
