@@ -5,7 +5,8 @@ SET feed off
 
 spool format.csv
 
-select a.format||','||a.formdoc
+select 
+    a.format||'#'||a.formdoc
 from formatdoc a;
 
 spool off

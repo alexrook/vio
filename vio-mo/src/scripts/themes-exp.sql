@@ -3,9 +3,10 @@ set hea off
 set pagesize 0
 SET feed off
 
-spool themes.csv
+spool theme.csv
 
-select a.codf||','||a.name
+select 
+    a.codf||'#'||a.name
 from clfavorite a;
 
 spool off

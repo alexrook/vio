@@ -5,7 +5,7 @@ SET feed off
 
 spool color.csv
 
-select a.color||','||a.colordoc
+select a.color||'#'||a.colordoc
 from colordoc a;
 
 spool off

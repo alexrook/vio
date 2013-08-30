@@ -6,7 +6,8 @@ SET feed off
 /*document type roots*/
 spool doctype.csv
 
-select a.shifrvid||','||a.viddoc
+select 
+	a.shifrvid||'#'||a.viddoc
 from clviddoc a;
 
 spool off
