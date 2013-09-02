@@ -4,12 +4,16 @@ import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Вид документа нормативный -> стандарты гос-е -> стандарты отраслевые -> тех.
@@ -18,6 +22,7 @@ import javax.persistence.OneToMany;
  * @author moroz
  *
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class DocumentType implements Serializable {
 
@@ -27,10 +32,12 @@ public class DocumentType implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     //
+    @XmlTransient
     @ManyToOne
     @JoinColumn(name = "parentId")
     private DocumentType parentDocType;
     //
+    @XmlTransient
     @OneToMany(mappedBy = "parentDocType", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private Collection<DocumentType> childDocTypes;
     //

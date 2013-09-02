@@ -12,10 +12,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /*
  * Представляет метаданные архивного документа
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Document implements Serializable {
 
@@ -35,6 +39,7 @@ public class Document implements Serializable {
     @JoinColumn(name = "formatId")
     private Format format;
     //
+    @XmlTransient
     @ManyToOne
     @JoinColumn(name = "doctypeId")
     private DocumentType docType;
@@ -43,15 +48,17 @@ public class Document implements Serializable {
     @JoinColumn(name = "colorId")
     private Color color;
     //
+    @XmlTransient
     @ManyToMany(mappedBy = "docs")
     private Collection<Theme> themes;
     //
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parentId")
     private Document parentDoc;
     /*
      * TODO: может стоит удалать по каскаду ?
      */
+    @XmlTransient
     @OneToMany(mappedBy = "parentDoc", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private Collection<Document> childDocs;
 
