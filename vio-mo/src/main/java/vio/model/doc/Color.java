@@ -8,16 +8,16 @@ import javax.persistence.Id;
 
 /**
  * Цвет документа
- *
- * @author moroz
  */
 @Entity
 public class Color implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    //
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    //
     private String val;
 
     public Color() {

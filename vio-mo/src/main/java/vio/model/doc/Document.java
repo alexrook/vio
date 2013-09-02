@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class Document implements Serializable {
     // регистрационный номер
     private String regNum;
     //формат (Книга, брошюра, пакет ...)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "formatId")
     private Format format;
     //
@@ -38,7 +39,7 @@ public class Document implements Serializable {
     @JoinColumn(name = "doctypeId")
     private DocumentType docType;
     //цвет (справочное)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "colorId")
     private Color color;
     //
