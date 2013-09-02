@@ -13,6 +13,10 @@
     <packaging>war</packaging>
 
     <name>vio-wi</name>
+    <properties>
+        <!-- this charm my ide-->
+        <org-netbeans-modules-maven-jaxws.rest_2e_config_2e_type>user</org-netbeans-modules-maven-jaxws.rest_2e_config_2e_type>
+    </properties>
     
     <dependencies>
        

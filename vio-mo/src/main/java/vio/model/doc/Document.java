@@ -14,11 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /*
  * Представляет метаданные архивного документа
  */
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Document implements Serializable {
@@ -35,7 +37,7 @@ public class Document implements Serializable {
     // регистрационный номер
     private String regNum;
     //формат (Книга, брошюра, пакет ...)
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "formatId")
     private Format format;
     //
