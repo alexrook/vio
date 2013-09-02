@@ -1,0 +1,40 @@
+Файлы для экспорта из старой базы oracle в новую postgresql
+
+=====================================================
+
+Соответствие таблиц Oracle(left) и PostgreSQL(right)
+
+OPISAN ---> document
+CLFAVORITE,FAVORITE(увязка m<->m doc) --> theme
+clviddoc, clpodvid --> documenttype
+COLORDOC --> Color
+FORMATDOC --> Format
+CLLOCATION ---> not implemented now
+
+=====================================================
+
+Порядок импорта 
+ color,format,theme,doctypes,document,m-m-binding
+
+=====================================================
+
+Иерархия Doctype 
+    В старой базе отображена в виде
+    двух таблиц clviddoc<--clpodvid
+    
+    В новой базе в виде одной таблицы
+    DocumentType c полями id <--parentId
+
+    Поскольку в clpodvid ключ составной (clpodvid.SHIFRVID & clpodvid.podvid)
+    напрямую импортировать эти две таблицы в одну DocumentType нельзя
+
+    При экспорте было принято значение new clpodvid.podvid=SHIFRVID||podvid (i.e '3'||'7'='37')
+    этот же факт должен быть отражен в экспорте&импорте opisan--->document
+
+====================================================
+
+TODO:
+1. общий скрипт экспорта и импорта
+
+
+
