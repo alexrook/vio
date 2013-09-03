@@ -1,76 +1,98 @@
 <!DOCTYPE html>
 <html data-ng-app>
     <head>
-        <title></title>
+        <title>Список документов</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link 
+            href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" 
+            rel="stylesheet">
+
+        <link 
+            href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"
+            rel="stylesheet">
+
+        <link href="css/appctl.css" rel="stylesheet">
+
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+
         <script type="text/javascript">
-            function TodoCtrl($scope,$http) {
-                
-                
-                $http.get('todos.js').success(function(data){
-                    console.log("return data=");
-                    console.log(data);
-                    $scope.todos=data.d;
+
+            function DocCtrl($scope, $http) {
+
+                $http.get('docs.json').success(function(data) {
+                    //console.log("return data=");
+                    //console.log(data);
+                    $scope.docs = data;
                 });
-                
 
-                $scope.addTodo = function() {
-                    console.log('todos:');
-                    console.log($scope.todos);
-                    $scope.todos.push({text: $scope.todoText, done: false});
-                    $scope.todoText = '';
+
+                $scope.setSearch = function() {
+                    $scope.searchQuery = $scope.searchQueryText;
+                    console.log($scope.searchQuery);
                 };
 
-                            
-                $scope.inlineTodo = function(todo) {
-                    return todo.text+' is '+todo.done;
-                };
             }
         </script>
-        <style type="text/css">
-            .done-true {
-                background-color: green;
-            }
-            .done-false {
-                background-color:red;
-            }
-        </style>
+
     </head>
-    <body>
-        <div>
-            <label>Search:</label>
-            <input type="text" data-ng-model="searchQuery" placeholder="Enter a name here">
+    <body data-ng-controller="DocCtrl">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">VIO</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <form class="navbar-form navbar-left" data-ng-submit="setSearch()">
+                <div class="form-group">
+                    <input type="text" 
+                           class="form-control" 
+                           data-ng-model="searchQueryText"
+                           placeholder="введите строку поиска">
+                </div>
+                <button class="btn btn-primary" type="submit">
+                    <span class="glyphicon glyphicon-search"></span>Поиск 
+                </button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">About</a></li>
+            </ul>
 
-            <div data-ng-controller="TodoCtrl">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>TODO</th>
-                            <th>is done ?</th>
-                            <th>c</th>
-                             <th>in</th>
-                        </tr>
-                    </thead>
+        </nav>
 
-                    <tbody >
-                        <tr data-ng-repeat="todo in todos|filter:searchQuery">
-                            <td>{{todo.text}}</td>
-                            <td>{{todo.done}}</td>
-                            <td>
-                                <input type="checkbox" 
-                                       data-ng-model="todo.done"/>
-                            </td>
-                            <td>
-                               {{inlineTodo(todo)}}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <form data-ng-submit="addTodo()">
-                    <input type="text" placeholder="add todo here" data-ng-model="todoText"/>
-                    <button type="submit" value="Add">Add</button>
-                </form>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>шифр</th>
+                                    <th>имя</th>
+                                    <th>формат</th>
+                                    <th>цвет</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="doc in docs|filter: searchQuery">
+                                    <td>{{doc.document.id}}</td>
+                                    <td>{{doc.document.code}}</td>
+                                    <td>{{doc.document.name}}</td>
+                                    <td>{{doc.document.format.val}}</td>
+                                    <td>{{doc.document.color.val}}</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+                <hr>
+                <footer>
+                    <span>2013 @IT Department</span>
+                </footer>
             </div>
         </div>
     </body>
