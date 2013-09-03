@@ -21,17 +21,34 @@
 
             function DocCtrl($scope, $http) {
 
-                $http.get('docs.json').success(function(data) {
-                    //console.log("return data=");
-                    //console.log(data);
-                    $scope.docs = data;
-                });
+                $scope.range = {
+                    count: 15,
+                    start: 0
+                };
+
+                function getRangeHeaderStr() {
+                    return $scope.range.start + '-' + $scope.range.count;
+                }
 
 
+
+                $scope.getDocs = function() {
+                    $http.get('rst/doc', {
+                        headers: {"Range": getRangeHeaderStr()}
+                    }).success(function(data) {
+                        //console.log("return data=");
+                        //console.log(data);
+                        $scope.docs = data;
+                    });
+                }
                 $scope.setSearch = function() {
                     $scope.searchQuery = $scope.searchQueryText;
                     console.log($scope.searchQuery);
                 };
+
+                $scope.rowsPerPage = [15, 20, 30, 40, 50];
+
+                $scope.getDocs();
 
             }
         </script>
@@ -55,6 +72,17 @@
                 </button>
             </form>
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="selectCount">Выбрать по:</label>
+                            <select id="selectCount" data-ng-model="range.count" class="form-control">
+                                <option data-ng-repeat="rpp in rowsPerPage" value="{{rpp}}">{{rpp}} строк</option>
+                            </select>
+                        </div>
+                    </form>
+                </li>
+
                 <li><a href="#">About</a></li>
             </ul>
 

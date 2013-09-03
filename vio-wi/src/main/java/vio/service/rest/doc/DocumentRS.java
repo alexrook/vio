@@ -1,5 +1,6 @@
 package vio.service.rest.doc;
 
+import vio.service.rest.AbstractRS;
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
 
@@ -9,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import java.util.List;
+import javax.ws.rs.HeaderParam;
 import vio.model.doc.Document;
 import vio.service.doc.DocumentFacade;
 
@@ -16,14 +18,13 @@ import vio.service.doc.DocumentFacade;
  * @author moroz
  */
 @Path("/doc")
-public class DocumentRS {
+public class DocumentRS extends AbstractRS {
 
     @EJB
     DocumentFacade facade;
 
     @GET
     @Path("{id:\\d+}")
-    //@Produces(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_JSON)
     public Document getDocumentByID(@PathParam("id") int id) {
         return facade.get(Integer.valueOf(id));
@@ -31,7 +32,7 @@ public class DocumentRS {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Document> getDocumentList() {
-        return facade.list();
+    public List<Document> getDocumentList(@HeaderParam("Range") String range) {
+        return facade.listByRange(getRangeFromHeader(range));
     }
 }
