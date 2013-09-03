@@ -23,13 +23,14 @@ public class DocumentRS {
 
     @GET
     @Path("{id:\\d+}")
-    @Produces(MediaType.APPLICATION_XML)
+    //@Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public Document getDocumentByID(@PathParam("id") int id) {
         return facade.get(Integer.valueOf(id));
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Document> getDocumentList() {
         return facade.list();
     }
