@@ -44,6 +44,12 @@
             <scope>test</scope>
         </dependency>
         
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.13</version>
+            <scope>provided</scope>
+        </dependency>
         
         <dependency>
             <groupId>org.hsqldb</groupId>
@@ -85,7 +91,7 @@
         <profile>
             <id>test-hs</id>
             <build>
-               <plugins>
+                <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>

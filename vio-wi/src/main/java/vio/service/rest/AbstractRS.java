@@ -16,7 +16,7 @@ public class AbstractRS {
     public static final int[] DEF_RESULTS_RANGE = {0, DEF_RESULTS_COUNT};
 
     public int[] getRangeFromHeader(String header) {
-        if (header==null){
+        if (header == null) {
             return Arrays.copyOf(DEF_RESULTS_RANGE, DEF_RESULTS_RANGE.length);
         }
         String[] strs = header.split("-");
@@ -32,5 +32,9 @@ public class AbstractRS {
             return Arrays.copyOf(DEF_RESULTS_RANGE, DEF_RESULTS_RANGE.length);
         }
         return result;
+    }
+
+    public String buildContentRange(int[] range) {
+        return range[0] + "-" + range[1];
     }
 }

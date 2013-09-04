@@ -22,12 +22,13 @@
             function DocCtrl($scope, $http) {
 
                 $scope.range = {
+                    finish:0,
                     count: 15,
                     start: 0
                 };
 
                 function getRangeHeaderStr() {
-                    return $scope.range.start + '-' + $scope.range.count;
+                    return $scope.range.start + '-' + $scope.range.finish+$scope.range.count;
                 }
 
 
@@ -36,12 +37,15 @@
                     //  $http.get('rst/doc', {
                     $http.get('docs.json', {
                         headers: {"Range": getRangeHeaderStr()}
-                    }).success(function(data) {
+                    }).success(function(data,status, headers ) {
                         //console.log("return data=");
-                        //console.log(data);
+                        console.log(status);
+                        console.log(headers('Content-Range'));
+                        
                         $scope.docs = data;
                     });
-                }
+                };
+                
                 $scope.setSearch = function() {
                     $scope.searchQuery = $scope.searchQueryText;
                     console.log($scope.searchQuery);
@@ -73,7 +77,7 @@
             </form>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">About</a></li>
+                <li><a href="#contact">About</a></li>
             </ul>
         </nav>
 
@@ -106,17 +110,18 @@
             </div><!--//row with table-->
 
             <div class="row">
-                <form class="col-lg-12 form-horizontal">
+                <form class="col-lg-12 form-horizontal" data-ng-submit="getDocs()">
                     <div class="form-group">
                         <div class="col-lg-3">
                             <button class="btn btn-default btn-sm" type="submit">
                                 <span class="glyphicon glyphicon-step-backward"></span>Назад
                             </button>
                         </div>
-                        <label for="selectCount" class="col-lg-2 control-label">Выбирать</label>
+                        <label for="selectCount" class="col-lg-2 control-label">Выбирать по</label>
                         <div class="col-lg-4">
                             <select class="form-control input-sm" id="selectCount" data-ng-model="range.count">
-                                <option data-ng-repeat="rpp in rowsPerPage" value="{{rpp}}">{{rpp}} строк</option>
+                                <option data-ng-selected="rpp==range.count" 
+                                        data-ng-repeat="rpp in rowsPerPage" value="{{rpp}}">{{rpp}} строк</option>
                             </select>
                         </div>
                         <div class="col-lg-3">
@@ -126,11 +131,11 @@
                         </div>
                     </div>
                 </form>
-            </div>
+            </div><!--//paginator-->
 
             <hr>
             <footer>
-                <span>2013 @IT Department</span>
+                <span>VIO project, <a name="contact" href="mailto:it@crimsec.com">2013 IT Department</a></span>
             </footer>
         </div>
 

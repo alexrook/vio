@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /*
  * Представляет метаданные архивного документа
@@ -41,6 +42,7 @@ public class Document implements Serializable {
     @JoinColumn(name = "formatId")
     private Format format;
     //
+    @JsonIgnore
     @XmlTransient
     @ManyToOne
     @JoinColumn(name = "doctypeId")
@@ -50,6 +52,7 @@ public class Document implements Serializable {
     @JoinColumn(name = "colorId")
     private Color color;
     //
+    @JsonIgnore
     @XmlTransient
     @ManyToMany(mappedBy = "docs")
     private Collection<Theme> themes;
@@ -60,6 +63,7 @@ public class Document implements Serializable {
     /*
      * TODO: может стоит удалать по каскаду ?
      */
+    @JsonIgnore
     @XmlTransient
     @OneToMany(mappedBy = "parentDoc", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private Collection<Document> childDocs;
