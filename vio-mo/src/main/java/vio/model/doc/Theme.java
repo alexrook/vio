@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
+//import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 public class Theme implements Serializable {
@@ -24,7 +24,7 @@ public class Theme implements Serializable {
     private String val;
     //
     @XmlTransient
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "docthemes",
             joinColumns = {

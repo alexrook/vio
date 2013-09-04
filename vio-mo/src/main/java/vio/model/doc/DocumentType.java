@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
+//import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * Вид документа нормативный -> стандарты гос-е -> стандарты отраслевые -> тех.
@@ -33,13 +33,13 @@ public class DocumentType implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     //
-    @JsonIgnore
+    //@JsonIgnore
     @XmlTransient
     @ManyToOne
     @JoinColumn(name = "parentId")
     private DocumentType parentDocType;
     //
-    @JsonIgnore
+    //@JsonIgnore
     @XmlTransient
     @OneToMany(mappedBy = "parentDocType", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private Collection<DocumentType> childDocTypes;

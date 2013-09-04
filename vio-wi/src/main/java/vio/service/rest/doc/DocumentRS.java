@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 
 import java.util.List;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import vio.model.doc.Document;
 import vio.service.doc.DocumentFacade;
@@ -42,8 +43,10 @@ public class DocumentRS extends AbstractRS {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDocumentList(@HeaderParam("Range") String headerRange) {
         int[] range = getRangeFromHeader(headerRange);
+        List<Document> list=facade.listByRange(range);
+        GenericEntity<List<Document>>entity =new GenericEntity<List<Document>>(list){};
         return Response.ok()
-                .entity(facade.listByRange(range))
+                .entity(entity)
                 .header("Content-Range", "0-1").build();
 
     }
