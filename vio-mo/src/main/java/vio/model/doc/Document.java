@@ -42,7 +42,7 @@ public class Document implements Serializable {
     @JoinColumn(name = "formatId")
     private Format format;
     //
-    @JsonIgnore
+    @JsonIgnore //jackson uses JavaBean model
     @XmlTransient
     @ManyToOne
     @JoinColumn(name = "doctypeId")

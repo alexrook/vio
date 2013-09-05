@@ -44,7 +44,7 @@ public class DocumentRS extends AbstractRS {
         int[] range = getRangeFromHeader(headerRange);
         return Response.ok()
                 .entity(facade.listByRange(range))
-                .header("Content-Range", "0-1").build();
+                .header("Content-Range", buildContentRangeHeaderValue(range)).build();
 
     }
 }

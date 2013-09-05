@@ -8,7 +8,6 @@ import vio.service.AbstractFacade;
 import vio.model.doc.Document;
 
 /**
- *
  * @author moroz
  */
 @Stateless

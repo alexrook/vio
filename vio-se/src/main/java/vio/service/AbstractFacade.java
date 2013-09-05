@@ -87,5 +87,4 @@ public abstract class AbstractFacade<T> {
         Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
 }
