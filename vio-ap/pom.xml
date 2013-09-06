@@ -15,6 +15,23 @@
     <name>vio-ap</name>
     <profiles>
         <profile>
+            <id>build-test-app</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-ear-plugin</artifactId>
+                        <configuration>
+                            <earSourceDirectory>src/bta/application</earSourceDirectory>
+                            <filtering>true</filtering>
+                            <filters>
+                                <filter>local.properties</filter>
+                            </filters>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>openshift</id>
             <build>
                 <plugins>
@@ -22,15 +39,24 @@
                         <artifactId>maven-ear-plugin</artifactId>
                         <configuration>
                             <outputDirectory>deployments</outputDirectory>
-                            <fileNameMapping>no-version</fileNameMapping>
-                            <defaultJavaBundleDir>lib/</defaultJavaBundleDir>
-                            <skinnyWars>true</skinnyWars>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
+                    <fileNameMapping>no-version</fileNameMapping>
+                    <defaultJavaBundleDir>lib/</defaultJavaBundleDir>
+                    <skinnyWars>true</skinnyWars>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <dependency>
             <groupId>vio</groupId>
