@@ -1,4 +1,6 @@
 target/
 deployments/*.ear
-**/local.properties
+*.dmp
+*.json
+local.properties
 
