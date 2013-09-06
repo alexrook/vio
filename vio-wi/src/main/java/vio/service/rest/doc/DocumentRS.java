@@ -40,11 +40,11 @@ public class DocumentRS extends AbstractRS {
   */  
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDocumentList(@HeaderParam("Range") String headerRange) {
+    public Response getDocumentList(@HeaderParam("X-Range") String headerRange) {
         int[] range = getRangeFromHeader(headerRange);
         return Response.ok()
                 .entity(facade.listByRange(range))
-                .header("Content-Range", buildContentRangeHeaderValue(range)).build();
+                .header("X-Content-Range", buildContentRangeHeaderValue(range)).build();
 
     }
 }

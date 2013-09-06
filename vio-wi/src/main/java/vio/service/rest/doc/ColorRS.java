@@ -25,11 +25,11 @@ public class ColorRS extends AbstractRS {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getColorList(@HeaderParam("Range") String headerRange) {
+    public Response getColorList(@HeaderParam("X-Range") String headerRange) {
         int[] range = getRangeFromHeader(headerRange);
         return Response.ok()
                 .entity(facade.listByRange(range))
-                .header("Content-Range", "0-1").build();
+                .header("X-Content-Range", "0-1").build();
 
     }
 }

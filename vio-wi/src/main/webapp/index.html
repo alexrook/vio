@@ -54,11 +54,11 @@
 
                 $scope.getDocs = function() {
                     $http.get('rst/doc', {
-                        // $http.get('docs.json', {
-                        headers: {"Range": getRangeHeaderStr()}
+
+                        headers: {"X-Range": getRangeHeaderStr()}
                     }).success(function(data, status, headers) {
-                        console.log(headers('Content-Range'));
-                        setRange(headers('Content-Range'));
+                     //   console.log(headers('Content-Range'));
+                        setRange(headers('X-Content-Range'));
                         $scope.docs = data;
                     });
                 };
