@@ -37,10 +37,11 @@
                                 : Number($scope.range.start);
                     } else {
                         start = $scope.range.start;
-                        finish =$scope.range.start+$scope.range.count;
+                        finish = $scope.range.start + $scope.range.count;
                     }
                     return start + '-' + finish;
                 }
+
 
                 function setRange(rangeStr) {
                     var sr = rangeStr.split('-');
@@ -48,16 +49,16 @@
                     $scope.range.finish = Number(sr[1]);
                 }
 
-                $scope.setFecthNarrow = function(narrow) {
+
+                $scope.setFetchNarrow = function(narrow) {
                     $scope.range.forward = narrow;
                 };
 
                 $scope.getDocs = function() {
                     $http.get('rst/doc', {
-
                         headers: {"X-Range": getRangeHeaderStr()}
                     }).success(function(data, status, headers) {
-                     //   console.log(headers('Content-Range'));
+                        //   console.log(headers('Content-Range'));
                         setRange(headers('X-Content-Range'));
                         $scope.docs = data;
                     });
@@ -141,7 +142,7 @@
                 <form class="col-lg-12 form-horizontal" data-ng-submit="getDocs()">
                     <div class="form-group">
                         <div class="col-lg-3">
-                            <button class="btn btn-default btn-sm" data-ng-click="setFecthNarrow(-1)" 
+                            <button class="btn btn-default btn-sm" data-ng-click="setFetchNarrow(-1)" 
                                     type="submit">
                                 <span class="glyphicon glyphicon-step-backward"></span>Назад
                             </button>
@@ -155,7 +156,7 @@
                             </select>
                         </div>
                         <div class="col-lg-3">
-                            <button class="pull-right btn btn-default btn-sm" data-ng-click="setFecthNarrow(+1)"
+                            <button class="pull-right btn btn-default btn-sm" data-ng-click="setFetchNarrow(+1)"
                                     type="submit">
                                 Далее<span class="glyphicon glyphicon-step-forward"></span>
                             </button>
