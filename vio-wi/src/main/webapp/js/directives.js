@@ -37,8 +37,11 @@ directive('draggable', function($document) {
 }).
 directive('scrollafix', function($document) {
   return function(scope, element, attr){
-    var pos=getOffsetPosition(element);
-    console.log(pos);  
+    var ePos=getOffsetPosition(element);
+    console.log(ePos);  
+    var eWidth=$(element).width();
+    console.log(eWidth);
+
     var isDock=false;
     element.css({
      backgroundColor: 'red',
@@ -50,35 +53,31 @@ directive('scrollafix', function($document) {
 
     function update(sTop){
       scope.a=sTop;
-      if (sTop>=pos[1]){
+      if (sTop>=ePos.top){
         if (!isDock) {
           element.css({
             position: 'fixed',
-            top:'0%'
+            top:'0%',
+            width:eWidth+'px'
           });
           isDock=true;
         }
       } else {
-          element.css({
-            position: 'static'
-          });
-          isDock=false;
+        element.css({
+          position: 'static'
+        });
+        isDock=false;
       }
     }
 
     function getDocScrollTop(doc){
-      return doc.documentElement.scrollTop;
+        return $(document).scrollTop();
     }
 
     function getOffsetPosition(element) {
-      var offsetLeft = 0, offsetTop = 0,e=element[0];
-      do {
-       offsetLeft += e.offsetLeft;
-       offsetTop  += e.offsetTop;
-     } while (e = e.offsetParent);
-     return [offsetLeft, offsetTop];
-   }
+      return $(element).offset();
+    }
 
- }
+  }
 });
 

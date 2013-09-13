@@ -5,6 +5,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport"
 	content="width=device-width, initial-scale=1.0">
+	
+	<script 
+		src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js">
+	</script>
+
 	<script 
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js">
 	</script>
@@ -68,6 +73,10 @@
 		color:white; background-color:blue;
 	}
 	
+	.sf {
+		margin: 3px;
+		padding: 7px;
+	}
 	</style>
 	<script type="text/javascript">
 	function TestCtl($scope) {
@@ -96,7 +105,7 @@
 			fixed
 		</div>
 
-		<div scrollafix>
+		<div class="sf" scrollafix>
 			<p>scrollafixt {{a}}</p>
 		</div>
 	</div>
