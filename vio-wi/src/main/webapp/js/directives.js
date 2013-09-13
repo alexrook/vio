@@ -53,7 +53,7 @@ directive('scrollafix', function($document) {
 
     function update(sTop){
       scope.a=sTop;
-      if (sTop>=ePos.top){
+      if (sTop>ePos.top){
         if (!isDock) {
           element.css({
             position: 'fixed',
