@@ -67,7 +67,7 @@ controller('DocCtrl',
     };
 
     $scope.rowsPerPage = [15, 20, 30, 40, 50];
-
+    $scope.testType = ['aaaa', 'bbb', 'vvv', 'fffff', 'hhhhh'];
     $scope.getDocs();
 
 }]);
