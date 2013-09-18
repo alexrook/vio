@@ -72,6 +72,7 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
+                            <skipTests>false</skipTests>
                             <!--it will select a suitable container in arquillian.xml-->
                             <systemProperties>
                                 <arquillian.launch>jboss7-local</arquillian.launch>
@@ -99,6 +100,7 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
+                            <skipTests>false</skipTests>
                             <systemProperties>
                                 <arquillian.launch>jboss7-remote</arquillian.launch>
                             </systemProperties>

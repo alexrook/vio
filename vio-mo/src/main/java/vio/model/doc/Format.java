@@ -6,7 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
+/*
+ * Формат документа -> Книга, Брошюра, Папка ...
+ */
 @Entity
 public class Format implements Serializable {
 

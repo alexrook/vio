@@ -13,6 +13,11 @@ import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+/*
+ * тематические подборки документов
+ *  -> подборка по атц, подборка по хво, договора ...
+ * 
+ */
 @Entity
 public class Theme implements Serializable {
 
@@ -87,7 +92,7 @@ public class Theme implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crimsec.archiv.jpa.doc.Theme[id=" + id + "]";
+        return "com.crimsec.archiv.jpa.doc.Theme[id=" + id + ", value=" + val + "]";
     }
 // </editor-fold>
 }

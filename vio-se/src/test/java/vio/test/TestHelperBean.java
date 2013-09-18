@@ -29,6 +29,10 @@ public class TestHelperBean {
         return (T) nativeQuery.getSingleResult();
     }
     
+     public int executeNativeQueryWithNoResult(String query) {
+        Query nativeQuery = em.createNativeQuery(query);
+        return nativeQuery.executeUpdate();
+    }
     
 
 }
