@@ -111,7 +111,7 @@ public class DocumentType implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crimsec.archiv.jpa.DocumentType[id=" + id + "]";
+        return "com.crimsec.archiv.jpa.DocumentType[id=" + id + ", value=" + val + "]";
 
     }
     // </editor-fold>

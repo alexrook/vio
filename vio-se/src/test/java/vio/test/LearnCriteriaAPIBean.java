@@ -73,7 +73,7 @@ public class LearnCriteriaAPIBean {
 
         Root<DocumentType> doctypeRoot = cq.from(DocumentType.class);
 
-        doctypeRoot.fetch("childDocTypes", JoinType.LEFT);
+        doctypeRoot.fetch("childDocTypes", JoinType.INNER);
 
         cq.select(doctypeRoot);
 

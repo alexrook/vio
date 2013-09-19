@@ -38,7 +38,7 @@ public class LearnCriteriaAPITest {
     private static final String[] themes = {"ThemeOne", "ThemeTwo", "ThemeThree", "ThemeFour", "ThemeFive"};
     //
     @EJB
-    LearnCriteriaAPIBean cbl;
+    LearnCriteriaAPIBean learnCriteriaBean;
     //
     @EJB
     ColorFacade cfb;
@@ -89,7 +89,7 @@ public class LearnCriteriaAPITest {
      */
     @Test
     public void test_DD_step_1() {
-        Collection<Color> cc = cbl.getColorsByName("%" + colors[0]);
+        Collection<Color> cc = learnCriteriaBean.getColorsByName("%" + colors[0]);
         assertNotNull(cc);
         assertTrue(!cc.isEmpty());
         for (Color c : cc) {
@@ -100,7 +100,7 @@ public class LearnCriteriaAPITest {
     
     @Test
     public void test_DD_step_2() {
-        Collection<Color> cc = cbl.getColorsByName("%e%");
+        Collection<Color> cc = learnCriteriaBean.getColorsByName("%e%");
         assertNotNull(cc);
         assertTrue(!cc.isEmpty());
         for (Color c : cc) {
@@ -111,7 +111,7 @@ public class LearnCriteriaAPITest {
     
     @Test
     public void test_DD_step_3() {
-        Collection<Color> cc = cbl.getColorsByName("%e_");
+        Collection<Color> cc = learnCriteriaBean.getColorsByName("%e_");
         assertNotNull(cc);
         assertTrue(!cc.isEmpty());
         for (Color c : cc) {
@@ -123,8 +123,8 @@ public class LearnCriteriaAPITest {
     @Test
     public void test_DD_step_4() {
         
-        log.info("====================Tuple-step-4========================");
-        Collection<Tuple> cc = cbl.getCartesianProduct();
+        log.info("====================Tuple-step-4======================");
+        Collection<Tuple> cc = learnCriteriaBean.getCartesianProduct();
         assertNotNull(cc);
         assertTrue(!cc.isEmpty());
         for (Tuple tuple : cc) {
@@ -138,12 +138,18 @@ public class LearnCriteriaAPITest {
     
     @Test
     public void test_DD_step_5() {
-        
-        log.info("===================Tuple-step-5========================");
+       log.info("===================Fetch-step-5========================");
+       Collection<DocumentType> doctypes=learnCriteriaBean.getFetch();
+       
+       assertTrue(!doctypes.isEmpty());
+       for (DocumentType dt:doctypes){
+            log.info(dt.toString());
+            assertNotNull(dt.getChildDocTypes());
+       }
         
         
     }
-    
+//    
     private void createEnt() {
         String prefix = String.valueOf(Math.random() * 100) + "_";
         for (String c : colors) {
@@ -165,7 +171,7 @@ public class LearnCriteriaAPITest {
                 DocumentType dt_two = new DocumentType(dt_one.getVal() + "_" + j);
                 dt_two.setParentDocType(dt_one);
                 dc_one_childs.add(dt_two);
-                
+               /* 
                 Collection<DocumentType> dc_two_childs = new ArrayList<DocumentType>(10);
                 
                 for (int k = 0; k < 5; k++) {
@@ -174,6 +180,7 @@ public class LearnCriteriaAPITest {
                     dc_two_childs.add(dt_three);
                 }
                 dt_two.setChildDocTypes(dc_two_childs);
+                */ 
             }
             dt_one.setChildDocTypes(dc_one_childs);
             dtfb.create(dt_one);
@@ -181,9 +188,11 @@ public class LearnCriteriaAPITest {
         
     }
     
+    //private void createDoctypes(int level,String prefix,Collection)
+    
     private void deleteEnt() {
         helper.executeNativeQueryWithNoResult("delete from color");
         helper.executeNativeQueryWithNoResult("delete from theme");
-        //helper.executeNativeQueryWithNoResult("delete from documenttype");
+       // helper.executeNativeQueryWithNoResult("delete from documenttype");
     }
 }
