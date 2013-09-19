@@ -34,9 +34,6 @@
             <scope>provided</scope>
         </dependency>
         
-        <!-- 
-        
-        -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -92,10 +89,6 @@
                 </dependency>
             </dependencies>
             <build>
-            <filters>
-    	        <filter>local.properties</filter>
-	    </filters>
-
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
@@ -119,6 +112,10 @@
                 <filtering>true</filtering>
             </testResource>
         </testResources>
+        
+        <filters>
+            <filter>local.properties</filter>
+        </filters>
         
         <plugins>
             <plugin>

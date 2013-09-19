@@ -13,9 +13,12 @@ import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Fetch;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import vio.model.doc.Color;
+import vio.model.doc.DocumentType;
 import vio.model.doc.Theme;
 
 /**
@@ -54,9 +57,25 @@ public class LearnCriteriaAPIBean {
         CriteriaQuery<Tuple> cq = cb.createTupleQuery();
 
         Root<Color> colorRoot = cq.from(Color.class);
-        Root<Theme> colorTheme = cq.from(Theme.class);
+        Root<Theme> themeRoot = cq.from(Theme.class);
 
-        cq.multiselect(colorRoot, colorTheme);
+        cq.multiselect(colorRoot, themeRoot);
+
+        Query q = em.createQuery(cq);
+        return q.getResultList();
+
+    }
+
+    public Collection<DocumentType> getFetch() {
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<DocumentType> cq = cb.createQuery(DocumentType.class);
+
+        Root<DocumentType> doctypeRoot = cq.from(DocumentType.class);
+
+        doctypeRoot.fetch("childDocTypes", JoinType.LEFT);
+
+        cq.select(doctypeRoot);
 
 
         Query q = em.createQuery(cq);

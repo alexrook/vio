@@ -4,7 +4,7 @@
              version="2.0">
 
     <persistence-unit name="unit-test">
-        <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>        
+        <jta-data-source>java:jboss/datasources/testDS</jta-data-source>        
         <!--
         <class>vio.model.doc.Color</class>
         <class>vio.model.doc.Document</class>
@@ -14,6 +14,12 @@
         -->
         <properties>
             <property name="hibernate.show_sql" value="true" />
+            <!--
+                validate: validate the schema, makes no changes to the database.
+                update: update the schema.
+                create: creates the schema, destroying previous data.
+                create-drop: drop the schema at the end of the session.
+            -->
             <property name="hibernate.hbm2ddl.auto" value="create" />
         </properties>
 

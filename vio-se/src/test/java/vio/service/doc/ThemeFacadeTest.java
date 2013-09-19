@@ -49,7 +49,7 @@ public class ThemeFacadeTest {
                 .addPackage(Theme.class.getPackage())
                 .addPackage(TestHelperBean.class.getPackage()) //to access to the EntityManager functionality
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
-                .addAsResource("test-ds.xml", "test-ds.xml")
+                .addAsResource("test-ds-driver-h2.xml", "META-INF/test-ds.xml")
                 .addAsResource("log4j.properties", "log4j.properties");
 
         result.as(ZipExporter.class).exportTo(new File("target/test-ear.zip"), true);
