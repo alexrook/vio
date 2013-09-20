@@ -149,7 +149,6 @@ public class LearnCriteriaAPITest {
             assertNotNull(dt.getChildDocTypes());
         }
 
-
     }
 //    
 
@@ -206,8 +205,8 @@ public class LearnCriteriaAPITest {
     }
 
     private void deleteEnt() {
-        helper.executeNativeQueryWithNoResult("delete from color");
-        helper.executeNativeQueryWithNoResult("delete from theme");
-        // helper.executeNativeQueryWithNoResult("delete from documenttype");
+        helper.executeNativeQueryNoResult("delete from color");
+        helper.executeNativeQueryNoResult("delete from theme");
+        helper.executeNativeQueryNoResult("delete from documenttype");
     }
 }

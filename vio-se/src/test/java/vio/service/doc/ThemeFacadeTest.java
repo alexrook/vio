@@ -86,7 +86,7 @@ public class ThemeFacadeTest {
         /*
          * select value natively to avoid some JPA machinery
          */
-        String val_act = testHelper.<String>executeNativeQueryWithSingleResult(
+        String val_act = testHelper.<String>executeNativeQuerySingleResult(
                 "select  t.val from Theme t where t.id="
                 + t1.getId());
         assertNotNull("error:val of theme after native query is null:" + t1.getId(), val_act);

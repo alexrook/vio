@@ -24,12 +24,12 @@ public class TestHelperBean {
      * @param query native query string
      * @return query result
      */
-    public <T> T executeNativeQueryWithSingleResult(String query) {
+    public <T> T executeNativeQuerySingleResult(String query) {
         Query nativeQuery = em.createNativeQuery(query);
         return (T) nativeQuery.getSingleResult();
     }
     
-     public int executeNativeQueryWithNoResult(String query) {
+     public int executeNativeQueryNoResult(String query) {
         Query nativeQuery = em.createNativeQuery(query);
         return nativeQuery.executeUpdate();
     }
