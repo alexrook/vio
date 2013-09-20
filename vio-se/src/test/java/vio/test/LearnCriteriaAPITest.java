@@ -32,8 +32,9 @@ import vio.service.doc.ThemeFacade;
  */
 @RunWith(Arquillian.class)
 public class LearnCriteriaAPITest {
-    
+
     public static Logger log = Logger.getLogger("vio.service.doc.LearnCriteriaAPITest");
+    //
     private static final String[] colors = {"Red", "Blue", "Green", "Yellow", "Black", "White"};
     private static final String[] themes = {"ThemeOne", "ThemeTwo", "ThemeThree", "ThemeFour", "ThemeFive"};
     //
@@ -51,10 +52,10 @@ public class LearnCriteriaAPITest {
     //
     @EJB
     TestHelperBean helper;
-    
+
     @Deployment
     public static Archive<?> createTestArchive() throws FileNotFoundException {
-        
+
         Archive<JavaArchive> result = ShrinkWrap.create(JavaArchive.class, "test.jar")
                 .addPackage(ColorFacade.class.getPackage())
                 .addPackage(AbstractFacade.class.getPackage())
@@ -62,19 +63,19 @@ public class LearnCriteriaAPITest {
                 .addPackage(LearnCriteriaAPITest.class.getPackage())
                 .addPackage(Color.class.getPackage())
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
-                .addAsResource("test-ds-driver-postgresql.xml", "META-INF/test-ds.xml")
+                .addAsResource("test-ds-driver-postgresql.xml", "META-INF/test-ds.xml") //put *-ds.xml at meta-inf - this creates a datasource before running the tests
                 .addAsResource("log4j.properties", "log4j.properties");
-        
-        result.as(ZipExporter.class).exportTo(new File("target/test-ear.zip"), true);
-        
+
+     //   result.as(ZipExporter.class).exportTo(new File("target/test-ear.zip"), true);
+
         return result;
     }
-    
+
     @Before
     public void setup() {
         createEnt();
     }
-    
+
     @After
     public void tearDown() {
         deleteEnt();
@@ -95,9 +96,9 @@ public class LearnCriteriaAPITest {
         for (Color c : cc) {
             log.info("Colors in collection:" + c.getVal());
         }
-        
+
     }
-    
+
     @Test
     public void test_DD_step_2() {
         Collection<Color> cc = learnCriteriaBean.getColorsByName("%e%");
@@ -106,9 +107,9 @@ public class LearnCriteriaAPITest {
         for (Color c : cc) {
             log.info("Colors in collection:" + c.getVal());
         }
-        
+
     }
-    
+
     @Test
     public void test_DD_step_3() {
         Collection<Color> cc = learnCriteriaBean.getColorsByName("%e_");
@@ -117,12 +118,12 @@ public class LearnCriteriaAPITest {
         for (Color c : cc) {
             log.info("Colors in collection:" + c.getVal());
         }
-        
+
     }
-    
+
     @Test
     public void test_DD_step_4() {
-        
+
         log.info("====================Tuple-step-4======================");
         Collection<Tuple> cc = learnCriteriaBean.getCartesianProduct();
         assertNotNull(cc);
@@ -130,26 +131,28 @@ public class LearnCriteriaAPITest {
         for (Tuple tuple : cc) {
             log.info(Arrays.toString(tuple.toArray()));
         }
-        
+
         Tuple t = (Tuple) cc.toArray()[0];
         log.info(t.get(0).toString());
-        
+
     }
-    
+
     @Test
     public void test_DD_step_5() {
-       log.info("===================Fetch-step-5========================");
-       Collection<DocumentType> doctypes=learnCriteriaBean.getFetch();
-       
-       assertTrue(!doctypes.isEmpty());
-       for (DocumentType dt:doctypes){
+
+        log.info("===================Fetch-step-5========================");
+        Collection<DocumentType> adoctypes = learnCriteriaBean.getFetch();
+
+        assertTrue(!adoctypes.isEmpty());
+        for (DocumentType dt : adoctypes) {
             log.info(dt.toString());
             assertNotNull(dt.getChildDocTypes());
-       }
-        
-        
+        }
+
+
     }
 //    
+
     private void createEnt() {
         String prefix = String.valueOf(Math.random() * 100) + "_";
         for (String c : colors) {
@@ -160,39 +163,51 @@ public class LearnCriteriaAPITest {
             Theme theme = new Theme(prefix + t);
             tfb.create(theme);
         }
-        
+
         /**
          * 3-levels of doctypes
          */
-        for (int i = 0; i < 10; i++) {
-            DocumentType dt_one = new DocumentType(prefix + "doctype_" + i);
-            Collection<DocumentType> dc_one_childs = new ArrayList<DocumentType>(10);
-            for (int j = 0; j < 3; j++) {
-                DocumentType dt_two = new DocumentType(dt_one.getVal() + "_" + j);
-                dt_two.setParentDocType(dt_one);
-                dc_one_childs.add(dt_two);
-               /* 
-                Collection<DocumentType> dc_two_childs = new ArrayList<DocumentType>(10);
-                
-                for (int k = 0; k < 5; k++) {
-                    DocumentType dt_three = new DocumentType(dt_two.getVal() + "_" + k);
-                    dt_three.setParentDocType(dt_two);
-                    dc_two_childs.add(dt_three);
-                }
-                dt_two.setChildDocTypes(dc_two_childs);
-                */ 
-            }
-            dt_one.setChildDocTypes(dc_one_childs);
-            dtfb.create(dt_one);
+        int[] levels = {5, 3, 3};
+        Collection<DocumentType> doctypes = createDoctypes(levels, String.valueOf(Math.random() + 100), null);
+        for (DocumentType d : doctypes) {
+            dtfb.create(d);
         }
-        
+
     }
-    
-    //private void createDoctypes(int level,String prefix,Collection)
-    
+
+    /**
+     * создает levels.lenght-уровневую тестовую иерархию documenttypes
+     *
+     * @param levels - levels[x] количество сущностей на уровне x (i.e
+     * levels[0]=5 -> five entities at level 0, and so on )
+     * @param prefix - prefix for name of all entities
+     * @param parent - parent entity (mainly for recursive purposes, we start
+     * with parent =null)
+     * @return tree like collection of documenttypes
+     */
+    private Collection<DocumentType> createDoctypes(int[] levels, String prefix, DocumentType parent) {
+
+        String val = prefix.contains("doctype") ? prefix : prefix + "_doctype";
+        Collection<DocumentType> result = new ArrayList<DocumentType>(levels[0]);
+
+        for (int i = 0; i < levels[0]; i++) {
+            DocumentType d = new DocumentType(val + "_" + i);
+            result.add(d);
+            if (parent != null) {
+                d.setParentDocType(parent);
+            }
+            if (levels.length > 1) {
+                int[] nlevels = Arrays.copyOfRange(levels, 1, levels.length);
+                d.setChildDocTypes(createDoctypes(nlevels, d.getVal(), d));
+            }
+        }
+
+        return result;
+    }
+
     private void deleteEnt() {
         helper.executeNativeQueryWithNoResult("delete from color");
         helper.executeNativeQueryWithNoResult("delete from theme");
-       // helper.executeNativeQueryWithNoResult("delete from documenttype");
+        // helper.executeNativeQueryWithNoResult("delete from documenttype");
     }
 }
