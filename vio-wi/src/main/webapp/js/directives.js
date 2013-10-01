@@ -10,7 +10,6 @@ angular.module('vio.directives', [])
         }else {
             ePos = getOffsetPosition(element);
         }
-        
         //   console.log(ePos);  
         var eWidth = $(element).width();
         // console.log(eWidth);
@@ -22,7 +21,7 @@ angular.module('vio.directives', [])
         });
 
         function update(sTop) {
-            scope.a = sTop;
+            //scope.a = sTop;
             if (sTop > ePos.top) {
                 if (!isDock) {
                     element.css({

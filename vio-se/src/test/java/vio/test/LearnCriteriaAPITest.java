@@ -82,8 +82,8 @@ public class LearnCriteriaAPITest {
     }
 
     /*
-     * % ->A substitute for zero or more characters
-     * _ ->A substitute for a single character
+     * '%' ->A substitute for zero or more characters
+     * '_' ->A substitute for a single character
      * [charlist] ->Sets and ranges of characters to match
      * [^charlist] or [!charlist] -> Matches only a character NOT specified within the brackets
      *	
