@@ -2,3 +2,7 @@
 	opacity: 1;
 }
 
+footer.navbar {
+    min-height:1px;
+}
+
