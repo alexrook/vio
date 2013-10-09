@@ -1,38 +1,99 @@
 <!DOCTYPE html>
-<html lang="ru" data-ng-app="vio">
+<html lang="ru" data-ng-app="infinite">
     <head>
         <title>infinite scroll</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <link 
-            href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" 
-            rel="stylesheet">
-
-        <link 
-            href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"
-            rel="stylesheet">
 
         <script 
             src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js">
         </script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+
+        <style type="text/css">
+            html,body{
+                margin: 0px;
+                padding: 3px;
+                height: 100%;
+            }
+            .ctrl {
+                height: 100%;
+                overflow: auto;
+                border: red solid thick;
+                padding: 12px;
+            }
+            table {
+                border-spacing:0;
+                border:  black dotted thin;
+                border-right: none;
+                border-bottom:  none;
+            }
+            table tr:hover {
+                background: aliceblue;
+            }
+            table td {
+                padding: 3px;
+                border-bottom: dotted black thin;
+                border-right:  dotted black thin;
+            }
+        </style>
+
+        <script type="text/javascript">
+                var big = 'b';
+                for (i = 0; i < 100; i++) {
+                    big += 'i';
+                }
+                big += 'g';
+
+
+                function createItem(counter) {
+                    return {id: counter,
+                        value: big + counter
+                    };
+
+                }
+
+                function Main($scope) {
+                    $scope.items = [];
+                    var counter = 0;
+
+                    $scope.loadMore = function() {
+                        for (var i = 0; i < 100; i++) {
+                            $scope.items.push(createItem(counter));
+                            counter += 10;
+                        }
+                    };
+
+                    $scope.loadMore();
+                }
+
+                angular.module('infinite', []).directive('whenScrolled', function() {
+                    return function(scope, elm, attr) {
+                        var raw = elm[0];
+
+                        elm.bind('scroll', function() {
+                            if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+                                scope.$apply(attr.whenScrolled);
+                            }
+                        });
+                    };
+                });
+
+        </script>
+
+
     </head>
     <body>
-        <div id="main" class="container">
-            <div id="main" class="row">
-                  <div class="col-lg-12">
-                    <table class="table table-hover">
-                        <tbody>
-                            <tr data-ng-repeat="item in items">
-                                <td>{{item.id}}</td>
-                                <td>{{item.value}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="ctrl"  data-ng-controller="Main" data-when-scrolled="loadMore()">
+            <table>
+                <tbody>
+                    <tr data-ng-repeat="item in items">
+                        <td>{{item.id}}</td>
+                        <td>{{item.value}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </body>
 </html>
