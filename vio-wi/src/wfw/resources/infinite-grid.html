@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-ng-app="infinite">
+<html lang="ru" data-ng-app="infin">
     <head>
         <title>infinite scroll</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -68,13 +68,14 @@
                     $scope.loadMore();
                 }
 
-                angular.module('infinite', []).directive('whenScrolled', function() {
+                angular.module('infin', []).directive('infipage', function() {
                     return function(scope, elm, attr) {
                         var raw = elm[0];
 
                         elm.bind('scroll', function() {
+                            console.log('scroll');
                             if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
-                                scope.$apply(attr.whenScrolled);
+                                scope.$apply(attr.infipage);
                             }
                         });
                     };
@@ -85,7 +86,7 @@
 
     </head>
     <body>
-        <div class="ctrl"  data-ng-controller="Main" data-when-scrolled="loadMore()">
+        <div class="ctrl"  data-ng-controller="Main" data-infipage="loadMore()" >
             <table>
                 <tbody>
                     <tr data-ng-repeat="item in items">
