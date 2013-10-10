@@ -26,6 +26,12 @@ mod.directive('infiniteScroll', [
             }
           });
         }
+        
+      sc=function(){
+            console.log('scroll');
+                handler();
+        };
+        
         handler = function() {
           var elementBottom, remaining, shouldScroll, windowBottom;
           windowBottom = $window.height() + $window.scrollTop();
@@ -42,7 +48,7 @@ mod.directive('infiniteScroll', [
             return checkWhenEnabled = true;
           }
         };
-        $window.on('scroll', handler);
+        $window.on('scroll', sc);
         scope.$on('$destroy', function() {
           return $window.off('scroll', handler);
         });

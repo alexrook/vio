@@ -8,21 +8,28 @@
         <script 
             src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js">
         </script>
-
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
         <script src="js/ng-infinite-scroll.js"></script>
 
         <style type="text/css">
             html,body{
                 margin: 0px;
-                padding: 3px;
+                padding: 7px;
+                height: 100%;
+            }
+            .itbl {
+                height: 100%;
+                background: green;
             }
         </style>
 
         <script type="text/javascript">
                 var myApp = angular.module('myApp', ['infinite-scroll']);
+                
+                
 
                 myApp.controller('DemoController', function($scope, Reddit) {
+                
                     $scope.reddit = new Reddit();
                 });
 
@@ -57,13 +64,13 @@
 
 
     </head>
-    <body>
+     <body>
         <a href="http://binarymuse.github.io/ngInfiniteScroll/demo_async.html">
             Infinite scroll Demo from Brandon Tilley
         </a>
         <hr>
-        <div data-ng-app='myApp' data-ng-controller='DemoController'>
-            <div data-infinite-scroll='reddit.nextPage()' 
+        <div class="itbl" data-ng-app='myApp' data-ng-controller='DemoController'>
+            <div  data-infinite-scroll='reddit.nextPage()' 
                  data-infinite-scroll-disabled='reddit.busy' 
                  data-infinite-scroll-distance='1'>
                 <div data-ng-repeat='item in reddit.items'>
