@@ -1,91 +1,89 @@
-<!DOCTYPE html>
-<html lang="ru">
-    <head>
-        <title>infinite scroll by Brandon Tilley</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html> <html lang="ru">
+<head>
+    <title>Remote example,infinite scroll by Brandon Tilley</title> <meta
+    http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta
+    name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <script 
-            src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js">
-        </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-        <script src="js/ng-infinite-scroll.js"></script>
+    <script src="js/jquery-2.0.3.js"> </script> <script
+    src="js/angular-1.0.8.js"></script> <script
+    src="js/ng-infinite-scroll.js"></script> <style type="text/css">
+        html,body{
+            margin: 0px; padding: 7px; 
+        }
+        
+    </style>
 
-        <style type="text/css">
-            html,body{
-                margin: 0px;
-                padding: 7px;
-                height: 100%;
-            }
-            .itbl {
-                height: 100%;
-                background: green;
-            }
-        </style>
+    <script type="text/javascript">
+            var myApp = angular.module('myApp', ['infinite-scroll']);
+            
+            
 
-        <script type="text/javascript">
-                var myApp = angular.module('myApp', ['infinite-scroll']);
-                
-                
+            myApp.controller('DemoController', function($scope, Reddit) {
+            
+                $scope.reddit = new Reddit();
+            });
 
-                myApp.controller('DemoController', function($scope, Reddit) {
-                
-                    $scope.reddit = new Reddit();
-                });
+            // Reddit constructor function to encapsulate HTTP and
+            // pagination logic
+            myApp.factory('Reddit', function($http) {
+                var Reddit = function() {
+                    this.items = []; this.busy = false; this.after = '';
+                };
 
-                // Reddit constructor function to encapsulate HTTP and pagination logic
-                myApp.factory('Reddit', function($http) {
-                    var Reddit = function() {
-                        this.items = [];
+                Reddit.prototype.nextPage = function() {
+                    if (this.busy)
+                        return;
+                    this.busy = true;
+
+                    var url = "http://api.reddit.com/hot?after=" +
+                    this.after + "&jsonp=JSON_CALLBACK";
+                    $http.jsonp(url).success(function(data) {
+                        console.log(this);
+                        var items = data.data.children;
+                        for (var i = 0; i <items.length; i++) {
+                            this.items.push(items[i].data);
+                        }
+                        this.after = "t3_" + this.items[this.items.length-1].id;
                         this.busy = false;
-                        this.after = '';
-                    };
+                    }.bind(this));
+                    //ES5 introduced the 'bind' method
+                    //to set the value of a function's this regardless of how it's called.
+                };
 
-                    Reddit.prototype.nextPage = function() {
-                        if (this.busy)
-                            return;
-                        this.busy = true;
+                return Reddit;
+            });
 
-                        var url = "http://api.reddit.com/hot?after=" + this.after + "&jsonp=JSON_CALLBACK";
-                        $http.jsonp(url).success(function(data) {
-                            var items = data.data.children;
-                            for (var i = 0; i < items.length; i++) {
-                                this.items.push(items[i].data);
-                            }
-                            this.after = "t3_" + this.items[this.items.length - 1].id;
-                            this.busy = false;
-                        }.bind(this));
-                    };
-
-                    return Reddit;
-                });
-
-        </script>
+    </script>
 
 
-    </head>
-     <body>
-        <a href="http://binarymuse.github.io/ngInfiniteScroll/demo_async.html">
-            Infinite scroll Demo from Brandon Tilley
-        </a>
-        <hr>
-        <div class="itbl" data-ng-app='myApp' data-ng-controller='DemoController'>
-            <div  data-infinite-scroll='reddit.nextPage()' 
-                 data-infinite-scroll-disabled='reddit.busy' 
-                 data-infinite-scroll-distance='1'>
-                <div data-ng-repeat='item in reddit.items'>
-                    <span class='score'>{{item.score}}</span>
-                    <span class='title'>
-                        <a data-ng-href='{{item.url}}' target='_blank'>{{item.title}}</a>
-                    </span>
-                    <small>by {{item.author}} -
-                        <a data-ng-href='http://reddit.com{{item.permalink}}' 
-                           target='_blank'>{{item.num_comments}} comments</a>
-                    </small>
-                    <div style='clear: both;'></div>
-                </div>
-                <div data-ng-show='reddit.busy'>Loading data...</div>
-            </div>
+</head>
+ <body>
+    <a href="http://binarymuse.github.io/ngInfiniteScroll/demo_async.html">
+        Remote example,infinite scroll by Brandon Tilley
+    </a>
+    <hr>
+    <div id="iconsole" style="position: fixed">
+        <div id="r"></div>
+        <div id="w"></div>
+        <div id="e"></div>
+        <div id="s"></div>
+    </div>
+    <hr>
+    <div class="itbl" data-ng-app='myApp'  data-ng-controller='DemoController'>
+        <div data-infinite-scroll='reddit.nextPage()'
+             data-infinite-scroll-disabled='reddit.busy'
+             data-infinite-scroll-distance='1'>
+            <div data-ng-repeat='item in reddit.items'>
+                <span class='score'>{{item.score}}</span> <span
+                class='title'>
+                    <a data-ng-href='{{item.url}}'
+                    target='_blank'>{{item.title}}</a>
+                </span> <small>by {{item.author}} -
+                    <a data-ng-href='http://reddit.com{{item.permalink}}'
+                       target='_blank'>{{item.num_comments}} comments</a>
+                </small> <div style='clear: both;'></div>
+            </div> <div data-ng-show='reddit.busy'>Loading data...</div>
         </div>
-    </body>
+    </div>
+</body>
 </html>

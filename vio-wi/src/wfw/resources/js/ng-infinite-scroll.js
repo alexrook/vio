@@ -1,4 +1,4 @@
-/* ng-infinite-scroll - v1.0.0 - 2013-02-23 */
+
 var mod;
 
 mod = angular.module('infinite-scroll', []);
@@ -17,6 +17,7 @@ mod.directive('infiniteScroll', [
                 }
                 scrollEnabled = true;
                 checkWhenEnabled = false;
+                
                 if (attrs.infiniteScrollDisabled != null) {
                     scope.$watch(attrs.infiniteScrollDisabled, function(value) {
                         scrollEnabled = !value;
@@ -27,13 +28,8 @@ mod.directive('infiniteScroll', [
                     });
                 }
 
-                sc = function() {
-                    console.log('scroll');
-
-                    handler();
-                };
-
                 handler = function() {
+                    console.log('handler');
                     var elementBottom, remaining, shouldScroll, windowBottom;
                     windowBottom = $window.height() + $window.scrollTop();
                     elementBottom = elem.offset().top + elem.height();
@@ -50,12 +46,12 @@ mod.directive('infiniteScroll', [
                         };
 
                         if ($rootScope.$$phase) {
-                            scope.$eval(attrs.infiniteScrollConsole, 1);
+                            scope.$eval(attrs.infiniteScrollConsole);
                         } else {
-                            scope.$apply(attrs.infiniteScrollConsole, 1);
+                            scope.$apply(attrs.infiniteScrollConsole);
                         }
                     }
-                    
+
                     if (shouldScroll && scrollEnabled) {
                         if ($rootScope.$$phase) {
                             return scope.$eval(attrs.infiniteScroll);
@@ -66,10 +62,12 @@ mod.directive('infiniteScroll', [
                         return checkWhenEnabled = true;
                     }
                 };
-                $window.on('scroll', sc);
+
+                $window.on('scroll', handler);
                 scope.$on('$destroy', function() {
                     return $window.off('scroll', handler);
                 });
+
                 return $timeout((function() {
                     if (attrs.infiniteScrollImmediateCheck) {
                         if (scope.$eval(attrs.infiniteScrollImmediateCheck)) {
