@@ -13,6 +13,9 @@
             li {
                 display: inline-block;
             }
+            .val {
+                color: green;
+            }
         </style>
 
         <script src="js/jquery-2.0.3.js"></script>
@@ -31,30 +34,35 @@
                 }();
 
                 $scope.loadMore = function() {
+                    $scope.busy=true;
                     var last = $scope.images[$scope.images.length - 1];
                     for (var i = 1; i <= 8; i++) {
                         $scope.images.push(last + i);
                     }
+                    $scope.busy=false;
                 };
 
-                });
+            });
         </script>
     </head>
     <body data-ng-app='myApp'>
         <div data-ng-controller='DemoController'>
             <div id="iconsole" style="position: fixed;">
-                <div id="r">remaining:<span>{{is.r}}</span></div>
-                <div id="w">windowBottom:</span>{{is.w}}</span></div>
-                <div id="e">elementBottom:</span>{{is.e}}</span></div>
-                <div id="s">shouldScroll(remaining <= $window.height() * scrollDistance):<span>{{is.s}}</span></div>
+                <div>remaining:<span class="val">{{iconsole.remaining()}}</span></div>
+                <div>windowBottom:<span class="val">{{iconsole.windowBottom}}</span></div>
+                <div>elementBottom:<span class="val">{{iconsole.elementBottom}}</span></div>
+                <div>shouldScroll(remaining <= $window.height() * scrollDistance):
+                    <span class="val">{{iconsole.shouldScroll()}}</span></div>
+                
             </div>
             <div style="padding-top: 50px;">
                 <ul data-infinite-scroll='loadMore()' data-infinite-scroll-distance='1'
-                data-infinite-scroll-console='is'>
+                data-infinite-scroll-console='iconsole'>
                     <li data-ng-repeat='image in images'>
-                        <img data-ng-src='http://placehold.it/125x125/ffffff&text={{image}}' src="">
+                        <img data-ng-src='http://placehold.it/64x64/ffffff&text={{image}}' src="">
                     </li>
                 </ul>
+                <div data-ng-show='busy'>Загрузка данных...</div>
             </div>
         </div>
     </body>

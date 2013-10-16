@@ -30,23 +30,26 @@ mod.directive('infiniteScroll', [
 
                 handler = function() {
                     console.log('handler');
-                    var elementBottom, remaining, shouldScroll, windowBottom;
-                    windowBottom = $window.height() + $window.scrollTop();
-                    elementBottom = elem.offset().top + elem.height();
-                    remaining = elementBottom - windowBottom;
-                    shouldScroll = remaining <= $window.height() * scrollDistance;
-
-
-                    if (attrs.infiniteScrollConsole) {
+                    
+                    function scrollInformer(){
+                        return {
+                            windowBottom :$window.height() + $window.scrollTop(),
+                            elementBottom : elem.offset().top + elem.height(),
+                            remaining:function(){
+                                return this.elementBottom - this.windowBottom;
+                            },
+                            shouldScroll:function(){
+                                return this.remaining() <= $window.height() * scrollDistance;
+                            }
+                        }
+                    }
+                    
+                    var info=scrollInformer();
+                    
+                    if (attrs.infiniteScrollConsole) {//debugger
                         
                         var updateConsole=function(){
-                           scope[attrs.infiniteScrollConsole]=
-                            {
-                                r: remaining,
-                                w: windowBottom,
-                                e: elementBottom,
-                                s: shouldScroll
-                            };
+                           scope[attrs.infiniteScrollConsole]=info;
                         }
 
                         if ($rootScope.$$phase) {
@@ -54,18 +57,22 @@ mod.directive('infiniteScroll', [
                         } else {
                             scope.$apply(updateConsole);
                         }
-                    }
+                    }//debugger
 
-                    if (shouldScroll && scrollEnabled) {
+                    if (info.shouldScroll && scrollEnabled) {
                         if ($rootScope.$$phase) {
-                            return scope.$eval(attrs.infiniteScroll);
+                           // return scope.$eval(attrs.infiniteScroll);
+                           scope.$eval(attrs.infiniteScroll);
+                           return info;
                         } else {
-                            return scope.$apply(attrs.infiniteScroll);
+                           // return scope.$apply(attrs.infiniteScroll);
+                           scope.$apply(attrs.infiniteScroll);
+                           return info;
                         }
-                    } else if (shouldScroll) {
+                    } else if (info.shouldScroll) {
                         return checkWhenEnabled = true;
                     }
-                };
+                }; //handler
 
                 $window.on('scroll', handler);
                 scope.$on('$destroy', function() {
