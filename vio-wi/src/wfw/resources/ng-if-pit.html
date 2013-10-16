@@ -37,26 +37,20 @@
                     }
                 };
 
-                    $scope.updateConsole = function() {
-                        $('#r').html('remaining=' + $scope.is.r);
-                        $('#w').html('windowBottom=' + $scope.is.w);
-                        $('#e').html('elementBottom=' + $scope.is.e);
-                        $('#s').html('shouldScroll=' + new String($scope.is.s));
-                    };
-
                 });
         </script>
     </head>
     <body data-ng-app='myApp'>
         <div data-ng-controller='DemoController'>
-            <div id="iconsole" style="position: fixed">
-                <div id="r">'{{is.r}}'</div>
-                <div id="w"></div>
-                <div id="e"></div>
-                <div id="s"></div>
+            <div id="iconsole" style="position: fixed;">
+                <div id="r">remaining:<span>{{is.r}}</span></div>
+                <div id="w">windowBottom:</span>{{is.w}}</span></div>
+                <div id="e">elementBottom:</span>{{is.e}}</span></div>
+                <div id="s">shouldScroll(remaining <= $window.height() * scrollDistance):<span>{{is.s}}</span></div>
             </div>
-            <div>
-                <ul data-infinite-scroll='loadMore()' data-infinite-scroll-distance='1'>
+            <div style="padding-top: 50px;">
+                <ul data-infinite-scroll='loadMore()' data-infinite-scroll-distance='1'
+                data-infinite-scroll-console='is'>
                     <li data-ng-repeat='image in images'>
                         <img data-ng-src='http://placehold.it/125x125/ffffff&text={{image}}' src="">
                     </li>

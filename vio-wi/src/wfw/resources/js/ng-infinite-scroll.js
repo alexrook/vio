@@ -38,17 +38,21 @@ mod.directive('infiniteScroll', [
 
 
                     if (attrs.infiniteScrollConsole) {
-                        scope.is = {
-                            r: remaining,
-                            w: windowBottom,
-                            e: elementBottom,
-                            s: shouldScroll
-                        };
+                        
+                        var updateConsole=function(){
+                           scope[attrs.infiniteScrollConsole]=
+                            {
+                                r: remaining,
+                                w: windowBottom,
+                                e: elementBottom,
+                                s: shouldScroll
+                            };
+                        }
 
                         if ($rootScope.$$phase) {
-                            scope.$eval(attrs.infiniteScrollConsole);
+                            scope.$eval(updateConsole);
                         } else {
-                            scope.$apply(attrs.infiniteScrollConsole);
+                            scope.$apply(updateConsole);
                         }
                     }
 
