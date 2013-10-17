@@ -33,6 +33,7 @@ mod.directive('infiniteScroll', [
                     
                     function scrollInformer(){
                         return {
+                            windowHeight:$window.height(),
                             windowBottom :$window.height() + $window.scrollTop(),
                             elementBottom : elem.offset().top + elem.height(),
                             remaining:function(){
