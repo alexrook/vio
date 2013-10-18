@@ -35,26 +35,32 @@
           //  var myApp = angular.module('myApp',[]);
             
             myApp.controller('Ctrl', function($scope) {
-            
-                
                 
                 $scope.values=[];
-                              
+
+               
                 $scope.loadMore = function() {
                     var last = $scope.values.length;
                     for (var i = last; i <= last+8; i++) {
                         $scope.values.push(i);
                     }
-                   $scope.$emit('element-dirty', true);
+                    $scope.$emit('loadmore');
                 };
-              
-               // $scope.$emit('element-dirty', true);
+                              
+                
+               
             });
 
+            
+            
         </script>
     </head>
     <body data-ng-app='myApp'>
-            <div data-ng-controller='Ctrl' data-infinite-loader='loadMore()' data-infinite-loader-event='element-dirty'>
+        
+            <div id="il" data-ng-controller='Ctrl' data-infinite-loader='loadMore()'
+                 data-infinite-loader-geometry='shouldMore'>
+                <div>{{dirty}}</div>
+                <hr/>
                 <ul>
                         <li data-ng-repeat='value in values'>
                             <div class="val">
