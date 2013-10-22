@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <title>infinite loader</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+        <style type="text/css">
+            html,body{
+                height: 100%;
+            }
+            li {
+                display: inline-block;
+                margin: 3px;
+            }
+            .val {
+                background-color: green;
+                min-height: 24px;
+                min-width: 24px;
+                
+            }
+            a {
+                font-size: 18px;
+            }
+        </style>
+
+        <script src="js/jquery-2.0.3.js"></script>
+        <script src="js/angular-1.0.8.js"></script>
+        <script src="js/ng-infinite-loader.js"></script>
+        
+        <script type="text/javascript">
+          
+            var myApp = angular.module('myApp', ['infinite-loader']);
+          //  var myApp = angular.module('myApp',[]);
+            
+            myApp.controller('Ctrl', function($scope,Reddit) {
+                
+               $scope.reddit=new Reddit(function(){
+                        $scope.$emit('loadmore');
+               });
+               
+               
+               
+            });
+            
+            // Reddit constructor function to encapsulate HTTP and
+            // pagination logic
+            myApp.factory('Reddit', function($http) {
+                var Reddit = function(nextSuccess) {
+                    this.items = []; this.busy = false; this.after = '',this.nextSuccess=nextSuccess;
+            };
+
+            Reddit.prototype.nextPage = function() {
+                if (this.busy)
+                    return;
+                    this.busy = true;
+
+                    var url = "http://api.reddit.com/hot?after=" +
+                    this.after + "&jsonp=JSON_CALLBACK";
+                    $http.jsonp(url).success(function(data) {
+                        console.log(this);
+                        var items = data.data.children;
+                        for (var i = 0; i <items.length; i++) {
+                            this.items.push(items[i].data);
+                        }
+                        this.after = "t3_" + this.items[this.items.length-1].id;
+                        this.busy = false;
+                        if (this.nextSuccess){
+                            this.nextSuccess();
+                        }
+                        
+                    }.bind(this)); //ES5 introduced the 'bind' method to set the value of a function's this regardless of how it's called.
+                   
+            };
+
+                return Reddit;
+            });
+
+            
+            
+        </script>
+    </head>
+    <body data-ng-app='myApp'>
+        
+            <div id="il" data-ng-controller='Ctrl' data-infinite-loader='reddit.nextPage()'
+                 data-infinite-loader-event='loadmore' data-infinite-loader-enabled='!reddit.busy'>
+                <div style="position: fixed;">
+                    {{reddit.busy}}
+                </div>
+                <hr/>   
+                <div data-ng-repeat='item in reddit.items'>
+                   <span class='score'>{{item.score}}</span>
+                   <span class='title'>
+                    <a data-ng-href='{{item.url}}' target='_blank'>{{item.title}}</a>
+                   </span>
+                   <small>by {{item.author}} -
+                    <a data-ng-href='http://reddit.com{{item.permalink}}' target='_blank'>{{item.num_comments}} comments</a>
+                   </small>
+                   <div style='clear: both;'></div>
+            </div>
+                 <div data-ng-show='reddit.busy'>Loading data...</div>
+            </div>
+    </body>
+</html>
+
+
