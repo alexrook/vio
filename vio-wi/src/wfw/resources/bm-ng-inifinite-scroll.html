@@ -29,11 +29,11 @@
             myApp.factory('Reddit', function($http) {
                 var Reddit = function() {
                     this.items = []; this.busy = false; this.after = '';
-                };
+            };
 
-                Reddit.prototype.nextPage = function() {
-                    if (this.busy)
-                        return;
+            Reddit.prototype.nextPage = function() {
+                if (this.busy)
+                    return;
                     this.busy = true;
 
                     var url = "http://api.reddit.com/hot?after=" +
@@ -49,7 +49,7 @@
                     }.bind(this));
                     //ES5 introduced the 'bind' method
                     //to set the value of a function's this regardless of how it's called.
-                };
+            };
 
                 return Reddit;
             });

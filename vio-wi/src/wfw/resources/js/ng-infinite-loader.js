@@ -8,7 +8,8 @@ mod.directive('infiniteLoader', ['$rootScope','$window','$timeout',function($roo
             link: function postLink(scope, elem, attrs){
                     
                     var scrollDistance=0,
-                        eventName=attrs.infiniteLoaderEvent||false;
+                        eventName=attrs.infiniteLoaderEvent||false,
+                        loaderEnabled=true;
                     
                     windowElem = angular.element($window);
                     
@@ -20,7 +21,7 @@ mod.directive('infiniteLoader', ['$rootScope','$window','$timeout',function($roo
                                 return this.elementBottom - this.windowBottom;
                             },
                             shouldMore:function(){
-                                return this.remaining() <= windowElem.height() * scrollDistance;
+                                return  this.remaining() <= windowElem.height() * scrollDistance;
                             }
                         }
                     }
@@ -33,9 +34,9 @@ mod.directive('infiniteLoader', ['$rootScope','$window','$timeout',function($roo
                          *otherwise you will have flicker.
                          *if you really want to do after the browser render you can do $timeout(fn, 0);
                          */
-
                         return $timeout(function(){
-                            if ((attrs.infiniteLoader)&&(getGeometry().shouldMore())) {
+                            console.log(loaderEnabled);
+                            if ((attrs.infiniteLoader)&&(getGeometry().shouldMore())&&loaderEnabled) {
                                 if ($rootScope.$$phase){
                                     scope.$eval(attrs.infiniteLoader);
                                 } else {
@@ -43,6 +44,7 @@ mod.directive('infiniteLoader', ['$rootScope','$window','$timeout',function($roo
                                 }
                             }
                         },0);
+                    
                     }
                                         
                     if (attrs.infiniteLoaderDistance) {
@@ -50,12 +52,24 @@ mod.directive('infiniteLoader', ['$rootScope','$window','$timeout',function($roo
                             return scrollDistance = parseInt(value, 10);
                         });
                     }
-                    scope.$on('loadmore',handler);  
+                    
+                    if (attrs.infiniteLoaderEvent) {
+                        scope.$on(attrs.infiniteLoaderEvent,handler);
+                    }
                     
                     windowElem.on('scroll',handler);
                     
+                    if (attrs.infiniteLoaderEnabled != null) {
+                        scope.$watch(attrs.infiniteLoaderEnabled, function(value) {
+                            console.log('watch='+value);
+                                loaderEnabled=value;
+                                handler();
+                           
+                        });
+                    }                   
+                    
                     handler();
-                 
+                  
             }
         }
     }]);

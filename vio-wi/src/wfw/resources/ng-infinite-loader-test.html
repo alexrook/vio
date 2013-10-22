@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
     <head>
-        <title>infinite loader</title>
+        <title>infinite loader test async</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -37,14 +37,16 @@
             myApp.controller('Ctrl', function($scope) {
                 
                 $scope.values=[];
-
+                $scope.counter=0;
                
                 $scope.loadMore = function() {
                     var last = $scope.values.length;
                     for (var i = last; i <= last+8; i++) {
                         $scope.values.push(i);
+                     //   couter++;
                     }
                     $scope.$emit('loadmore');
+                    
                 };
                               
                 
@@ -58,8 +60,7 @@
     <body data-ng-app='myApp'>
         
             <div id="il" data-ng-controller='Ctrl' data-infinite-loader='loadMore()'
-                 data-infinite-loader-geometry='shouldMore'>
-                <div>{{dirty}}</div>
+                 data-infinite-loader-event='loadmore'>
                 <hr/>
                 <ul>
                         <li data-ng-repeat='value in values'>
