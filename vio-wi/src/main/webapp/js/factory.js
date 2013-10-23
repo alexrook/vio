@@ -4,14 +4,14 @@ angular.module('vio.factory', []).
         factory('Documents', function($http) {
 
             var Documents = function(nextSuccess, nextError, itemsPerPage) {
-		
+
                 angular.extend(this, {
                     url: 'rst/doc',
                     items: [],
                     busy: false,
                     nextSuccess: nextSuccess,
                     nextError: nextError,
-                    noMoreData:false,
+                    noMoreData: false,
                     range: {
                         itemsPerPage: Number(itemsPerPage) || 35,
                         finish: 0,
@@ -19,9 +19,9 @@ angular.module('vio.factory', []).
                         direction: 1 //0- refresh, -1 - backward, +1 - forward
                     }
                 });
-		
+
             };
-            
+
             Documents.prototype.buildRangeHeaderStr = function() {
                 var start, finish, range = this.range;
                 if (range.direction !== 0) {
@@ -51,14 +51,16 @@ angular.module('vio.factory', []).
 
                 $http.get('rst/doc', {headers: {"X-Range": this.buildRangeHeaderStr()}})
                         .success(function(data, status, headers) {
-                            this.setRange(headers('X-Content-Range'));
                             for (var i = 0; i < data.length; i++) {
                                 this.items.push(data[i]);
                             }
-                            this.busy=false;
-                            this.noMoreData=data.length===0;
+                            this.busy = false;
+                            this.noMoreData = data.length === 0;
+                            if (!this.noMoreData) {
+                                this.setRange(headers('X-Content-Range'));
+                            }
                             if (angular.isFunction(this.nextSuccess)) {
-                                this.nextSuccess(data.length>0);
+                                this.nextSuccess(data.length > 0);
                             }
                         }.bind(this));
 
