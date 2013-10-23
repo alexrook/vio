@@ -49,7 +49,7 @@ angular.module('vio.factory', []).
                     return;
                 this.busy = true;
 
-                $http.get('rst/doc', {headers: {"X-Range": this.buildRangeHeaderStr()}})
+                $http.get(this.url, {headers: {"X-Range": this.buildRangeHeaderStr()}})
                         .success(function(data, status, headers) {
                             for (var i = 0; i < data.length; i++) {
                                 this.items.push(data[i]);
@@ -67,4 +67,37 @@ angular.module('vio.factory', []).
             };
 
             return Documents;
-        });
+        })
+        .factory('DocumentTypes', function($http) {
+
+            var DocumentTypes = function(nextSuccess, nextError, itemsPerPage) {
+
+                angular.extend(this, {
+                    url: 'rst/doctype',
+                    items: [],
+                    busy: false,
+                    nextSuccess: nextSuccess,
+                    nextError: nextError
+                });
+
+            };
+
+            DocumentTypes.prototype.getList = function() {
+                if (this.busy)
+                    return;
+                this.busy = true;
+
+                $http.get(this.url, {})
+                        .success(function(data, status, headers) {
+                            for (var i = 0; i < data.length; i++) {
+                                this.items.push(data[i]);
+                            }
+                            this.busy = false;
+                            if (angular.isFunction(this.nextSuccess)) {
+                                this.nextSuccess(data.length > 0);
+                            }
+                        }.bind(this));
+            };
+
+            return DocumentTypes;
+         });

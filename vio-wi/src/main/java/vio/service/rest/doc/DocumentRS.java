@@ -9,7 +9,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import java.util.List;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.core.Response;
 import vio.model.doc.Document;
@@ -30,14 +29,7 @@ public class DocumentRS extends AbstractRS {
     public Document getDocumentByID(@PathParam("id") int id) {
         return facade.get(Integer.valueOf(id));
     }
-/*
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public  List<Document> getDocumentList(@HeaderParam("Range") String headerRange) {
-        int[] range = getRangeFromHeader(headerRange);
-        return facade.listByRange(range);
-    }
-  */  
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDocumentList(@HeaderParam("X-Range") String headerRange) {

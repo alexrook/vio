@@ -33,7 +33,7 @@ public class AbstractRS {
     }
 
     private boolean checkRange(int[] range) {
-        return (range.length != 2) || (range[0] < 0) || (range[0] >= range[1]) ? false : true;
+        return !((range.length != 2) || (range[0] < 0) || (range[0] >= range[1])) ;
     }
 
     public String buildContentRangeHeaderValue(int[] range) {

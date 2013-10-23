@@ -38,6 +38,18 @@
                   data-ng-submit="setSearch()" data-scrollafix="main">
 
                 <fieldset>
+
+                    <div class="form-group">
+                        <select class="form-control">
+                            <option data-ng-repeat="t in testType">t val</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select class="form-control form-group">
+                            <option data-ng-repeat="t in testType">t val</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <input type="text" 
                                class="form-control" 
@@ -73,7 +85,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-ng-repeat="doc in documents.items|filter:searchQuery">
+                            <tr data-ng-repeat="doc in docs|filter: searchQuery">
                                 <td>{{(docCheck(doc)).id}}</td>
                                 <td>{{(docCheck(doc)).code}}</td>
                                 <td>{{(docCheck(doc)).name}}</td>
@@ -86,7 +98,6 @@
                     <div data-ng-show="documents.busy">Загрузка данных...
                         <span class="badge">{{documents.items.length}}</span>
                     </div>
-
                     <div data-ng-show="documents.noMoreData">Достигнут конец набора</div>
                 </div>
             </div><!--//row with table-->
@@ -94,7 +105,7 @@
         </div> <!-- //main -->
 
         <hr>
-        <footer class="navbar navbar-fixed-bottom">
+        <footer>
             <span>VIO project, <a name="contact" href="mailto:rook.alex@gmail.com">2013 IT Department</a></span>
         </footer>
 
