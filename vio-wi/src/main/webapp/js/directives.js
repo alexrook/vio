@@ -52,6 +52,7 @@ angular.module('vio.directives', [])
         }).directive('infiniteLoader', ['$rootScope', '$window', '$timeout', function($rootScope,
             $window,
             $timeout) {
+                //based on http://binarymuse.github.com/ngInfiniteScroll/
         return {
             link: function postLink(scope, elem, attrs) {
 
