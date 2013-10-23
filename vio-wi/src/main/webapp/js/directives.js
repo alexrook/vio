@@ -97,7 +97,7 @@ angular.module('vio.directives', [])
                 }
 
                 windowElem.on('scroll', handler);
-
+                  /*  
                 if (attrs.infiniteLoaderEnabled !== null) {
                     scope.$watch(attrs.infiniteLoaderEnabled, function(value) {
                         // console.log('watch='+value);
@@ -106,7 +106,7 @@ angular.module('vio.directives', [])
 
                     });
                 }
-
+                */
                 handler();
 
             }

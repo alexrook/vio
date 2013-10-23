@@ -4,15 +4,19 @@
 
 angular.module('vio.controllers', []).
         controller('DocCtrl',
-                ['$scope',
+                ['$scope','Documents',
                     function($scope, Documents) {
 
-                        $scope.documents = new Documents(function() {
-                            $scope.$emit('getdocs');
+                        $scope.documents = new Documents(function(success) {
+                            
+                            if (success){
+                                $scope.$emit('getdocs');
+                            } 
                         });
 
                         $scope.setSearch = function() {
                             $scope.searchQuery = $scope.searchQueryText;
+                            $scope.$emit('getdocs');
                             console.log($scope.searchQuery);
                         };
 

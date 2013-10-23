@@ -68,8 +68,7 @@
                 <li><a href="#contact">About</a></li>
             </ul>
         </nav><!--//main menu-->
-
-
+      
         <div id="main" class="container">
 
             <div class="row">
@@ -87,7 +86,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-ng-repeat="doc in docs|filter: searchQuery">
+                            <tr data-ng-repeat="doc in documents.items|filter:searchQuery">
                                 <td>{{(docCheck(doc)).id}}</td>
                                 <td>{{(docCheck(doc)).code}}</td>
                                 <td>{{(docCheck(doc)).name}}</td>
@@ -97,13 +96,15 @@
                         </tbody>
 
                     </table>
+                    <div data-ng-show="documents.busy">Загрузка данных...{{documents.items.length}}</div>
+                    <div data-ng-show="documents.noMoreData">Достигнут конец набора</div>
                 </div>
             </div><!--//row with table-->
 
         </div> <!-- //main -->
 
         <hr>
-        <footer>
+        <footer class="navbar navbar-fixed-bottom">
             <span>VIO project, <a name="contact" href="mailto:rook.alex@gmail.com">2013 IT Department</a></span>
         </footer>
 
