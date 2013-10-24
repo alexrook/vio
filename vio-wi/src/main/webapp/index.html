@@ -16,10 +16,10 @@
         <link href="css/appctl.css" rel="stylesheet">
 
         <script 
-            src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js">
+            src="js/jquery-2.0.3.js">
         </script>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+        <script src="js/angular-1.0.8.js"></script>
 
         <script src="js/app.js"></script>
         <script src="js/controllers.js"></script>
@@ -85,7 +85,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-ng-repeat="doc in docs|filter: searchQuery">
+                            <tr data-ng-repeat="doc in documents.items|filter: searchQuery">
                                 <td>{{(docCheck(doc)).id}}</td>
                                 <td>{{(docCheck(doc)).code}}</td>
                                 <td>{{(docCheck(doc)).name}}</td>
@@ -95,7 +95,7 @@
                         </tbody>
 
                     </table>
-                    <div data-ng-show="documents.busy">Загрузка данных...
+                    <div data-ng-show="!documents.noMoreData">Загрузка данных...
                         <span class="badge">{{documents.items.length}}</span>
                     </div>
                     <div data-ng-show="documents.noMoreData">Достигнут конец набора</div>
