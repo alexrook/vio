@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>test jsonp filter</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <style type="text/css">
+            li {
+                padding: 3px;
+            }
+        </style>
+        <script type="text/javascript" src="js/angular-1.0.8.js"></script>
+        <script type="text/javascript">
+            function Ctrl($scope, $http) {
+                $scope.items = [];
+                $scope.noMoreData = false;
+                $scope.busy = false;
+                var url = 'http://devhelper:8080/vio-wi-1.0-SNAPSHOT/rst/doc',
+                        range = {
+                            finish: 0,
+                            start: 0
+                        };
+
+                $scope.loadMore = function() {
+                    $http.get(url).success(function(data, status,headers) {
+                        var items = data; //maybe data.<some-field>
+                        $scope.items.push({name: '-----delimiter-------'});
+                        for (var i = 0; i < items.length; i++) {
+                            $scope.items.push(items[i]);
+                        }
+                        console.log(headers('X-Content-Range'));
+                    });
+                };
+
+                $scope.loadMore();
+            }
+        </script>
+    </head>
+    <body data-ng-app>
+        <div data-ng-controller="Ctrl">
+            <button data-ng-click='loadMore()'>Load more</button>
+            <ul>
+                <li data-ng-repeat='item in items'>
+                    <span class="name">{{item.name}}</span>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
