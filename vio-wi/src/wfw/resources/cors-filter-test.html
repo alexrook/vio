@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>test jsonp filter</title>
+        <title>test CORS filter</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <style type="text/css">
@@ -15,18 +15,18 @@
                 $scope.items = [];
                 $scope.noMoreData = false;
                 $scope.busy = false;
-                var url = 'http://devhelper:8080/vio-wi-1.0-SNAPSHOT/rst/doc?jsonp=JSON_CALLBACK';
-         
+                var url = 'http://devhelper:8080/vio-wi-1.0-SNAPSHOT/rst/doc';
+
                 $scope.loadMore = function() {
-                    $http.jsonp(url)
-                            .success(function(data, status) {
-                        var items = data; //maybe data.<some-field>
-                        $scope.items.push({name: '-----delimiter-------'});
-                        for (var i = 0; i < items.length; i++) {
-                            $scope.items.push(items[i]);
-                        }
-                        console.log(status);
-                    });
+                    $http.get(url, {headers: {"X-Range": "0-50"}})
+                            .success(function(data, status, headers) {
+                                var items = data; //maybe data.<some-field>
+                                $scope.items.push({name: '-----delimiter-------'});
+                                for (var i = 0; i < items.length; i++) {
+                                    $scope.items.push(items[i]);
+                                }
+                                console.log(headers('X-Content-Range'));
+                            });
                 };
 
                 $scope.loadMore();
