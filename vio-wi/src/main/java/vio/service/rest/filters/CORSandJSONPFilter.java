@@ -58,7 +58,7 @@ public class CORSandJSONPFilter extends GenericFilter {
         } else if (getOrigin(httpRequest) != null) {
 
             // this security hole for debug&devel purposes 
-            setOriginHeaders(httpRequest, httpResponse);// in case Request Method:GET we need before processing
+            setOriginHeaders(httpRequest, httpResponse);// in case Request Method:GET we need setup before processing
         }
 
     }
@@ -89,12 +89,13 @@ public class CORSandJSONPFilter extends GenericFilter {
 
         } else if (getOrigin(httpRequest) != null) {
             // this security hole for debug&devel purposes 
-            setOriginHeaders(httpRequest, httpResponse);// in case Request Method:GET we need after processing
+            setOriginHeaders(httpRequest, httpResponse);// in case Request Method:OPTIONS we need setup after processing
         }
     }
 
     private String getExposeHeadersList() {
         String ret = getFilterConfig().getInitParameter(EPOSE_HEADERS_PARAMETER_NAME);
+        log("JSONPFilter:Access-Control-Expose-Headers:" + ret);
         return ret != null ? ret : "";
     }
 

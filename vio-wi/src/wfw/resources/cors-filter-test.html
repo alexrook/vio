@@ -15,10 +15,38 @@
                 $scope.items = [];
                 $scope.noMoreData = false;
                 $scope.busy = false;
-                var url = 'http://devhelper:8080/vio-wi-1.0-SNAPSHOT/rst/doc';
-
+                $scope.url = 'http://devhelper:8080/vio-wi-1.0-SNAPSHOT/rst/doc';
+                $scope.range = {
+                    itemsPerPage: 50,
+                    finish: 0,
+                    start: 0,
+                    direction: 1 //0- refresh, -1 - backward, +1 - forward
+                };
+                //
+                $scope.buildRangeHeaderStr = function() {
+                    var start, finish, range = $scope.range;
+                    if (range.direction !== 0) {
+                        start = (range.direction > 0)
+                                ? range.finish //forward
+                                : range.start - range.itemsPerPage;
+                        finish = (range.direction > 0)
+                                ? range.finish + range.itemsPerPage //forward
+                                : range.start;
+                    } else { //refresh items
+                        start = range.start;
+                        finish = range.start + range.itemsPerPage;
+                    }
+                    return start + '-' + finish;
+                };
+                //
+                $scope.setRange = function(rangeStr) {
+                    var sr = rangeStr.split('-');
+                    $scope.range.start = Number(sr[0]);
+                    $scope.range.finish = Number(sr[1]);
+                };
+                //
                 $scope.loadMore = function() {
-                    $http.get(url, {headers: {"X-Range": "0-50"}})
+                    $http.get($scope.url, {headers: {"X-Range": $scope.buildRangeHeaderStr()}})
                             .success(function(data, status, headers) {
                                 var items = data; //maybe data.<some-field>
                                 $scope.items.push({name: '-----delimiter-------'});
@@ -26,9 +54,10 @@
                                     $scope.items.push(items[i]);
                                 }
                                 console.log(headers('X-Content-Range'));
+                                $scope.setRange(headers('X-Content-Range'));
                             });
                 };
-
+                //
                 $scope.loadMore();
             }
         </script>

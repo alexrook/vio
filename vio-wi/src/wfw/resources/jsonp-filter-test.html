@@ -25,7 +25,7 @@
                         for (var i = 0; i < items.length; i++) {
                             $scope.items.push(items[i]);
                         }
-                        console.log(status);
+                       // console.log(status);
                     });
                 };
 
@@ -35,7 +35,6 @@
     </head>
     <body data-ng-app>
         <div data-ng-controller="Ctrl">
-            <button data-ng-click='loadMore()'>Load more</button>
             <ul>
                 <li data-ng-repeat='item in items'>
                     <span class="name">{{item.name}}</span>

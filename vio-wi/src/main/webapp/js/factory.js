@@ -6,7 +6,7 @@ angular.module('vio.factory', []).
             var Documents = function(nextSuccess, nextError, itemsPerPage) {
 
                 angular.extend(this, {
-                    url: 'rst/doc',
+                    url: (window.appdeb.urlprefix||'')+'rst/doc',
                     items: [],
                     busy: false,
                     nextSuccess: nextSuccess,
@@ -73,7 +73,7 @@ angular.module('vio.factory', []).
             var DocumentTypes = function(nextSuccess, nextError, itemsPerPage) {
 
                 angular.extend(this, {
-                    url: 'rst/doctype',
+                    url:(window.appdeb.urlprefix||'')+'rst/doctype',
                     items: [],
                     busy: false,
                     nextSuccess: nextSuccess,

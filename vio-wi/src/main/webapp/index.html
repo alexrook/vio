@@ -14,6 +14,12 @@
             rel="stylesheet">
 
         <link href="css/appctl.css" rel="stylesheet">
+            
+        <script type="text/javascript">
+            window.appdeb={
+                    urlprefix:'http://devhelper:8080/vio-wi-1.0-SNAPSHOT/'
+                };
+        </script>
 
         <script 
             src="js/jquery-2.0.3.js">
@@ -44,18 +50,14 @@
                             <option data-ng-repeat="t in testType">t val</option>
                         </select>
                     </div>
-
-                    <div class="form-group">
-                        <select class="form-control form-group">
-                            <option data-ng-repeat="t in testType">t val</option>
-                        </select>
-                    </div>
+                   
                     <div class="form-group">
                         <input type="text" 
                                class="form-control" 
                                data-ng-model="searchQueryText"
                                placeholder="поиск">
                     </div>
+                    
                     <button class="btn btn-primary" type="submit">
                         <span class="glyphicon glyphicon-search"></span>Выбрать 
                     </button>
