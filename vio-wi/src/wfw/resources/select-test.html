@@ -3,7 +3,7 @@
     <head>
         <title>multi select test</title>
         <meta charset="UTF-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link 
             href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" 
@@ -13,18 +13,55 @@
             href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"
             rel="stylesheet">
         <style type="text/css">
+            .mytest {
+                margin-top: 70px;
+            }
             .dropdown-menu{
                 display: block;
             }
+
+            .mm li span{ display: block;
+                         padding: 3px 20px;
+                         clear: both;
+                         font-weight: normal;
+                         line-height: 1.428571429;
+                         color: #333;
+                         white-space: nowrap;
+            }
+            .mm li span:hover {
+                background-color: #357ebd;
+                background-image: -webkit-gradient(linear,left 0,left 100%,from(#428bca),to(#357ebd));
+                background-image: -webkit-linear-gradient(top,#428bca,0%,#357ebd,100%);
+                background-image: -moz-linear-gradient(top,#428bca 0,#357ebd 100%);
+                background-image: linear-gradient(to bottom,#428bca 0,#357ebd 100%);
+                background-repeat: repeat-x;
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff428bca',endColorstr='#ff357ebd',GradientType=0);
+
+            }
         </style>
+        
         <script type="text/javascript" src="js/jquery-2.0.3.js"></script>
         <script type="text/javascript" src="js/angular-1.0.8.js"></script>
-       
+	<script type="text/javascript" src="js/ng-tree-menu.js"></script>
+	
+        <script type="text/javascript">
+	    var myApp=angular.module('myApp',['tree-menu']);
+	        myApp.controller('Ctrl', function($scope) {
+		    $scope.testItem='yes infrastructure works!';
+		});
+	</script>
     </head>
-    <body>
-        <div id="main" class="container">
+    <body data-ng-app="myApp">
+        <div class="container" data-ng-controller='Ctrl'>
+	    <h5>{{testItem}}</h5>
+            <!--
+            Get two equal-width columns starting at desktops and scaling to large desktops. 
+            On mobile devices, tablets and below, the columns will automatically stack.
+            Remember, grid columns should add up to twelve for a single horizontal block. 
+            More than that, and columns start stacking no matter the viewport.
+            -->
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-md-6">
                     <h1>multilevel menu</h1>
                     <div class="dropdown clearfix">
                         <a id="dropdownMenu1" href="#" role="button" class="dropdown-toggle" 
@@ -46,26 +83,34 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-md-6">
                     <h1>multilevel menu without bootstrap</h1>
                     <div>
-                        <ul>
-                            <li>Action</li>
+                        <ul class="mm">
+                            <li><span>Action</span></li>
                             <li>
                                 <ul>
-                                    <li>aaa</li>
-                                    <li>bbb</li>
+                                    <li><span>aaa</span></li>
+                                    <li><span>bbb</span></li>
 
-                                    <li>ccc</li>
+                                    <li><span>ccc</span></li>
                                 </ul>
                             </li> 
-                            <li>Another action</li>
-                            <li>Something else here</li>
-                            <li>Separated link</li>
+                            <li><span>Another action</span></li>
+                            <li><span>Something else here</span></li>
+                            <li><span>Separated link</span></li>
                         </ul>
                     </div>
                 </div><!--col-->
             </div><!--row-->
+            <div class="row mytest">
+                <div class="col-md-offset-3 col-md-6">
+                    <h1>multilevel menu test</h1>
+                    <div>
+                        <div data-tree-menu></div>
+                    </div>
+                </div><!--col-->
+            </div>
         </div><!--container-->
     </body>
 </html>
