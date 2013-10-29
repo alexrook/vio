@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>multi select test</title>
+        <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link 
+            href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" 
+            rel="stylesheet">
+
+        <link 
+            href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"
+            rel="stylesheet">
+        <style type="text/css">
+            .dropdown-menu{
+                display: block;
+            }
+        </style>
+        <script type="text/javascript" src="js/jquery-2.0.3.js"></script>
+        <script type="text/javascript" src="js/angular-1.0.8.js"></script>
+       
+    </head>
+    <body>
+        <div id="main" class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1>multilevel menu</h1>
+                    <div class="dropdown clearfix">
+                        <a id="dropdownMenu1" href="#" role="button" class="dropdown-toggle" 
+                           data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                            <li role="presentation">
+                                <ul class="dropdown-menu">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">aaa</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">bbb</a></li>
+                                    <li role="presentation" class="divider"></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">ccc</a></li>
+                                </ul>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h1>multilevel menu without bootstrap</h1>
+                    <div>
+                        <ul>
+                            <li>Action</li>
+                            <li>
+                                <ul>
+                                    <li>aaa</li>
+                                    <li>bbb</li>
+
+                                    <li>ccc</li>
+                                </ul>
+                            </li> 
+                            <li>Another action</li>
+                            <li>Something else here</li>
+                            <li>Separated link</li>
+                        </ul>
+                    </div>
+                </div><!--col-->
+            </div><!--row-->
+        </div><!--container-->
+    </body>
+</html>
