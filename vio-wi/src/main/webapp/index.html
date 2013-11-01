@@ -46,8 +46,10 @@
                 <fieldset>
 
                     <div class="form-group">
-                        <select class="form-control">
-                            <option data-ng-repeat="t in testType">t val</option>
+                        <select class="form-control" data-ng-model="selectedDocType">
+                            <option selected='selected' value="undefined">&lt;Все типы документов&gt;</option>
+                            <option data-ng-repeat="doctype in doctypes.items"
+                                    value="{{doctype.id}}">{{doctype.val}}</option>
                         </select>
                     </div>
                    
@@ -72,7 +74,7 @@
         </nav><!--//main menu-->
 
         <div id="main" class="container">
-
+            <div style="position: fixed">{{selectedDocType}}</div>
             <div class="row">
                 <div class="col-lg-12" data-infinite-loader='documents.nextPage()'
                      data-infinite-loader-event='getdocs'>

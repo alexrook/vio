@@ -3,7 +3,7 @@
 angular.module('vio.factory', []).
         factory('Documents', function($http) {
 
-            var Documents = function(nextSuccess, nextError, itemsPerPage) {
+            var Documents = function(paramsFunc,nextSuccess, nextError, itemsPerPage) {
 
                 angular.extend(this, {
                     url: (window.appdeb.urlprefix||'')+'rst/doc',
@@ -12,6 +12,7 @@ angular.module('vio.factory', []).
                     nextSuccess: nextSuccess,
                     nextError: nextError,
                     noMoreData: false,
+                    paramsFunc:paramsFunc,
                     range: {
                         itemsPerPage: Number(itemsPerPage) || 35,
                         finish: 0,
@@ -49,7 +50,10 @@ angular.module('vio.factory', []).
                     return;
                 this.busy = true;
 
-                $http.get(this.url, {headers: {"X-Range": this.buildRangeHeaderStr()}})
+                $http.get(this.url, {
+                                        headers: {"X-Range": this.buildRangeHeaderStr()},
+                                        params:this.paramsFunc()
+                                    })
                         .success(function(data, status, headers) {
                             for (var i = 0; i < data.length; i++) {
                                 this.items.push(data[i]);
@@ -70,7 +74,7 @@ angular.module('vio.factory', []).
         })
         .factory('DocumentTypes', function($http) {
 
-            var DocumentTypes = function(nextSuccess, nextError, itemsPerPage) {
+            var DocumentTypes = function(nextSuccess, nextError) {
 
                 angular.extend(this, {
                     url:(window.appdeb.urlprefix||'')+'rst/doctype',
