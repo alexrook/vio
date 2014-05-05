@@ -1,7 +1,7 @@
 set termout off
 set hea off
 set pagesize 0
-SET feed off
+set feed off
 
 spool theme.csv
 

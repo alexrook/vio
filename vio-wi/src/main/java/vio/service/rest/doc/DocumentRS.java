@@ -27,7 +27,7 @@ public class DocumentRS extends AbstractRS {
     @Path("{id:\\d+}")
     @Produces(MediaType.APPLICATION_JSON)
     public Document getDocumentByID(@PathParam("id") int id) {
-        return facade.get(Integer.valueOf(id));
+        return facade.get(id);
     }
 
     @GET

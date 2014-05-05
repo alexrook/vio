@@ -6,19 +6,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link 
-            href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" 
+            href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" 
             rel="stylesheet">
 
         <link 
-            href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"
+            href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"
             rel="stylesheet">
 
         <link href="css/appctl.css" rel="stylesheet">
-            
+
         <script type="text/javascript">
-            window.appdeb={
-                    urlprefix:'http://devhelper:8080/vio-wi-1.0-SNAPSHOT/'
-                };
+            window.appdeb = {
+                urlprefix: 'http://devhelper:8080/vio-wi-1.0-SNAPSHOT/'
+            };
         </script>
 
         <script 
@@ -35,43 +35,44 @@
 
     <body data-ng-controller="DocCtrl">
         <nav class="navbar navbar-inverse" role="navigation">
+           
+            <div class="container-fluid">
+           
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">VIO</a>
+                </div>
 
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">VIO</a>
+                <form class="navbar-form navbar-left vio-filter-form" 
+                      data-ng-submit="setSearch()" data-scrollafix="main">
+                    <fieldset>
+                        <div class="form-group">
+                            <select class="form-control" data-ng-model="selectedDocType">
+                                <option selected='selected' value="undefined">&lt;Все типы документов&gt;</option>
+                                <option data-ng-repeat="doctype in doctypes.items"
+                                        value="{{doctype.id}}">{{doctype.val}}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" 
+                                   class="form-control" 
+                                   data-ng-model="searchQueryText"
+                                   placeholder="поиск">
+                        </div>
+
+                        <button class="btn btn-primary" type="submit">
+                            <span class="glyphicon glyphicon-search"></span>Выбрать 
+                        </button>
+                    </fieldset>
+                </form>
+
+                <p class="navbar-text navbar-right">
+                    <a class="navbar-link" href="#contact">About
+                    </a>
+                </p>
             </div>
-
-            <form class="navbar-form navbar-left" 
-                  data-ng-submit="setSearch()" data-scrollafix="main">
-
-                <fieldset>
-
-                    <div class="form-group">
-                        <select class="form-control" data-ng-model="selectedDocType">
-                            <option selected='selected' value="undefined">&lt;Все типы документов&gt;</option>
-                            <option data-ng-repeat="doctype in doctypes.items"
-                                    value="{{doctype.id}}">{{doctype.val}}</option>
-                        </select>
-                    </div>
-                   
-                    <div class="form-group">
-                        <input type="text" 
-                               class="form-control" 
-                               data-ng-model="searchQueryText"
-                               placeholder="поиск">
-                    </div>
-                    
-                    <button class="btn btn-primary" type="submit">
-                        <span class="glyphicon glyphicon-search"></span>Выбрать 
-                    </button>
-
-                </fieldset>
-
-            </form>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#contact">About</a></li>
-            </ul>
-        </nav><!--//main menu-->
+            
+        </nav><!--//navbar-->
 
         <div id="main" class="container">
             <div style="position: fixed">{{selectedDocType}}</div>

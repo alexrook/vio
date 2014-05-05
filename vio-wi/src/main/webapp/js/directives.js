@@ -26,6 +26,7 @@ angular.module('vio.directives', [])
                         if (!isDock) {
                             element.css({
                                 position: 'fixed',
+                                'z-index':3,
                                 top: '0%',
                                 //  width:eWidth+'px'
                                 left: ePos.left + 'px'
@@ -34,7 +35,8 @@ angular.module('vio.directives', [])
                         }
                     } else {
                         element.css({
-                            position: 'static'
+                            position: 'static',
+                            'z-index':0
                         });
                         isDock = false;
                     }
