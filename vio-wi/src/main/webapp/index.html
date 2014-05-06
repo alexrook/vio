@@ -34,7 +34,7 @@
     </head>
 
     <body data-ng-controller="DocCtrl">
-        <nav class="navbar navbar-inverse" role="navigation">
+        <nav class="navbar navbar-default" role="navigation">
            
             <div class="container-fluid">
            
@@ -45,14 +45,7 @@
                 <form class="navbar-form navbar-left vio-filter-form" 
                       data-ng-submit="setSearch()" data-scrollafix="main">
                     <fieldset>
-                        <div class="form-group">
-                            <select class="form-control" data-ng-model="selectedDocType">
-                                <option selected='selected' value="undefined">&lt;Все типы документов&gt;</option>
-                                <option data-ng-repeat="doctype in doctypes.items"
-                                        value="{{doctype.id}}">{{doctype.val}}</option>
-                            </select>
-                        </div>
-
+              
                         <div class="form-group">
                             <input type="text" 
                                    class="form-control" 
@@ -76,37 +69,10 @@
 
         <div id="main" class="container">
             <div style="position: fixed">{{selectedDocType}}</div>
-            <div class="row">
-                <div class="col-lg-12" data-infinite-loader='documents.nextPage()'
-                     data-infinite-loader-event='getdocs'>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>шифр</th>
-                                <th>имя</th>
-                                <th>формат</th>
-                                <th>цвет</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr data-ng-repeat="doc in documents.items|filter: searchQuery">
-                                <td>{{(docCheck(doc)).id}}</td>
-                                <td>{{(docCheck(doc)).code}}</td>
-                                <td>{{(docCheck(doc)).name}}</td>
-                                <td>{{(docCheck(doc)).format.val}}</td>
-                                <td>{{(docCheck(doc)).color.val}}</td>
-                            </tr>
-                        </tbody>
-
-                    </table>
-                    <div data-ng-show="!documents.noMoreData">Загрузка данных...
-                        <span class="badge">{{documents.items.length}}</span>
-                    </div>
-                    <div data-ng-show="documents.noMoreData">Достигнут конец набора</div>
-                </div>
-            </div><!--//row with table-->
-
+          <div class="row">
+            <div data-ng-view></div>
+          </div>
+          
         </div> <!-- //main -->
 
         <hr>

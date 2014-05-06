@@ -37,4 +37,9 @@ angular.module('vio.controllers', []).
 			
 			$scope.doctypes.getList();
 
+                    }])
+	.controller('DocEditCtrl',
+                ['$scope', function($scope) {
+
+
                     }]);
