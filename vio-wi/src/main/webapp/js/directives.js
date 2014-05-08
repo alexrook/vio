@@ -1,6 +1,21 @@
 'use strict';
 
 angular.module('vio.directives', [])
+        /* http://stackoverflow.com/questions/14201753/angular-js-how-when-to-use-ng-click-to-call-a-route
+         * Click to navigate
+         * similar to <a href="#/partial"> but hash is not required, e.g. <div click-link="/partial">
+         */
+        .directive('clickLink', ['$location', function($location) {
+                return {
+                    link: function(scope, element, attrs) {
+                        element.on('click', function() {
+                            scope.$apply(function() {
+                                $location.path(attrs.clickLink);
+                            });
+                        });
+                    }
+                };
+            }])
         .directive('scrollafix', function($document) {
             return function(scope, element, attr) {
                 //console.log(attr);
@@ -26,7 +41,7 @@ angular.module('vio.directives', [])
                         if (!isDock) {
                             element.css({
                                 position: 'fixed',
-                                'z-index':3,
+                                'z-index': 3,
                                 top: '0%',
                                 //  width:eWidth+'px'
                                 left: ePos.left + 'px'
@@ -36,7 +51,7 @@ angular.module('vio.directives', [])
                     } else {
                         element.css({
                             position: 'static',
-                            'z-index':0
+                            'z-index': 0
                         });
                         isDock = false;
                     }
@@ -54,7 +69,7 @@ angular.module('vio.directives', [])
         }).directive('infiniteLoader', ['$rootScope', '$window', '$timeout', function($rootScope,
             $window,
             $timeout) {
-                //based on http://binarymuse.github.com/ngInfiniteScroll/
+        //based on http://binarymuse.github.com/ngInfiniteScroll/
         return {
             link: function postLink(scope, elem, attrs) {
 
@@ -100,16 +115,16 @@ angular.module('vio.directives', [])
                 }
 
                 windowElem.on('scroll', handler);
-                  /*  
-                if (attrs.infiniteLoaderEnabled !== null) {
-                    scope.$watch(attrs.infiniteLoaderEnabled, function(value) {
-                        // console.log('watch='+value);
-                        loaderEnabled = value;
-                        handler();
-
-                    });
-                }
-                */
+                /*  
+                 if (attrs.infiniteLoaderEnabled !== null) {
+                 scope.$watch(attrs.infiniteLoaderEnabled, function(value) {
+                 // console.log('watch='+value);
+                 loaderEnabled = value;
+                 handler();
+                 
+                 });
+                 }
+                 */
                 handler();
 
             }

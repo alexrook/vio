@@ -1,6 +1,14 @@
 .vio-filter-form{
-	opacity: 1;
-	
+    opacity: 1;
+
+}
+
+/*
+*any element with data-click-link attribute (see directives.js)
+*http://www.w3schools.com/cssref/css_selectors.asp
+*/
+*[data-click-link]{
+    cursor: pointer;
 }
 
 footer.navbar {

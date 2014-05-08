@@ -6,7 +6,7 @@ angular.module('vio', ['vio.directives', 'vio.controllers','vio.factory']).
   config(['$routeProvider', function($routeProvider) {
 
     $routeProvider
-                .when('/edit',
+                .when('/edit/:docId',
                         {   templateUrl: 'part/edit.html',
                             controller: 'DocEditCtrl'})
                 .when('/list',

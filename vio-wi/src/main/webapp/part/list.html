@@ -11,25 +11,27 @@
                 <th>цвет</th>
             </tr>
         </thead> <tbody>
-            <tr data-ng-repeat="doc in
-                                documents.items | filter: searchQuery">
+            <tr data-ng-repeat="doc in documents.items| filter: searchQuery" 
+                data-click-link="/edit/{{(docCheck(doc)).id}}">
                 <td>
-                    <a href="#/edit">
-                        {{(docCheck(doc)).id}}</a>
+                    <a href="#/edit/{{(docCheck(doc)).id}}">
+                        {{(docCheck(doc)).id}}
+                    </a>
                 </td>
                 <td>{{(docCheck(doc)).code}}</td>
                 <td>{{(docCheck(doc)).name}}</td>
                 <td>{{(docCheck(doc)).format.val}}</td>
                 <td>{{(docCheck(doc)).color.val}}</td>
+
             </tr>
         </tbody>
 
-    </table> <div
+    </table>
+    <div
         data-ng-show="!documents.noMoreData">Загрузка
         данных...
         <span
             class="badge">{{documents.items.length}}</span>
-    </div> <div
-        data-ng-show="documents.noMoreData">Достигнут
-        конец набора</div>
+    </div>
+    <div data-ng-show="documents.noMoreData">Достигнут конец набора</div>
 </div>
