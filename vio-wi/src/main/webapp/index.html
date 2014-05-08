@@ -35,55 +35,54 @@
 
     <body data-ng-controller="DocCtrl">
         <nav class="navbar navbar-default" role="navigation">
-           
+
             <div class="container-fluid">
-           
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">VIO</a>
-                </div>
-           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-left">
-                    <li>
-                        <ol class="breadcrumb">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Library</a></li>
-                            <li class="active">Data</li>
+                <div class="row"> 
+                    <div class="navbar-header col-lg-3">
+                        <a class="navbar-brand" href="#">VIO</a>
+                        <ol class="nav navbar-nav custom-nav">
+                            <li><a href="#/list">Список</a></li>
+                            <li><a class="active" href="#">Новый+</a></li>
                         </ol>
-                    </li>
-                </ul>
-            
-                <form class="navbar-form navbar-left vio-filter-form" 
-                      data-ng-submit="setSearch()" data-scrollafix="main">
-                    <fieldset>
-              
-                        <div class="form-group">
-                            <input type="text" 
-                                   class="form-control" 
-                                   data-ng-model="searchQueryText"
-                                   placeholder="поиск">
-                        </div>
+                    </div>
+                   
+                    <div class="col-lg-3" data-scrollafix="main">
+                        <form class="navbar-form navbar-right col-lg-6 vio-filter-form" 
+                              data-ng-submit="setSearch()" >
+                            <fieldset>
+                                
+                                <div class="input-group">
+                                    <input type="text" 
+                                           class="form-control"
+                                           data-ng-model="searchQueryText"
+                                           placeholder="поиск">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="submit">
+                                            <span class="glyphicon glyphicon-search"></span>Поиск 
+                                        </button>
+                                    </span>
+                                </div>
 
-                        <button class="btn btn-primary" type="submit">
-                            <span class="glyphicon glyphicon-search"></span>Выбрать 
-                        </button>
-                    </fieldset>
-                </form>
+                            </fieldset>
+                        </form>
+                    </div>  
+                    <div class="col-lg-6">
+                        <p class="navbar-text navbar-right">
+                            <a class="navbar-link" href="#contact">About
+                            </a>
+                        </p>
+                    </div>
                 </div>
-
-                <p class="navbar-text navbar-right">
-                    <a class="navbar-link" href="#contact">About
-                    </a>
-                </p>
             </div>
-            
+
         </nav><!--//navbar-->
 
         <div id="main" class="container">
             <div style="position: fixed">{{selectedDocType}}</div>
-          <div class="row">
-            <div data-ng-view></div>
-          </div>
-          
+            <div class="row">
+                <div data-ng-view></div>
+            </div>
+
         </div> <!-- //main -->
 
         <hr>

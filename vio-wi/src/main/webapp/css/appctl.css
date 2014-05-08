@@ -11,6 +11,31 @@
     cursor: pointer;
 }
 
+.custom-nav a:after{
+    content: " /";
+}
+
+.custom-nav li:first-child a{
+    padding-left: 15px;
+    padding-right:0px;
+}
+
+.custom-nav li:last-child a:after{
+    content: "";
+}
+
+.custom-nav li:last-child a{
+    padding-right:15px;
+}
+
+.custom-nav li a{
+    color: red;
+    padding-right:3px;
+    padding-left: 3px;
+}
+
+
+
 footer.navbar {
     min-height:1px;
 }
