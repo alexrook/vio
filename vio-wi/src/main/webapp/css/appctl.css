@@ -1,6 +1,5 @@
 .vio-filter-form{
     opacity: 1;
-
 }
 
 /*
@@ -11,8 +10,10 @@
     cursor: pointer;
 }
 
+/*links a-la bootstrap(c) breadcrumbs*/
 .custom-nav a:after{
     content: " /";
+    color: blue;
 }
 
 .custom-nav li:first-child a{
@@ -29,12 +30,20 @@
 }
 
 .custom-nav li a{
-    color: red;
+    /* http://htmlbook.ru/samcss/kaskadirovanie */
+    color: #428bca !important; /* a color from bootstrap css*/
     padding-right:3px;
     padding-left: 3px;
 }
 
+.custom-nav li a:hover{
+    text-decoration: underline;
+}
 
+.custom-nav li a.active{
+    color: #777 !important;
+    text-decoration: none;
+}
 
 footer.navbar {
     min-height:1px;

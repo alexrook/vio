@@ -41,16 +41,16 @@
                     <div class="navbar-header col-lg-3">
                         <a class="navbar-brand" href="#">VIO</a>
                         <ol class="nav navbar-nav custom-nav">
-                            <li><a href="#/list">Список</a></li>
-                            <li><a class="active" href="#">Новый+</a></li>
+                            <li><a class="active" href="#/list">Список</a></li>
+                            <li><a  href="#">Новый+</a></li>
                         </ol>
                     </div>
-                   
+
                     <div class="col-lg-3" data-scrollafix="main">
                         <form class="navbar-form navbar-right col-lg-6 vio-filter-form" 
                               data-ng-submit="setSearch()" >
                             <fieldset>
-                                
+
                                 <div class="input-group">
                                     <input type="text" 
                                            class="form-control"
@@ -78,11 +78,9 @@
         </nav><!--//navbar-->
 
         <div id="main" class="container">
-            <div style="position: fixed">{{selectedDocType}}</div>
             <div class="row">
                 <div data-ng-view></div>
             </div>
-
         </div> <!-- //main -->
 
         <hr>
