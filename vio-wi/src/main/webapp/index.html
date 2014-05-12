@@ -33,18 +33,14 @@
         <script src="js/factory.js"></script>
     </head>
 
-    <body data-ng-controller="DocCtrl">
+    <body data-ng-controller="MainCtrl">
         <nav class="navbar navbar-default" role="navigation">
 
             <div class="container-fluid">
                 <div class="row"> 
-                    <div class="navbar-header col-lg-3">
-                        <a class="navbar-brand" href="#">VIO</a>
-                        <ol class="nav navbar-nav custom-nav">
-                            <li><a class="active" href="#/list">Список</a></li>
-                            <li><a  href="#">Новый+</a></li>
-                        </ol>
-                    </div>
+
+                    <div class="navbar-header col-lg-3" 
+                         data-ng-include="'part/menu.html'"></div>
 
                     <div class="col-lg-3" data-scrollafix="main">
                         <form class="navbar-form navbar-right col-lg-6 vio-filter-form" 
@@ -68,8 +64,7 @@
                     </div>  
                     <div class="col-lg-6">
                         <p class="navbar-text navbar-right">
-                            <a class="navbar-link" href="#contact">About
-                            </a>
+                            <a class="navbar-link" href="#/about">About</a>
                         </p>
                     </div>
                 </div>
@@ -84,10 +79,7 @@
         </div> <!-- //main -->
 
         <hr>
-        <footer>
-            <span>VIO project, <a name="contact" href="mailto:rook.alex@gmail.com">2013 IT Department</a></span>
-        </footer>
-
+        <footer data-ng-include="'part/about.html'"></footer>
 
     </body>
 </html>

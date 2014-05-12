@@ -2,8 +2,18 @@
 
 /* Controllers */
 
-angular.module('vio.controllers', []).
-        controller('DocCtrl',
+angular.module('vio.controllers', [])
+        .controller('MainCtrl',
+                ['$scope', function($scope) {
+
+                        $scope.setSearch = function() {
+                            $scope.searchQuery = $scope.searchQueryText;
+                            $scope.$emit('getdocs');
+                            console.log($scope.searchQuery);
+                        };
+
+                    }])
+        .controller('DocCtrl',
                 ['$scope', 'Documents', 'DocumentTypes',
                     function($scope, Documents, DocumentTypes) {
 
@@ -22,12 +32,6 @@ angular.module('vio.controllers', []).
                                     }
                                 }
                         );
-
-                        $scope.setSearch = function() {
-                            $scope.searchQuery = $scope.searchQueryText;
-                            $scope.$emit('getdocs');
-                            console.log($scope.searchQuery);
-                        };
 
                         $scope.docCheck = function(doc) {
                             return doc.document ? doc.document : doc;
