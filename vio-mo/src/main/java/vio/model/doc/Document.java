@@ -2,7 +2,9 @@ package vio.model.doc;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,6 +35,12 @@ public class Document implements Serializable {
     private int id;
     //наименование документа
     private String name;
+    //Описание документа
+    @JsonIgnore //jackson uses JavaBean model
+    @XmlTransient
+    @Basic(fetch=FetchType.LAZY)
+    @Column(length = 500)
+    private String description;
     //шифр документа
     private String code;
     // регистрационный номер
@@ -41,8 +49,8 @@ public class Document implements Serializable {
     @ManyToOne
     @JoinColumn(name = "formatId")
     private Format format;
-    //
-    @JsonIgnore //jackson uses JavaBean model
+    //тип документа
+    @JsonIgnore
     @XmlTransient
     @ManyToOne
     @JoinColumn(name = "doctypeId")
@@ -74,13 +82,15 @@ public class Document implements Serializable {
     /**
      * Метаданные архивного документа
      *
-     * @param name наименование документа
-     * @param code шифр документа
+     * @param name   наименование документа
+     * @param code   шифр документа
      * @param regNum регистрационный номер
+     *
      * @see Format
      * @param format формат (Книга, брошюра, пакет ...)
+     *
      * @see Color
-     * @param color цвет (справочное)
+     * @param color  цвет (справочное)
      */
     public Document(String name,
             String code,
@@ -147,6 +157,14 @@ public class Document implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDesc() {
+        return description;
+    }
+
+    public void setDesc(String desc) {
+        this.description = desc;
     }
 
     public Document getParentDoc() {
