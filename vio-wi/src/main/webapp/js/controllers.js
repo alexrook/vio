@@ -16,44 +16,39 @@ angular.module('vio.controllers', [])
                         $scope.docCheck = function(doc) {
                             return doc.document ? doc.document : doc;
                         };
+			
+			$scope.aaa='erf';
 
 	}])
         .controller('DocListCtrl',
                 ['$scope', 'Documents',
-                    function($scope, Documents) {
-
-                        $scope.documents = new Documents(function() {
-                            if ($scope.selectedDocType) {
-                                return {
-                                    "doctypeId": parseInt($scope.selectedDocType)
-                                };
-                            } else {
-                                return {};
-                            }
-                        },
-                                function(success) {
+                    function($scope, documents) {
+			
+			documents.nextSuccess=function(success) {
                                     if (success) {
                                         $scope.$emit('getdocs');
                                     }
-                                }
-                        );
-
+                                };
+				
+			$scope.documents=documents;
 
 	}])
         .controller('DocEditCtrl',
                 ['$scope','$routeParams', 'Documents',
-			function($scope,$routeParams,Documents) {
+			function($scope,$routeParams,documents) {
+		
+		console.log($scope.aaa);
 		
 		$scope.legend='Редактирование';
-		$scope.rp=$routeParams;
+		$scope.routeParams=$routeParams;
 		
-		$scope.documents = new Documents(angular.noop(),
-                                function(success) {
+		documents.nextSuccess=function(success) {
                                     if (success) {
                                         $scope.$emit('getdoc');
                                     }
-                                }
-                        );
+                                };
+				
+		$scope.documents =documents;
 
                 $scope.documents.getDoc($routeParams.docId);
 
