@@ -3,16 +3,17 @@
 angular.module('vio.factory', []).
         factory('Documents', function($http) {
 
-            var Documents = function(paramsFunc,nextSuccess, nextError, itemsPerPage) {
+            var Documents = function(paramsFunc, nextSuccess, nextError, itemsPerPage) {
 
                 angular.extend(this, {
-                    url: (window.appdeb.urlprefix||'')+'rst/doc',
+                    url: (window.appdeb.urlprefix || '') + 'rst/doc',
                     items: [],
+                    item:{},
                     busy: false,
                     nextSuccess: nextSuccess,
                     nextError: nextError,
                     noMoreData: false,
-                    paramsFunc:paramsFunc,
+                    paramsFunc: paramsFunc,
                     range: {
                         itemsPerPage: Number(itemsPerPage) || 35,
                         finish: 0,
@@ -51,9 +52,9 @@ angular.module('vio.factory', []).
                 this.busy = true;
 
                 $http.get(this.url, {
-                                        headers: {"X-Range": this.buildRangeHeaderStr()},
-                                        params:this.paramsFunc()
-                                    })
+                    headers: {"X-Range": this.buildRangeHeaderStr()},
+                    params: this.paramsFunc()
+                })
                         .success(function(data, status, headers) {
                             for (var i = 0; i < data.length; i++) {
                                 this.items.push(data[i]);
@@ -70,6 +71,28 @@ angular.module('vio.factory', []).
 
             };
 
+            Documents.prototype.getDoc = function(docId) {
+                if (this.busy)
+                    return;
+                this.busy = true;
+                var docUrl=this.url+'/'+docId;
+                console.log('docUrl='+docUrl);
+                $http.get(docUrl, {
+                    params: this.paramsFunc()
+                })
+                        .success(function(data, status, headers) {
+                            
+                            this.item=data.document ? data.document : data;
+                            
+                            this.busy = false;
+                            
+                            if (angular.isFunction(this.nextSuccess)) {
+                                this.nextSuccess(1);
+                            }
+                        }.bind(this));
+
+            };
+
             return Documents;
         })
         .factory('DocumentTypes', function($http) {
@@ -77,7 +100,7 @@ angular.module('vio.factory', []).
             var DocumentTypes = function(nextSuccess, nextError) {
 
                 angular.extend(this, {
-                    url:(window.appdeb.urlprefix||'')+'rst/doctype',
+                    url: (window.appdeb.urlprefix || '') + 'rst/doctype',
                     items: [],
                     busy: false,
                     nextSuccess: nextSuccess,
@@ -104,4 +127,4 @@ angular.module('vio.factory', []).
             };
 
             return DocumentTypes;
-         });
+        });

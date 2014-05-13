@@ -1,6 +1,16 @@
 
     <form class="col-lg-12 form-horizontal">
-        <legend>Редактирование</legend>
+        <legend>{{legend}}</legend>
+        <!--
+       {
+        "id":115,
+        "name":"..энергия и ... безопасность.",
+        "code":"",
+        "regNum":null,
+        "format":{"id":1,"val":"Книга"},
+        "color":{"id":6,"val":"Зеленый"}
+        }
+        -->
             <div class="form-group">
                 <label for="docType" class="col-lg-2 control-label">Тип документа</label>
                 <div class="col-lg-10">
@@ -28,18 +38,22 @@
                     </select>
                 </div>
             </div>
-
+            
+            <input type="hidden" id="id" data-ng-model="documents.item.id">
+                
             <div class="form-group">
                 <label for="code" class="col-lg-2 control-label">Шифр</label>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control" id="code" placeholder="Шифр">
+                    <input type="text" class="form-control" id="code" placeholder="Шифр"
+                   data-ng-model="documents.item.code">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="name" class="col-lg-2 control-label">Имя</label>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control" id="name" placeholder="Имя">
+                    <input type="text" class="form-control" id="name" placeholder="Имя"
+                    data-ng-model="documents.item.name">
                 </div>
             </div>
 
@@ -56,3 +70,4 @@
                 </div>
             </div>
         </form>
+    <pre>{{rp|json}}</pre>

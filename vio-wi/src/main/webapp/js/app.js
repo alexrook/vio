@@ -8,13 +8,13 @@ angular.module('vio', ['vio.directives', 'vio.controllers', 'vio.factory']).
                 $routeProvider
                         .when('/new',
                                 {templateUrl: 'part/edit.html',
-                                    controller: 'DocEditCtrl'})
+                                    controller: 'DocNewCtrl'})
                         .when('/edit/:docId',
                                 {templateUrl: 'part/edit.html',
                                     controller: 'DocEditCtrl'})
                         .when('/list',
                                 {templateUrl: 'part/list.html',
-                                    controller: 'DocCtrl'})
+                                    controller: 'DocListCtrl'})
                         .when('/about',
                                 {templateUrl: 'part/about.html',
                                     controller: 'DocCtrl'})
