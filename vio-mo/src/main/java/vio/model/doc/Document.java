@@ -38,7 +38,7 @@ public class Document implements Serializable {
     //Описание документа
     @JsonIgnore //jackson uses JavaBean model
     @XmlTransient
-    @Basic(fetch=FetchType.LAZY)
+    @Basic(fetch = FetchType.LAZY)
     @Column(length = 500)
     private String description;
     //шифр документа
@@ -65,7 +65,9 @@ public class Document implements Serializable {
     @ManyToMany(mappedBy = "docs")
     private Collection<Theme> themes;
     //
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @XmlTransient
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parentId")
     private Document parentDoc;
     /*
@@ -73,7 +75,9 @@ public class Document implements Serializable {
      */
     @JsonIgnore
     @XmlTransient
-    @OneToMany(mappedBy = "parentDoc", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "parentDoc",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
+            fetch = FetchType.LAZY)
     private Collection<Document> childDocs;
 
     public Document() {
@@ -159,11 +163,11 @@ public class Document implements Serializable {
         this.name = name;
     }
 
-    public String getDesc() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDesc(String desc) {
+    public void setDescription(String desc) {
         this.description = desc;
     }
 
