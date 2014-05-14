@@ -23,6 +23,7 @@ angular.module('vio.controllers', [])
         .controller('DocListCtrl',
                 ['$scope', 'Documents',
                     function($scope, documents) {
+			$scope.documents={};
 			
 			documents.nextSuccess=function(success) {
                                     if (success) {
@@ -30,8 +31,24 @@ angular.module('vio.controllers', [])
                                     }
                                 };
 				
+			/*
+			 * для большого массива documents.items наблюдается
+			 * низкая производительность работы при переходе
+			 * редактирование ->список
+			 * для избежания этого массив урезается до шапки размером
+			 * 0...itemsPerPage*2
+			 *
+			 * TODO: переписать директиву infiniteLoader (управлять размерами массива?)
+			 */
+			
+			if (documents.items.length>documents.range.itemsPerPage*2) {
+				documents.items=documents.items.slice(0,
+								      documents
+								      .range
+								      .itemsPerPage*2);
+			}
+			
 			$scope.documents=documents;
-
 	}])
         .controller('DocEditCtrl',
                 ['$scope','$routeParams', 'Documents',
