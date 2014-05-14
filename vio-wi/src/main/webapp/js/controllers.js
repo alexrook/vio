@@ -4,11 +4,17 @@
 
 angular.module('vio.controllers', [])
         .controller('MainCtrl',
-                ['$scope', function($scope) {
+                ['$scope','Documents', function($scope,documents) {
 
+			documents.setNextSuccess(function(success){
+						if (success) {
+							$scope.$emit('getdocs');
+						}
+					});
+		
                         $scope.setSearch = function() {
                             $scope.searchQuery = $scope.searchQueryText;
-                            $scope.$emit('getdocs');
+                            $scope.$emit('getdocs','setsearch');
                             console.log($scope.searchQuery);
                         };
 			
@@ -24,13 +30,7 @@ angular.module('vio.controllers', [])
                 ['$scope', 'Documents',
                     function($scope, documents) {
 			$scope.documents={};
-			
-			documents.nextSuccess=function(success) {
-                                    if (success) {
-                                        $scope.$emit('getdocs');
-                                    }
-                                };
-				
+	
 			/*
 			 * для большого массива documents.items наблюдается
 			 * низкая производительность работы при переходе
@@ -48,7 +48,11 @@ angular.module('vio.controllers', [])
 								      .itemsPerPage*2);
 			}
 			
+			 
 			$scope.documents=documents;
+			
+			//$scope.$emit('getdocs');
+			
 	}])
         .controller('DocEditCtrl',
                 ['$scope','$routeParams', 'Documents',

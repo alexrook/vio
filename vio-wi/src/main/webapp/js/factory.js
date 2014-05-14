@@ -20,14 +20,20 @@ angular.module('vio.factory', []).
                         start: 0,
                         direction: 1 //0- refresh, -1 - backward, +1 - forward
                     },
+                    setNextSuccess:function(f){
+                        this.nextSuccess=
+                        angular.isFunction(f) ? f : angular.noop;
+                    },
                     buildRangeHeaderStr: function() {
                         var start, finish, range = this.range;
                         if (range.direction !== 0) {
                             start = (range.direction > 0)
-                                    ? range.finish //forward
+                                    //? range.finish //forward
+                                    ? this.items.length //forward
                                     : range.start - range.itemsPerPage;
                             finish = (range.direction > 0)
-                                    ? range.finish + range.itemsPerPage //forward
+                                   // ? range.finish + range.itemsPerPage //forward
+                                    ? this.items.length + range.itemsPerPage //forward
                                     : range.start;
                         } else { //refresh items
                             start = range.start;
@@ -117,6 +123,7 @@ angular.module('vio.factory', []).
                                     if (angular.isFunction(this.nextSuccess)) {
                                         this.nextSuccess(data.length > 0);
                                     }
+                                   
                                 }.bind(this));
                     }
                 });

@@ -66,9 +66,10 @@ angular.module('vio.directives', [])
                 }
 
             };
-        }).directive('infiniteLoader', ['$rootScope', '$window', '$timeout', function($rootScope,
-            $window,
-            $timeout) {
+        }).directive('infiniteLoader', ['$rootScope', '$window', '$timeout',
+                                        function($rootScope,
+                                                $window,
+                                                $timeout) {
         //based on http://binarymuse.github.com/ngInfiniteScroll/
         return {
             link: function postLink(scope, elem, attrs) {
@@ -78,9 +79,10 @@ angular.module('vio.directives', [])
                         windowElem = angular.element($window);
 
                 function getGeometry() {
+                    var e=elem.offset().top + elem.height();
                     return {
                         windowBottom: windowElem.height() + windowElem.scrollTop(),
-                        elementBottom: elem.offset().top + elem.height(),
+                        elementBottom: e,
                         remaining: function() {
                             return this.elementBottom - this.windowBottom;
                         },
@@ -90,18 +92,24 @@ angular.module('vio.directives', [])
                     };
                 }
 
-                function handler() {
-                    return $timeout(function() {
-                        //   console.log(loaderEnabled);
-                        if ((attrs.infiniteLoader) && (getGeometry().shouldMore()) && loaderEnabled) {
+                function handler(event,args) {
+                    console.log(event);
+                    console.log(args);
+                    var g=getGeometry();
+                    var sm=g.shouldMore();
+                    console.log(g); console.log(sm);
+                    if ((attrs.infiniteLoader) && (sm)) {
+                       return $timeout(function() {
+                                                
                             if ($rootScope.$$phase) {
                                 scope.$eval(attrs.infiniteLoader);
                             } else {
                                 scope.$apply(attrs.infiniteLoader);
                             }
-                        }
-                    }, 0);
-
+                        }, 0);
+                    } else {
+                        return null;
+                    }
                 }
 
                 if (attrs.infiniteLoaderDistance) {
@@ -111,7 +119,7 @@ angular.module('vio.directives', [])
                 }
 
                 if (attrs.infiniteLoaderEvent) {
-                    scope.$on(attrs.infiniteLoaderEvent, handler);
+                    $rootScope.$on(attrs.infiniteLoaderEvent, handler);
                 }
 
                 windowElem.on('scroll', handler);
