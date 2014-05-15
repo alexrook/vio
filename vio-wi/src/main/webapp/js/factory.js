@@ -47,6 +47,7 @@ angular.module('vio.factory', []).
                         this.range.finish = Number(sr[1]);
                     },
                     nextPage: function() {
+                         console.log("nextpage");  
                         if (this.busy)
                             return;
                         this.busy = true;
@@ -80,7 +81,7 @@ angular.module('vio.factory', []).
                             return;
                         this.busy = true;
                         var docUrl = this.url + '/' + docId;
-                        console.log('docUrl=' + docUrl);
+                      //  console.log('docUrl=' + docUrl);
                         $http.get(docUrl)
                                 .success(function(data, status, headers) {
 

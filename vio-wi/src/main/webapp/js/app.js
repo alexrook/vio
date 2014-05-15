@@ -2,7 +2,7 @@
 
 
 // Declare app level module 
-angular.module('vio', ['vio.directives', 'vio.controllers', 'vio.factory']).
+angular.module('vio', ['ngRoute','vio.directives', 'vio.controllers', 'vio.factory']).
         config(['$routeProvider', function($routeProvider) {
 
                 $routeProvider

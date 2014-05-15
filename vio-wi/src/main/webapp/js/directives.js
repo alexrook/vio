@@ -1,5 +1,16 @@
 'use strict';
 
+window.requestAnimFrame = (function(){
+  return  window.requestAnimationFrame       ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame    ||
+    window.oRequestAnimationFrame      ||
+    window.msRequestAnimationFrame     ||
+    function(/* function */ callback, /* DOMElement */ element){
+      window.setTimeout(callback, 1000 / 60);
+    };
+})();
+
 angular.module('vio.directives', [])
         /* http://stackoverflow.com/questions/14201753/angular-js-how-when-to-use-ng-click-to-call-a-route
          * Click to navigate
@@ -19,7 +30,7 @@ angular.module('vio.directives', [])
         .directive('scrollafix', function($document) {
             return function(scope, element, attr) {
                 //console.log(attr);
-                var ePos;
+                                var ePos;
                 if (attr.scrollafix) { //must be an id
                     ePos = getOffsetPosition('#' + attr.scrollafix);
                 } else {
@@ -76,10 +87,14 @@ angular.module('vio.directives', [])
 
                 var scrollDistance = 0,
                         loaderEnabled = true,
-                        windowElem = angular.element($window);
+                        windowElem = angular.element($window),
+                        wElement=angular.element(elem);
 
                 function getGeometry() {
-                    var e=elem.offset().top + elem.height();
+                    console.log(wElement);
+                    console.log(wElement.offset().top);
+                    console.log(wElement.height());
+                    var e=wElement.offset().top + wElement.height();
                     return {
                         windowBottom: windowElem.height() + windowElem.scrollTop(),
                         elementBottom: e,
@@ -92,24 +107,39 @@ angular.module('vio.directives', [])
                     };
                 }
 
-                function handler(event,args) {
-                    console.log(event);
-                    console.log(args);
-                    var g=getGeometry();
-                    var sm=g.shouldMore();
-                    console.log(g); console.log(sm);
-                    if ((attrs.infiniteLoader) && (sm)) {
-                       return $timeout(function() {
+                function handler(event) {
+                //    console.log(event);
+                    if ((attrs.infiniteLoader)) {
+                        requestAnimFrame(function() {
+                                var g=getGeometry();
+                                var sm=g.shouldMore();
+                                //console.log(g); console.log(sm);
+                            if (sm) {
+                                  if ($rootScope.$$phase) {
+                                        console.log('phase='+g.elementBottom);
+                                        scope.$eval(attrs.infiniteLoader);
+                                    } else {
+                                        console.log(wElement);
+                                        console.log('apply='+g.elementBottom);
+                                        scope.$apply(attrs.infiniteLoader);
+                                    }
+                                   
+                            }
+
+                          }
+                        );
+                        /*
+                        return $timeout(function() {
                                                 
                             if ($rootScope.$$phase) {
                                 scope.$eval(attrs.infiniteLoader);
                             } else {
                                 scope.$apply(attrs.infiniteLoader);
                             }
+                            loaderEnabled=true;
                         }, 0);
-                    } else {
-                        return null;
-                    }
+                        */
+                    } 
                 }
 
                 if (attrs.infiniteLoaderDistance) {
