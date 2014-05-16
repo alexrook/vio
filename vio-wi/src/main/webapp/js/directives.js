@@ -87,17 +87,16 @@ angular.module('vio.directives', [])
 
                 var scrollDistance = 0,
                         loaderEnabled = true,
-                        windowElem = angular.element($window),
-                        wElement=angular.element(elem);
+                        windowElem = angular.element($window);
+                       
 
                 function getGeometry() {
-                    console.log(wElement);
-                    console.log(wElement.offset().top);
-                    console.log(wElement.height());
-                    var e=wElement.offset().top + wElement.height();
+                   /* console.log(elem);
+                    console.log(elem.offset().top);
+                    console.log(elem.height());*/
                     return {
                         windowBottom: windowElem.height() + windowElem.scrollTop(),
-                        elementBottom: e,
+                        elementBottom: elem.offset().top + elem.height(),
                         remaining: function() {
                             return this.elementBottom - this.windowBottom;
                         },
@@ -107,38 +106,22 @@ angular.module('vio.directives', [])
                     };
                 }
 
-                function handler(event) {
+                var handler=function (event) {
                 //    console.log(event);
                     if ((attrs.infiniteLoader)) {
                         requestAnimFrame(function() {
-                                var g=getGeometry();
-                                var sm=g.shouldMore();
-                                //console.log(g); console.log(sm);
-                            if (sm) {
+                                if (getGeometry().shouldMore()) {
                                   if ($rootScope.$$phase) {
-                                        console.log('phase='+g.elementBottom);
+                                        console.log('phase='+getGeometry().elementBottom);
                                         scope.$eval(attrs.infiniteLoader);
                                     } else {
-                                        console.log(wElement);
-                                        console.log('apply='+g.elementBottom);
+                                        console.log('apply='+getGeometry().elementBottom);
                                         scope.$apply(attrs.infiniteLoader);
                                     }
                                    
-                            }
-
+                                }
                           }
                         );
-                        /*
-                        return $timeout(function() {
-                                                
-                            if ($rootScope.$$phase) {
-                                scope.$eval(attrs.infiniteLoader);
-                            } else {
-                                scope.$apply(attrs.infiniteLoader);
-                            }
-                            loaderEnabled=true;
-                        }, 0);
-                        */
                     } 
                 }
 
@@ -153,6 +136,18 @@ angular.module('vio.directives', [])
                 }
 
                 windowElem.on('scroll', handler);
+                
+                /*
+                 * to prevent memory leaks 
+                 *  and the wrong handler calls 
+                 *  remove an event handler for the target element
+                 *  https://code.angularjs.org/1.3.0-beta.5/docs/guide/directive
+                 */
+                elem.on('$destroy',function(){
+                        windowElem.off('scroll', handler);
+                });
+                
+                
                 /*  
                  if (attrs.infiniteLoaderEnabled !== null) {
                  scope.$watch(attrs.infiniteLoaderEnabled, function(value) {
