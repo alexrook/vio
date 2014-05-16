@@ -5,17 +5,12 @@
 angular.module('vio.controllers', [])
         .controller('MainCtrl',
                 ['$scope','Documents', function($scope,documents) {
-
-			documents.setNextSuccess(function(success){
-						if (success) {
-							$scope.$emit('getdocs');
-						}
-					});
 		
                         $scope.setSearch = function() {
                             $scope.searchQuery = $scope.searchQueryText;
                             $scope.$emit('getdocs','setsearch');
                             console.log($scope.searchQuery);
+			    console.log('in mainscope');
                         };
 			
 			
@@ -23,14 +18,22 @@ angular.module('vio.controllers', [])
                             return doc.document ? doc.document : doc;
                         };
 			
-			$scope.aaa='erf';
-
+		
 	}])
         .controller('DocListCtrl',
                 ['$scope', 'Documents',
                     function($scope, documents) {
+			
+			var listDocsHndl=function(success){
+				if (success) {
+					console.log('in doclistscope');
+					$scope.$emit('getdocs');
+				}
+			};
+			
 			$scope.documents={};
-	
+						
+			documents.onListDocs(listDocsHndl);
 			/*
 			 * для большого массива documents.items наблюдается
 			 * низкая производительность работы при переходе
@@ -40,35 +43,29 @@ angular.module('vio.controllers', [])
 			 *
 			 * TODO: переписать директиву infiniteLoader (управлять размерами массива?)
 			 */
-			
+			/*
 			if (documents.items.length>documents.range.itemsPerPage*2) {
 				documents.items=documents.items.slice(0,
 								      documents
 								      .range
 								      .itemsPerPage*2);
-			}
-			
-			 
+			}*/
+					 
 			$scope.documents=documents;
 			
+			$scope.$on('$destroy',function(){
+				documents.offListDocs(listDocsHndl);
+			});
 			//$scope.$emit('getdocs');
 			
 	}])
         .controller('DocEditCtrl',
                 ['$scope','$routeParams', 'Documents',
 			function($scope,$routeParams,documents) {
-		
-		console.log($scope.aaa);
-		
+				
 		$scope.legend='Редактирование';
 		$scope.routeParams=$routeParams;
-		
-		documents.nextSuccess=function(success) {
-                                    if (success) {
-                                        $scope.$emit('getdoc');
-                                    }
-                                };
-				
+							
 		$scope.documents =documents;
 
                 $scope.documents.getDoc($routeParams.docId);

@@ -1,28 +1,64 @@
 'use strict';
 
-angular.module('vio.factory', []).
-        factory('Documents', function($http) {
-
-            var Documents = function(paramsFunc, nextSuccess, nextError, itemsPerPage) {
-
-                angular.extend(this, {
-                    url: (window.appdeb.urlprefix || '') + 'rst/doc',
+angular.module('vio.factory', [])
+        .factory('Events',function(){
+                var events={};
+                return {
+                    on:function(event,callback){
+                        console.log('on');
+                        console.log(events);
+                        if (!events[event]){
+                            events[event]=$.Callbacks();
+                        }
+                        events[event].add(callback);
+                    },
+                    fire:function(event,data){
+                        if (events[event]) {
+                            events[event].fire(data);
+                        }
+                    },
+                    off:function(event,callback){
+                        console.log('off');
+                        console.log(events);
+                        if (events[event]) {
+                            events[event].remove(callback);
+                        }
+                    }
+                }
+            })
+        .factory('Documents',['$http','Events', function($http,events) {
+            console.log(events);
+            
+            var EV_GET_LIST='listDocs',
+                EV_GET_DOC='getDoc',
+                url=(window.appdeb.urlprefix || '') + 'rst/doc',
+                busy=false,
+                paramsFunc= angular.noop;
+            
+            return {
                     items: [],
                     item: {},
-                    busy: false,
-                    nextSuccess: angular.isFunction(nextSuccess) ? nextSuccess : angular.noop,
-                    nextError: angular.isFunction(nextError) ? nextError : angular.noop,
                     noMoreData: false,
-                    paramsFunc: angular.isFunction(paramsFunc) ? paramsFunc : angular.noop,
                     range: {
-                        itemsPerPage: Number(itemsPerPage) || 35,
+                        itemsPerPage: 35,
                         finish: 0,
                         start: 0,
                         direction: 1 //0- refresh, -1 - backward, +1 - forward
                     },
-                    setNextSuccess:function(f){
-                        this.nextSuccess=
-                        angular.isFunction(f) ? f : angular.noop;
+                    setParams:function(callback){
+                        paramsFunc= callback;
+                    },
+                    onListDocs:function(callback){
+                        events.on(EV_GET_LIST,callback);                            
+                    },
+                    offListDocs:function(callback){
+                        events.off(EV_GET_LIST,callback);                            
+                    },
+                    onGetDoc:function(callback){
+                        events.on(EV_GET_DOC,callback);                            
+                    },
+                    offGetDoc:function(callback){
+                        events.off(EV_GET_DOC,callback);                            
                     },
                     buildRangeHeaderStr: function() {
                         var start, finish, range = this.range;
@@ -47,14 +83,13 @@ angular.module('vio.factory', []).
                         this.range.finish = Number(sr[1]);
                     },
                     nextPage: function() {
-                         console.log("nextpage");  
-                        if (this.busy)
-                            return;
-                        this.busy = true;
+                        console.log("nextpage");  
+                        if (busy) return;
+                        busy = true;
 
-                        $http.get(this.url, {
+                        $http.get(url, {
                             headers: {"X-Range": this.buildRangeHeaderStr()},
-                            params: this.paramsFunc()
+                            params: paramsFunc()
                         })
                                 .success(function(data, status, headers) {
 
@@ -62,7 +97,7 @@ angular.module('vio.factory', []).
                                         this.items.push(data[i]);
                                     }
 
-                                    this.busy = false;
+                                    busy = false;
 
                                     this.noMoreData = data.length === 0;
 
@@ -70,36 +105,32 @@ angular.module('vio.factory', []).
                                         this.setRange(headers('X-Content-Range'));
                                     }
 
-                                    this.nextSuccess(data.length > 0);
+                                    events.fire(EV_GET_LIST,data.length>0);
 
 
                                 }.bind(this));
 
                     },
                     getDoc: function(docId) {
-                        if (this.busy)
-                            return;
-                        this.busy = true;
-                        var docUrl = this.url + '/' + docId;
+                        if (busy)return;
+                        busy = true;
+                        var docUrl = url + '/' + docId;
                       //  console.log('docUrl=' + docUrl);
                         $http.get(docUrl)
                                 .success(function(data, status, headers) {
 
                                     this.item = data.document ? data.document : data;
 
-                                    this.busy = false;
+                                    busy = false;
                                   
-                                    this.nextSuccess(docId);
+                                    events.fire(EV_GET_DOC,this.item);
                                   
                                 }.bind(this));
 
                     }
-                });
-
-            };
-
-            return new Documents();
-        })
+                };
+            
+        }])
         .factory('DocumentTypes', function($http) {
 
             var DocumentTypes = function(nextSuccess, nextError) {

@@ -116,6 +116,7 @@ angular.module('vio.directives', [])
                                         scope.$eval(attrs.infiniteLoader);
                                     } else {
                                         console.log('apply='+getGeometry().elementBottom);
+                                        console.log(event);
                                         scope.$apply(attrs.infiniteLoader);
                                     }
                                    
@@ -145,6 +146,7 @@ angular.module('vio.directives', [])
                  */
                 elem.on('$destroy',function(){
                         windowElem.off('scroll', handler);
+                    //    $rootScope.off(attrs.infiniteLoaderEvent, handler);
                 });
                 
                 
