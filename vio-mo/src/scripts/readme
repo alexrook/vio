@@ -1,5 +1,5 @@
 Файлы для экспорта из старой базы oracle в новую postgresql
-
+(put here *.csv files)
 =====================================================
 
 Соответствие таблиц Oracle(left) и PostgreSQL(right)
