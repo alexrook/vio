@@ -131,9 +131,14 @@ angular.module('vio.directives', [])
                         return scrollDistance = parseInt(value, 10);
                     });
                 }
-
+                var offFunc;
                 if (attrs.infiniteLoaderEvent) {
-                    $rootScope.$on(attrs.infiniteLoaderEvent, handler);
+                  /*
+                   * https://github.com/angular/angular.js/blob/master/src/ng/rootScope.js
+                   * Returns a deregistration function for this listener.
+                   * 
+                   */
+                    offFunc=$rootScope.$on(attrs.infiniteLoaderEvent, handler);
                 }
 
                 windowElem.on('scroll', handler);
@@ -146,7 +151,9 @@ angular.module('vio.directives', [])
                  */
                 elem.on('$destroy',function(){
                         windowElem.off('scroll', handler);
-                    //    $rootScope.off(attrs.infiniteLoaderEvent, handler);
+                        if (angular.isFunction(offFunc)) {
+                          offFunc();
+                        }
                 });
                 
                 

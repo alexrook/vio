@@ -5,8 +5,8 @@ angular.module('vio.factory', [])
                 var events={};
                 return {
                     on:function(event,callback){
-                        console.log('on');
-                        console.log(events);
+                       // console.log('on');
+                       // console.log(events);
                         if (!events[event]){
                             events[event]=$.Callbacks();
                         }
@@ -18,8 +18,8 @@ angular.module('vio.factory', [])
                         }
                     },
                     off:function(event,callback){
-                        console.log('off');
-                        console.log(events);
+                        //console.log('off');
+                        //console.log(events);
                         if (events[event]) {
                             events[event].remove(callback);
                         }
@@ -28,7 +28,7 @@ angular.module('vio.factory', [])
                 }
             })
         .factory('Documents',['$http','Events', function($http,events) {
-            console.log(events);
+           // console.log(events);
             
             var EV_GET_LIST='listDocs',
                 EV_GET_DOC='getDoc',
