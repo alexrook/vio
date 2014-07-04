@@ -23,6 +23,7 @@ angular.module('vio.factory', [])
                         if (events[event]) {
                             events[event].remove(callback);
                         }
+                        console.log(events);
                     }
                 }
             })
