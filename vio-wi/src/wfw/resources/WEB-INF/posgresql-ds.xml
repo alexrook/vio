@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <datasources xmlns="http://www.jboss.org/ironjacamar/schema">
 
-    <datasource jndi-name="java:jboss/datasources/PostgreSQLDS" pool-name="PostgreSQLDS">
+    <datasource 
+	    jndi-name="java:jboss/datasources/PostgreSQLDS" 
+	    pool-name="PostgreSQLDS">
         <connection-url>${postgresql.db.url}</connection-url>
         <driver>postgresql</driver>
         <security>

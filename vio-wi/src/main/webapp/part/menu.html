@@ -1,5 +1,6 @@
 <a class="navbar-brand" href="#">VIO</a>
 <ol class="nav navbar-nav custom-nav">
-    <li><a class="active" href="#/list">Список</a></li>
-    <li><a  href="#/new">Новый+</a></li>
+    <li><a data-ng-class="{active:shared.isListState()}"
+             href="#/list">Список</a></li>
+    <li><a data-ng-hide="shared.isNewState()" href="#/new">Новый+</a></li>
 </ol>
