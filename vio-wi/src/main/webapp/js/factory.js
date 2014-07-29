@@ -145,36 +145,150 @@ angular.module('vio.factory', [])
                 };
 
             }])
-        .factory('DocumentTypes', function($http) {
+        .factory('DocumentTypes', ['$http', 'Events', function($http, events) {
 
-            var DocumentTypes = function(nextSuccess, nextError) {
+                var EV_GET_LIST = 'listDocTypes',
+                        EV_GET_ITEM = 'getDocType',
+                        url = (window.appdeb.urlprefix || '') + 'rst/doctype',
+                        busy = false,
+                        paramsFunc = angular.noop;
 
-                angular.extend(this, {
-                    url: (window.appdeb.urlprefix || '') + 'rst/doctype',
+                return {
                     items: [],
-                    busy: false,
-                    nextSuccess: angular.isFunction(nextSuccess) ? nextSuccess : angular.noop,
-                    nextError: angular.isFunction(nextError) ? nextError : angular.noop,
-                    getList: function() {
-                        if (this.busy)
+                    getItem: function(itemId) {
+                        if (busy)
                             return;
-                        this.busy = true;
+                        busy = true;
+                        var Url = url + '/' + itemId;
 
-                        $http.get(this.url, {})
+                        $http.get(Url)
                                 .success(function(data, status, headers) {
+
+                                    this.item = data.doctype ? data.doctype : data;
+
+                                    busy = false;
+
+                                    events.fire(EV_GET_ITEM, this.item);
+
+                                }.bind(this));
+
+                    },
+                    getList: function() {
+                        if (busy)
+                            return;
+                        busy = true;
+                        $http.get(url, {
+                            headers: {"X-Range": "0-99999"},
+                            params: paramsFunc})
+                                .success(function(data, status, headers) {
+
                                     for (var i = 0; i < data.length; i++) {
                                         this.items.push(data[i]);
                                     }
-                                    this.busy = false;
-                                    if (angular.isFunction(this.nextSuccess)) {
-                                        this.nextSuccess(data.length > 0);
-                                    }
+                                    busy = false;
+                                    events.fire(EV_GET_LIST, data.length > 0);
 
                                 }.bind(this));
                     }
-                });
+                };
 
-            };
 
-            return new DocumentTypes();
-        });
+
+
+            }])
+        .factory('Colors', ['$http', 'Events', function($http, events) {
+
+                var EV_GET_LIST = 'listColors',
+                        EV_GET_ITEM = 'getColor',
+                        url = (window.appdeb.urlprefix || '') + 'rst/color',
+                        busy = false,
+                        paramsFunc = angular.noop;
+
+                return {
+                    items: [],
+                    getItem: function(itemId) {
+                        if (busy)
+                            return;
+                        busy = true;
+                        var Url = url + '/' + itemId;
+
+                        $http.get(Url)
+                                .success(function(data, status, headers) {
+
+                                    this.item = data.doctype ? data.doctype : data;
+
+                                    busy = false;
+
+                                    events.fire(EV_GET_ITEM, this.item);
+
+                                }.bind(this));
+
+                    },
+                    getList: function() {
+                        if (busy)
+                            return;
+                        busy = true;
+                        $http.get(url, {
+                            headers: {"X-Range": "0-99999"},
+                            params: paramsFunc})
+                                .success(function(data, status, headers) {
+
+                                    for (var i = 0; i < data.length; i++) {
+                                        this.items.push(data[i]);
+                                    }
+                                    busy = false;
+                                    events.fire(EV_GET_LIST, data.length > 0);
+
+                                }.bind(this));
+                    }
+                };
+
+            }])
+        .factory('Formats', ['$http', 'Events', function($http, events) {
+
+                var EV_GET_LIST = 'listFormats',
+                        EV_GET_ITEM = 'getFormat',
+                        url = (window.appdeb.urlprefix || '') + 'rst/format',
+                        busy = false,
+                        paramsFunc = angular.noop;
+
+                return {
+                    items: [],
+                    getItem: function(itemId) {
+                        if (busy)
+                            return;
+                        busy = true;
+                        var Url = url + '/' + itemId;
+
+                        $http.get(Url)
+                                .success(function(data, status, headers) {
+
+                                    this.item = data.doctype ? data.doctype : data;
+
+                                    busy = false;
+
+                                    events.fire(EV_GET_ITEM, this.item);
+
+                                }.bind(this));
+
+                    },
+                    getList: function() {
+                        if (busy)
+                            return;
+                        busy = true;
+                        $http.get(url, {
+                            headers: {"X-Range": "0-99999"},
+                            params: paramsFunc})
+                                .success(function(data, status, headers) {
+
+                                    for (var i = 0; i < data.length; i++) {
+                                        this.items.push(data[i]);
+                                    }
+                                    busy = false;
+                                    events.fire(EV_GET_LIST, data.length > 0);
+
+                                }.bind(this));
+                    }
+                };
+
+            }]);
