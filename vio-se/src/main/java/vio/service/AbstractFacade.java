@@ -12,6 +12,7 @@ import javax.persistence.Query;
 public abstract class AbstractFacade<T> {
 
     private Class<T> entityClass;
+    private int[] lastRange = {0, 0};
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -71,13 +72,24 @@ public abstract class AbstractFacade<T> {
         return getEntityManager().createQuery(cq).getResultList();
     }
 
+    public int[] getLastQueryRange() {
+        return lastRange;
+    }
+
+    private void setLastQueryRange(Query query, List lastQueryResult) {
+        lastRange[0] = query.getFirstResult();
+        lastRange[1] = lastRange[0] + lastQueryResult.size();
+    }
+
     public List<T> listByRange(int[] range) {
         CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         Query q = getEntityManager().createQuery(cq);
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);
-        return q.getResultList();
+        List<T> result = q.getResultList();
+        setLastQueryRange(q,result);
+        return result;
     }
 
     public int count() {

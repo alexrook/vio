@@ -52,7 +52,12 @@
             <artifactId>arquillian-protocol-servlet</artifactId>
             <scope>test</scope>
         </dependency>
-  
+        
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <scope>test</scope>
+        </dependency>
         
     </dependencies>
     <profiles>
@@ -65,9 +70,9 @@
                 </dependency>
             </dependencies>
             <build>
-		<filters>
-	    	    <filter>local.properties</filter>
-    		</filters>
+                <filters>
+                    <filter>local.properties</filter>
+                </filters>
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
@@ -92,9 +97,9 @@
                 </dependency>
             </dependencies>
             <build>
-		<filters>
-	    	    <filter>local.properties</filter>
-    		</filters>
+                <filters>
+                    <filter>local.properties</filter>
+                </filters>
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>

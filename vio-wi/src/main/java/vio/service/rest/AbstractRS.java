@@ -1,7 +1,8 @@
-
 package vio.service.rest;
 
 import java.util.Arrays;
+import javax.ws.rs.core.Response;
+import vio.service.AbstractFacade;
 
 /**
  *
@@ -33,10 +34,19 @@ public class AbstractRS {
     }
 
     private boolean checkRange(int[] range) {
-        return !((range.length != 2) || (range[0] < 0) || (range[0] >= range[1])) ;
+        return !((range.length != 2) || (range[0] < 0) || (range[0] >= range[1]));
     }
 
     public String buildContentRangeHeaderValue(int[] range) {
         return range[0] + "-" + range[1];
+    }
+
+    
+    public Response getItemsList(AbstractFacade facade,  String headerRange) {
+        int[] range = getRangeFromHeader(headerRange);
+        return Response.ok()
+                .entity(facade.listByRange(range))
+                .header("X-Content-Range", buildContentRangeHeaderValue(facade.getLastQueryRange())).build();
+
     }
 }

@@ -25,16 +25,13 @@ public class DocumentTypeRS extends AbstractRS {
     @Path("{id:\\d+}")
     @Produces(MediaType.APPLICATION_JSON)
     public DocumentType getDocumentTypeByID(@PathParam("id") int id) {
-        return facade.get(Integer.valueOf(id));
+        return facade.get(id);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDocumentTypeList() {
-        
-        return Response.ok()
-                .entity(facade.list()).build();
-
+    public Response getDocumentTypesList(@HeaderParam("X-Range") String headerRange) {
+        return getItemsList(facade, headerRange);
     }
 
 }
