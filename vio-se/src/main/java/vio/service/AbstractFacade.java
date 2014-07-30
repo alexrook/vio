@@ -11,8 +11,8 @@ import javax.persistence.Query;
 
 public abstract class AbstractFacade<T> {
 
-    private Class<T> entityClass;
-    private int[] lastRange = {0, 0};
+    private final Class<T> entityClass;
+    private final int[] lastRange = {0, 0};
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;

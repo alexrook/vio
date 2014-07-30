@@ -64,8 +64,12 @@ angular.module('vio.controllers', [])
 
                     }])
         .controller('DocEditCtrl',
-                ['$scope', '$routeParams', 'Documents', 'DocumentTypes', 'Colors', 'Shared',
-                    function($scope, $routeParams, documents, doctypes, colors, shared) {
+                ['$scope', '$routeParams',
+		 'Documents', 'DocumentTypes', 'Colors','Formats',
+		 'Shared',
+                    function($scope, $routeParams,
+			     documents, doctypes, colors,formats,
+			     shared) {
                         shared.state = 'edit';
                         $scope.legend = 'Редактирование';
                         $scope.routeParams = $routeParams;
@@ -73,10 +77,12 @@ angular.module('vio.controllers', [])
                         $scope.documents = documents;
                         $scope.doctypes = doctypes;
                         $scope.colors = colors;
+			$scope.formats = formats;
 
                         $scope.documents.getItem($routeParams.docId);
                         $scope.doctypes.getItemsList();
                         $scope.colors.getItemsList();
+			$scope.formats.getItemsList();
 
                     }])
         .controller('DocNewCtrl',
