@@ -1,11 +1,11 @@
 'use strict';
 
-var RestStorage = function($http, events, baseUrl,
+var RestStorage = function($http, events, url,
         itemCheckName, paramsFunc) {
 
     this.http = $http;
     this.events = events;
-    this.baseUrl = baseUrl;
+    this.baseUrl = this.debugUrl()+url;
     this.headers = {"X-Range": "0-99999"};
     this.paramsFunc = angular.isFunction(paramsFunc) ? paramsFunc : angular.noop;
     this.itemCheckName = itemCheckName;
@@ -23,6 +23,13 @@ var RestStorage = function($http, events, baseUrl,
     this.EV_GET_ITEM = 'get' + this.itemCheckName.toUpperCase();
 };
 
+RestStorage.prototype.debugUrl=function(){
+    var result='';
+    if (window.appdeb) {
+        result=window.appdeb.urlprefix?window.appdeb.urlprefix:'';
+    };
+    return result;
+}
 RestStorage.prototype.getItem = function(itemId) {
     if (this.busy)
         return;
@@ -144,10 +151,11 @@ angular.module('vio.factory', [])
             };
         })
         .factory('Documents', ['$http', 'Events', function($http, events) {
-
-
+                
+                
+               //  console.log(baseUrl);
                 return angular.extend(new RestStorage($http, events,
-                        (window.appdeb.urlprefix || '') + 'rst/doc',
+                         'rst/doc',
                         'document'),
                         {
                             setParams: function(callback) {
@@ -171,24 +179,19 @@ angular.module('vio.factory', [])
 
             }])
         .factory('DocumentTypes', ['$http', 'Events', function($http, events) {
-
                 return new RestStorage($http, events,
-                        (window.appdeb.urlprefix || '') + 'rst/doctype',
+                       'rst/doctype',
                         'doctype');
-
 
             }])
         .factory('Colors', ['$http', 'Events', function($http, events) {
-
                 return new RestStorage($http, events,
-                        (window.appdeb.urlprefix || '') + 'rst/color',
+                        'rst/color',
                         'color');
 
             }])
         .factory('Formats', ['$http', 'Events', function($http, events) {
-
                 return new RestStorage($http, events,
-                        (window.appdeb.urlprefix || '') + 'rst/format',
+                        'rst/format',
                         'format');
-
             }]);

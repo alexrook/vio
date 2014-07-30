@@ -27,7 +27,7 @@
             <select class="form-control" id="docFormat">
                 <option selected='selected' value="undefined">&lt;Все форматы&gt;</option>
                 <option data-ng-repeat="format in formats.items"
-                        value="{{format.id}}">{{format.val}}</option>
+                     data-ng-selected="documents.item.format.id===format.id"   value="{{format.id}}">{{format.val}}</option>
             </select>
         </div>
     </div>
@@ -38,6 +38,7 @@
             <select class="form-control" id="docColor">
                 <option selected='selected' value="undefined">&lt;не указано&gt;</option>
                 <option data-ng-repeat="color in colors.items"
+                         data-ng-selected="documents.item.color.id===color.id"
                         value="{{color.id}}">{{color.val}}</option>
             </select>
         </div>
@@ -74,6 +75,8 @@
         </div>
     </div>
 </form>
-<pre>{{routeParams|json}}</pre>
-
+<div>
+    <pre>{{routeParams|json}}</pre>
+    <pre>{{documents.item|json}}</pre>
+</div>
 
