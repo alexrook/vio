@@ -74,9 +74,9 @@ angular.module('vio.controllers', [])
                         $scope.doctypes = doctypes;
                         $scope.colors = colors;
 
-                        $scope.documents.getDoc($routeParams.docId);
-                        $scope.doctypes.getList();
-                        $scope.colors.getList();
+                        $scope.documents.getItem($routeParams.docId);
+                        $scope.doctypes.getItemsList();
+                        $scope.colors.getItemsList();
 
                     }])
         .controller('DocNewCtrl',
