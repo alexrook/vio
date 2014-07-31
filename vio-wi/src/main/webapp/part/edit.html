@@ -14,22 +14,32 @@
     <div class="form-group">
         <label for="docType" class="col-lg-2 control-label">Тип документа</label>
         <div class="col-lg-10">
-            <select class="form-control" id="docType">
+            <!--select class="form-control" id="docType">
                 <option selected='selected' value="undefined">&lt;Все типы документов&gt;</option>
                 <option data-ng-repeat="doctype in doctypes.items"
                         data-ng-selected="documents.item.docType.id===doctype.id"
                         value="{{doctype.id}}">{{doctype.val}}</option>
+            </select-->
+            <select class="form-control" id="docType"
+                    data-ng-model="documents.item.docType"
+                    data-ng-options="doctype as doctype.val for doctype in doctypes.items track by doctype.id">
+                <option value="">&lt;Все форматы&gt;</option>
             </select>
         </div>
     </div>
     <div class="form-group">
         <label for="docFormat" class="col-lg-2 control-label">Формат документа</label>
         <div class="col-lg-10">
-            <select class="form-control" id="docFormat">
+            <!--select class="form-control" id="docFormat">
                 <option selected='selected' value="undefined">&lt;Все форматы&gt;</option>
                 <option data-ng-repeat="format in formats.items"
                      data-ng-selected="documents.item.format.id===format.id"
                         value="{{format.id}}">{{format.val}}</option>
+            </select-->
+            <select class="form-control" id="docFormat"
+                    data-ng-model="documents.item.format"
+                    data-ng-options="format as format.val for format in formats.items track by format.id">
+                <option value="">&lt;Все форматы&gt;</option>
             </select>
         </div>
     </div>
@@ -37,11 +47,17 @@
     <div class="form-group">
         <label for="docColor" class="col-lg-2 control-label">Цвет</label>
         <div class="col-lg-10">
-            <select class="form-control" id="docColor">
+            <!--select class="form-control" id="docColor"
+                     data-ng-model="documents.item.color">
                 <option selected='selected' value="undefined">&lt;не указано&gt;</option>
                 <option data-ng-repeat="color in colors.items"
                          data-ng-selected="documents.item.color.id===color.id"
                         value="{{color.id}}">{{color.val}}</option>
+            </select-->
+            <select class="form-control" id="docColor"
+                    data-ng-model="documents.item.color"
+                    data-ng-options="color as color.val for color in colors.items track by color.id">
+                <option value="">&lt;не указано&gt;</option>
             </select>
         </div>
     </div>
@@ -67,7 +83,11 @@
     <div class="form-group">
         <label for="desc" class="col-lg-2 control-label">Описание</label>
         <div class="col-lg-10">
-            <textarea id="desc" rows="3" class="form-control" placeholder="&lt;Описание&gt;"></textarea>
+            <textarea id="desc"
+                       data-ng-model="documents.item.description"
+                      rows="3"
+                      class="form-control"
+                      placeholder="&lt;Описание&gt;"></textarea>
         </div>
     </div>
 

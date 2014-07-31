@@ -205,7 +205,11 @@ angular.module('vio.factory', [])
                             },
                             getDocumentType: function(itemId) {
                                 return this.getItemField(itemId,'docType');
+                            },
+                            getDocumentDesc: function(itemId) {
+                                return this.getItemField(itemId,'description');
                             }
+                            
                         });
 
 

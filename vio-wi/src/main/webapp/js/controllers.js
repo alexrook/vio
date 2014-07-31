@@ -87,6 +87,7 @@ angular.module('vio.controllers', [])
 			$scope.formats.getItemsList();
 			
 			$scope.documents.getDocumentType($routeParams.docId);
+			$scope.documents.getDocumentDesc($routeParams.docId);
 
                     }])
         .controller('DocNewCtrl',
