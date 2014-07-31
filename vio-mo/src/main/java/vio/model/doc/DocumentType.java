@@ -31,9 +31,9 @@ public class DocumentType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    //
+    /*
     @JsonIgnore
-    @XmlTransient
+    @XmlTransient*/
     @ManyToOne
     @JoinColumn(name = "parentId")
     private DocumentType parentDocType;
