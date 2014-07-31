@@ -27,7 +27,8 @@
             <select class="form-control" id="docFormat">
                 <option selected='selected' value="undefined">&lt;Все форматы&gt;</option>
                 <option data-ng-repeat="format in formats.items"
-                     data-ng-selected="documents.item.format.id===format.id"   value="{{format.id}}">{{format.val}}</option>
+                     data-ng-selected="documents.item.format.id===format.id"
+                        value="{{format.id}}">{{format.val}}</option>
             </select>
         </div>
     </div>

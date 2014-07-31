@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,6 +27,11 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@NamedQueries(value={
+   @NamedQuery(
+      name = "Document.docType",
+      query="select a.docType from Document a where a.id = :docId")
+})
 @Entity
 public class Document implements Serializable {
 

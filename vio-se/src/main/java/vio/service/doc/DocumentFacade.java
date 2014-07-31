@@ -1,11 +1,12 @@
 package vio.service.doc;
 
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import vio.service.AbstractFacade;
 import vio.model.doc.Document;
+import vio.model.doc.DocumentType;
+import vio.service.AbstractFacade;
 
 /**
  * @author moroz
@@ -24,5 +25,11 @@ public class DocumentFacade extends AbstractFacade<Document> {
 
     public DocumentFacade() {
         super(Document.class);
+    }
+
+    public DocumentType getDocumentType(int docId) {
+        return em.createNamedQuery("Document.docType", DocumentType.class)
+                .setParameter("docId", docId)
+                .getSingleResult();
     }
 }

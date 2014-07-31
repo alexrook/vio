@@ -31,6 +31,16 @@ public class DocumentRS extends AbstractRS {
     }
 
     @GET
+    @Path("{id:\\d+}/doctype")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDocumentType(@PathParam("id") int id) {
+        return Response
+                .ok()
+                .entity(facade.getDocumentType(id))
+                .build();
+    }
+
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDocumentList(@HeaderParam("X-Range") String headerRange) {
         return getItemsList(facade, headerRange);
