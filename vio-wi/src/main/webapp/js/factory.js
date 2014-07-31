@@ -5,7 +5,7 @@ var RestStorage = function($http, events, url,
 
     this.http = $http;
     this.events = events;
-    this.baseUrl = this.debugUrl()+url;
+    this.baseUrl = this.debugUrl() + url;
     this.headers = {"X-Range": "0-99999"};
     this.paramsFunc = angular.isFunction(paramsFunc) ? paramsFunc : angular.noop;
     this.itemCheckName = itemCheckName;
@@ -23,11 +23,12 @@ var RestStorage = function($http, events, url,
     this.EV_GET_ITEM = 'get' + this.itemCheckName.toUpperCase();
 };
 
-RestStorage.prototype.debugUrl=function(){
-    var result='';
+RestStorage.prototype.debugUrl = function() {
+    var result = '';
     if (window.appdeb) {
-        result=window.appdeb.urlprefix?window.appdeb.urlprefix:'';
-    };
+        result = window.appdeb.urlprefix ? window.appdeb.urlprefix : '';
+    }
+    ;
     return result;
 }
 RestStorage.prototype.getItem = function(itemId) {
@@ -39,7 +40,8 @@ RestStorage.prototype.getItem = function(itemId) {
     return this.http.get(Url)
             .then(function(response) {
 
-                this.item = response.data[this.itemCheckName] ? response.data[this.itemCheckName] : response.data;
+                this.item =angular.extend(this.item,
+                response.data[this.itemCheckName] ? response.data[this.itemCheckName] : response.data);
 
                 this.busy = false;
 
@@ -106,7 +108,7 @@ RestStorage.prototype.nextPage = function() {
     return this.getItemsList()
             .then(function(response) {
 
-              //  console.log(response);
+                //  console.log(response);
                 this.noMoreData = response.data.length === 0;
 
                 if (!this.noMoreData) {
@@ -151,13 +153,15 @@ angular.module('vio.factory', [])
             };
         })
         .factory('Documents', ['$http', 'Events', function($http, events) {
+
                 
-                
-               //  console.log(baseUrl);
+                //  console.log(baseUrl);
                 return angular.extend(new RestStorage($http, events,
-                         'rst/doc',
+                        'rst/doc',
                         'document'),
                         {
+                            EV_FILL_ITEM:'fill' + 'document'.toUpperCase(),
+                            
                             setParams: function(callback) {
                                 this.paramsFunc = callback;
                             },
@@ -172,6 +176,25 @@ angular.module('vio.factory', [])
                             },
                             offGetDoc: function(callback) {
                                 events.off(this.EV_GET_ITEM, callback);
+                            },
+                            getDocumentType: function(itemId) {
+                               
+                                var Url = this.baseUrl + '/' + itemId+'/doctype';
+                                console.log(Url);
+                                return this.http.get(Url)
+                                        .then(function(response) {
+
+                                            var doctype = response.data['documenttype']
+                                            ? response.data['documenttype'] : response.data;
+                                                                                        
+                                            this.item.docType=doctype;
+                                            
+                                            console.log(this.item);
+                                            
+                                            this.events.fire(this.EV_FILL_ITEM, this.item);
+
+                                            return response;
+                                        }.bind(this));
                             }
                         });
 
@@ -180,7 +203,7 @@ angular.module('vio.factory', [])
             }])
         .factory('DocumentTypes', ['$http', 'Events', function($http, events) {
                 return new RestStorage($http, events,
-                       'rst/doctype',
+                        'rst/doctype',
                         'doctype');
 
             }])

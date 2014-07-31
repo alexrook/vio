@@ -70,19 +70,23 @@ angular.module('vio.controllers', [])
                     function($scope, $routeParams,
 			     documents, doctypes, colors,formats,
 			     shared) {
+			
                         shared.state = 'edit';
                         $scope.legend = 'Редактирование';
                         $scope.routeParams = $routeParams;
-
+	
                         $scope.documents = documents;
                         $scope.doctypes = doctypes;
                         $scope.colors = colors;
 			$scope.formats = formats;
-
+			
                         $scope.documents.getItem($routeParams.docId);
+			
                         $scope.doctypes.getItemsList();
                         $scope.colors.getItemsList();
 			$scope.formats.getItemsList();
+			
+			$scope.documents.getDocumentType($routeParams.docId);
 
                     }])
         .controller('DocNewCtrl',

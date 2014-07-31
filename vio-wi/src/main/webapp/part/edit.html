@@ -17,6 +17,7 @@
             <select class="form-control" id="docType">
                 <option selected='selected' value="undefined">&lt;Все типы документов&gt;</option>
                 <option data-ng-repeat="doctype in doctypes.items"
+                        data-ng-selected="documents.item.docType.id===doctype.id"
                         value="{{doctype.id}}">{{doctype.val}}</option>
             </select>
         </div>
