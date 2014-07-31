@@ -21,6 +21,7 @@ var RestStorage = function($http, events, url,
     };
     this.EV_GET_LIST = 'list' + this.itemCheckName.toUpperCase() + 's';
     this.EV_GET_ITEM = 'get' + this.itemCheckName.toUpperCase();
+    this.EV_FILL_ITEM= 'fill' + this.itemCheckName.toUpperCase();
 };
 
 RestStorage.prototype.debugUrl = function() {
@@ -51,6 +52,29 @@ RestStorage.prototype.getItem = function(itemId) {
             }.bind(this));
 
 };
+
+    /*
+    * returns lazy fields
+    */
+RestStorage.prototype.getItemField = function(itemId,fieldName) {
+    
+    var Url = this.baseUrl + '/' + itemId+'/'+fieldName.toLowerCase();
+
+    return this.http.get(Url)
+            .then(function(response) {
+
+    
+                this.item[fieldName]=response.data[fieldName] ?
+                    response.data[fieldName] : response.data;
+                
+                
+                this.events.fire(this.EV_FILL_ITEM, this.item);
+
+                return response;
+            }.bind(this));
+
+};
+
 
 RestStorage.prototype.getItemsList = function() {
 
@@ -160,8 +184,7 @@ angular.module('vio.factory', [])
                         'rst/doc',
                         'document'),
                         {
-                            EV_FILL_ITEM:'fill' + 'document'.toUpperCase(),
-                            
+                                                      
                             setParams: function(callback) {
                                 this.paramsFunc = callback;
                             },
@@ -178,23 +201,7 @@ angular.module('vio.factory', [])
                                 events.off(this.EV_GET_ITEM, callback);
                             },
                             getDocumentType: function(itemId) {
-                               
-                                var Url = this.baseUrl + '/' + itemId+'/doctype';
-                                console.log(Url);
-                                return this.http.get(Url)
-                                        .then(function(response) {
-
-                                            var doctype = response.data['documenttype']
-                                            ? response.data['documenttype'] : response.data;
-                                                                                        
-                                            this.item.docType=doctype;
-                                            
-                                            console.log(this.item);
-                                            
-                                            this.events.fire(this.EV_FILL_ITEM, this.item);
-
-                                            return response;
-                                        }.bind(this));
+                                return this.getItemField(itemId,'docType');
                             }
                         });
 
