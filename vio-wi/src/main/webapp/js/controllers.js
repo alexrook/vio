@@ -90,8 +90,26 @@ angular.module('vio.controllers', [])
 
                     }])
         .controller('DocNewCtrl',
-                ['$scope', 'Shared', function($scope, shared) {
+                ['$scope',
+		'Documents', 'DocumentTypes', 'Colors','Formats',
+		'Shared',
+		 function($scope,
+			  documents, doctypes, colors,formats,
+			  shared) {
                         shared.state = 'new';
                         $scope.legend = 'Новый';
+			
+                        $scope.documents = documents;
+                        $scope.doctypes = doctypes;
+                        $scope.colors = colors;
+			$scope.formats = formats;
+			
+			$scope.documents.item={};
+			
+                        $scope.doctypes.getItemsList();
+                        $scope.colors.getItemsList();
+			$scope.formats.getItemsList();
+			
+			
 
                     }]);

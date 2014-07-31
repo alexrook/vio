@@ -150,6 +150,9 @@ angular.module('vio.factory', [])
                 isNewState: function() {
                     return this.state === 'new';
                 },
+                isEditState: function() {
+                    return this.state === 'edit';
+                },
                 isListState: function() {
                     return this.state === 'list';
                 }
