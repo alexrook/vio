@@ -41,6 +41,13 @@ public class DocumentRS extends AbstractRS {
     }
 
     @GET
+    @Path("{id:\\d+}/description")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getDocumentDescription(@PathParam("id") int id) {
+        return facade.getDocumentDescription(id);
+    }
+
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDocumentList(@HeaderParam("X-Range") String headerRange) {
         return getItemsList(facade, headerRange);

@@ -30,7 +30,10 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries(value={
    @NamedQuery(
       name = "Document.docType",
-      query="select a.docType from Document a where a.id = :docId")
+      query="select a.docType from Document a where a.id = :docId"),
+     @NamedQuery(
+      name = "Document.description",
+      query="select a.description from Document a where a.id = :docId")
 })
 @Entity
 public class Document implements Serializable {

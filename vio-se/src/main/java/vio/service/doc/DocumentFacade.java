@@ -32,4 +32,10 @@ public class DocumentFacade extends AbstractFacade<Document> {
                 .setParameter("docId", docId)
                 .getSingleResult();
     }
+    
+    public String getDocumentDescription(int docId) {
+        return em.createNamedQuery("Document.description", String.class)
+                .setParameter("docId", docId)
+                .getSingleResult();
+    }
 }
