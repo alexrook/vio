@@ -74,17 +74,17 @@ angular.module('vio.controllers', [])
                         shared.state = 'edit';
                         $scope.legend = 'Редактирование';
                         $scope.routeParams = $routeParams;
-	
+			
                         $scope.documents = documents;
                         $scope.doctypes = doctypes;
                         $scope.colors = colors;
 			$scope.formats = formats;
-			
+						
                         $scope.documents.getItem($routeParams.docId);
 			
-                        $scope.doctypes.getItemsList();
-                        $scope.colors.getItemsList();
-			$scope.formats.getItemsList();
+                        $scope.doctypes.refreshItemsList();
+                        $scope.colors.refreshItemsList();
+			$scope.formats.refreshItemsList();
 			
 			$scope.documents.getDocumentType($routeParams.docId);
 			$scope.documents.getDocumentDesc($routeParams.docId);
@@ -107,9 +107,9 @@ angular.module('vio.controllers', [])
 			
 			$scope.documents.item={};
 			
-                        $scope.doctypes.getItemsList();
-                        $scope.colors.getItemsList();
-			$scope.formats.getItemsList();
+                        $scope.doctypes.refreshItemsList();
+                        $scope.colors.refreshItemsList();
+			$scope.formats.refreshItemsList();
 			
 			
 

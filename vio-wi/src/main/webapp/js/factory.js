@@ -9,7 +9,6 @@ var RestStorage = function($http, events, url,
     this.headers = {"X-Range": "0-99999"};
     this.paramsFunc = angular.isFunction(paramsFunc) ? paramsFunc : angular.noop;
     this.itemCheckName = itemCheckName;
-    this.busy = false;
     this.item = {};
     this.items = [];
     this.noMoreData = false;
@@ -33,9 +32,7 @@ RestStorage.prototype.debugUrl = function() {
     return result;
 }
 RestStorage.prototype.getItem = function(itemId) {
-    if (this.busy)
-        return;
-    this.busy = true;
+   
     var Url = this.baseUrl + '/' + itemId;
 
     return this.http.get(Url)
@@ -75,12 +72,15 @@ RestStorage.prototype.getItemField = function(itemId,fieldName) {
 
 };
 
+RestStorage.prototype.refreshItemsList=function(){
+    //TODO: move refresh logic to getItemList(nextPage?)
+    //for cleanup/splice items array relying on range.direction value
+   
+    this.items=[];
+    return this.getItemsList();
+}
 
 RestStorage.prototype.getItemsList = function() {
-
-    if (this.busy)
-        return;
-    this.busy = true;
 
     return this.http.get(this.baseUrl, {
         headers: this.headers,
