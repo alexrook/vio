@@ -78,7 +78,7 @@ RestStorage.prototype.refreshItemsList=function(){
    
     this.items=[];
     return this.getItemsList();
-}
+};
 
 RestStorage.prototype.getItemsList = function() {
 
