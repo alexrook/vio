@@ -1,8 +1,9 @@
 package vio.model.utils.ei;
 
-
 import java.util.Collection;
 import java.util.Date;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import vio.model.doc.Document;
@@ -15,10 +16,26 @@ import vio.model.doc.Document;
 @XmlRootElement(name = "documents")
 public class DocumentEICollection {
 
+    
+    /*
+    * simply wrapper on Document for getting  @XmlTransient field
+    */
+    @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
+    public static class DocumentExt extends Document {
+
+        public void setDesc(String desc) {
+            super.setDescription(desc);
+        }
+
+        public String getDesc() {
+            return super.getDescription();
+        }
+    }
+
     String importedFromUrl;
     Date generated;
-    
-    private Collection<Document> documents;
+
+    private Collection<DocumentExt> documents;
 
     public String getImportedFromUrl() {
         return importedFromUrl;
@@ -37,11 +54,11 @@ public class DocumentEICollection {
     }
 
     @XmlElementWrapper(name = "items")
-    public Collection<Document> getDocuments() {
+    public Collection<DocumentExt> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(Collection<Document> documents) {
+    public void setDocuments(Collection<DocumentExt> documents) {
         this.documents = documents;
     }
 
