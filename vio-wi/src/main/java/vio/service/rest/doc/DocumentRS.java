@@ -42,9 +42,14 @@ public class DocumentRS extends AbstractRS {
 
     @GET
     @Path("{id:\\d+}/description")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getDocumentDescription(@PathParam("id") int id) {
-        return facade.getDocumentDescription(id);
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response getDocumentDescription(@PathParam("id") int id) {
+    
+        return Response
+                .ok()//TODO: this dirty hack to avoid angularjs parse strings with '{' as json object
+                .entity(facade.getDocumentDescription(id).replace("{", "//{"))
+                .build();
+
     }
 
     @GET
