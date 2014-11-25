@@ -8,11 +8,18 @@ angular.module('vio.controllers', [])
 
                         $scope.shared = shared;
 
+                        $scope.searchQuery='Белый';
+                        
                         $scope.setSearch = function() {
-                            $scope.searchQuery = $scope.searchQueryText;
-                            $scope.$emit('getdocs', 'setsearch');
+                            
+                            for(var i in $scope){
+                                console.log(i);
+                            }
+                            
                             console.log($scope.searchQuery);
-                            console.log('in mainscope');
+                        //    $scope.searchQuery = $scope.searchQueryText;
+                            $scope.$emit('getdocs', 'setsearch');
+                            console.log('in MainCtrl');
                         };
 
 
@@ -30,7 +37,7 @@ angular.module('vio.controllers', [])
 
                         var listDocsHndl = function(success) {
                             if (success) {
-                                console.log('in doclistscope');
+                                console.log('in DocListCtrl');
                                 $scope.$emit('getdocs');
                             }
                         };

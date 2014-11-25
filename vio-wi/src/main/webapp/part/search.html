@@ -1,16 +1,14 @@
  <form data-ng-show="shared.isListState()"
-       class="navbar-form navbar-right col-lg-6 vio-filter-form" 
-      data-ng-submit="setSearch()" >
-
+       class="navbar-form navbar-right col-lg-6 vio-filter-form">
      <fieldset>
-
+         <label>{{searchQuery}}</label>
      <div class="input-group">
             <input type="text" 
                class="form-control"
-               data-ng-model="searchQueryText"
+               data-ng-model="searchQuery"
                placeholder="поиск">
             <span class="input-group-btn">
-    	        <button class="btn btn-primary" type="submit">
+                <button class="btn btn-primary" data-ng-click="setSearch()">
 	    	    <span class="glyphicon glyphicon-search"></span>Поиск 
         	</button>
             </span>

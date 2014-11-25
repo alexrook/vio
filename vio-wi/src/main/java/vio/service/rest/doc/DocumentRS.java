@@ -47,7 +47,7 @@ public class DocumentRS extends AbstractRS {
     
         return Response
                 .ok()//TODO: this dirty hack to avoid angularjs parse strings with '{' as json object
-                .entity(facade.getDocumentDescription(id).replace("{", "//{"))
+                .entity(facade.getDocumentDescription(id)/*.replace("{", "//")*/)
                 .build();
 
     }

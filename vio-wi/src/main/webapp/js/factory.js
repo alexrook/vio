@@ -60,10 +60,11 @@ RestStorage.prototype.getItemField = function (itemId, fieldName) {
     return this.http.get(Url)
             .then(function (response) {
 
-            //    console.log(response.headers("Content-Type"));
+                //    console.log(response.headers("Content-Type"));
 
                 this.item[fieldName] = response.data[fieldName] ?
-                        response.data[fieldName] : response.data;
+                        response.data[fieldName] :
+                        (response.headers("Content-Type") === "text/plain" ? response.data.toString() : response.data);
 
                 this.events.fire(this.EV_FILL_ITEM, this.item);
 
