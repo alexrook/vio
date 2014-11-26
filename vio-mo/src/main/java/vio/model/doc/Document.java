@@ -49,7 +49,7 @@ public class Document implements Serializable {
     @JsonIgnore //jackson uses JavaBean model
     @XmlTransient
     @Basic(fetch = FetchType.LAZY)
-    @Column(length = 500)
+    @Column(length = 5000)
     private String description;
     //шифр документа
     private String code;

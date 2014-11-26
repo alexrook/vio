@@ -1,6 +1,6 @@
 'use strict';
 
-var RestStorage = function($http, events, url,
+var RestStorage = function ($http, events, url,
         itemCheckName, paramsFunc) {
 
     this.http = $http;
@@ -20,10 +20,10 @@ var RestStorage = function($http, events, url,
     };
     this.EV_GET_LIST = 'list' + this.itemCheckName.toUpperCase() + 's';
     this.EV_GET_ITEM = 'get' + this.itemCheckName.toUpperCase();
-    this.EV_FILL_ITEM= 'fill' + this.itemCheckName.toUpperCase();
+    this.EV_FILL_ITEM = 'fill' + this.itemCheckName.toUpperCase();
 };
 
-RestStorage.prototype.debugUrl = function() {
+RestStorage.prototype.debugUrl = function () {
     var result = '';
     if (window.appdeb) {
         result = window.appdeb.urlprefix ? window.appdeb.urlprefix : '';
@@ -31,15 +31,15 @@ RestStorage.prototype.debugUrl = function() {
     ;
     return result;
 }
-RestStorage.prototype.getItem = function(itemId) {
-   
+RestStorage.prototype.getItem = function (itemId) {
+
     var Url = this.baseUrl + '/' + itemId;
 
     return this.http.get(Url)
-            .then(function(response) {
+            .then(function (response) {
 
-                this.item =angular.extend(this.item,
-                response.data[this.itemCheckName] ? response.data[this.itemCheckName] : response.data);
+                this.item = angular.extend(this.item,
+                        response.data[this.itemCheckName] ? response.data[this.itemCheckName] : response.data);
 
                 this.busy = false;
 
@@ -50,21 +50,22 @@ RestStorage.prototype.getItem = function(itemId) {
 
 };
 
-    /*
-    * returns lazy fields
-    */
-RestStorage.prototype.getItemField = function(itemId,fieldName) {
-    
-    var Url = this.baseUrl + '/' + itemId+'/'+fieldName.toLowerCase();
+/*
+ * returns lazy fields
+ */
+RestStorage.prototype.getItemField = function (itemId, fieldName) {
+
+    var Url = this.baseUrl + '/' + itemId + '/' + fieldName.toLowerCase();
 
     return this.http.get(Url)
-            .then(function(response) {
+            .then(function (response) {
 
-    
-                this.item[fieldName]=response.data[fieldName] ?
-                    response.data[fieldName] : response.data;
-                
-                
+                //    console.log(response.headers("Content-Type"));
+
+                this.item[fieldName] = response.data[fieldName] ?
+                        response.data[fieldName] :
+                        (response.headers("Content-Type") === "text/plain" ? response.data.toString() : response.data);
+
                 this.events.fire(this.EV_FILL_ITEM, this.item);
 
                 return response;
@@ -72,20 +73,20 @@ RestStorage.prototype.getItemField = function(itemId,fieldName) {
 
 };
 
-RestStorage.prototype.refreshItemsList=function(){
+RestStorage.prototype.refreshItemsList = function () {
     //TODO: move refresh logic to getItemList(nextPage?)
     //for cleanup/splice items array relying on range.direction value
-   
-    this.items=[];
+
+    this.items = [];
     return this.getItemsList();
 };
 
-RestStorage.prototype.getItemsList = function() {
+RestStorage.prototype.getItemsList = function () {
 
     return this.http.get(this.baseUrl, {
         headers: this.headers,
         params: this.paramsFunc()})
-            .then(function(response) {
+            .then(function (response) {
 
                 for (var i = 0; i < response.data.length; i++) {
                     this.items.push(response.data[i]);
@@ -100,7 +101,7 @@ RestStorage.prototype.getItemsList = function() {
 
 };
 
-RestStorage.prototype.buildRangeHeaderStr = function() {
+RestStorage.prototype.buildRangeHeaderStr = function () {
     var start, finish, range = this.range;
     if (range.direction !== 0) {
         start = (range.direction > 0)
@@ -118,19 +119,19 @@ RestStorage.prototype.buildRangeHeaderStr = function() {
     return start + '-' + finish;
 };
 
-RestStorage.prototype.setRange = function(rangeStr) {
+RestStorage.prototype.setRange = function (rangeStr) {
     var sr = rangeStr.split('-');
     this.range.start = Number(sr[0]);
     this.range.finish = Number(sr[1]);
 };
 
-RestStorage.prototype.nextPage = function() {
+RestStorage.prototype.nextPage = function () {
     console.log("nextpage");
 
     this.headers = {"X-Range": this.buildRangeHeaderStr()};
 
     return this.getItemsList()
-            .then(function(response) {
+            .then(function (response) {
 
                 //  console.log(response);
                 this.noMoreData = response.data.length === 0;
@@ -144,90 +145,89 @@ RestStorage.prototype.nextPage = function() {
 
 
 angular.module('vio.factory', [])
-        .factory('Shared', function() {
+        .factory('Shared', function () {
             return {
                 state: "list",
-                isNewState: function() {
+                isNewState: function () {
                     return this.state === 'new';
                 },
-                isEditState: function() {
+                isEditState: function () {
                     return this.state === 'edit';
                 },
-                isListState: function() {
+                isListState: function () {
                     return this.state === 'list';
                 }
             };
         })
-        .factory('Events', function() {
+        .factory('Events', function () {
             var events = {};
             return {
-                on: function(event, callback) {
+                on: function (event, callback) {
                     if (!events[event]) {
                         events[event] = $.Callbacks();
                     }
                     events[event].add(callback);
                 },
-                fire: function(event, data) {
+                fire: function (event, data) {
                     if (events[event]) {
                         events[event].fire(data);
                     }
                 },
-                off: function(event, callback) {
+                off: function (event, callback) {
                     if (events[event]) {
                         events[event].remove(callback);
                     }
                 }
             };
         })
-        .factory('Documents', ['$http', 'Events', function($http, events) {
+        .factory('Documents', ['$http', 'Events', function ($http, events) {
 
-                
+
                 //  console.log(baseUrl);
                 return angular.extend(new RestStorage($http, events,
                         'rst/doc',
                         'document'),
                         {
-                                                      
-                            setParams: function(callback) {
+                            setParams: function (callback) {
                                 this.paramsFunc = callback;
                             },
-                            onListDocs: function(callback) {
+                            onListDocs: function (callback) {
                                 events.on(this.EV_GET_LIST, callback);
                             },
-                            offListDocs: function(callback) {
+                            offListDocs: function (callback) {
                                 events.off(this.EV_GET_LIST, callback);
                             },
-                            onGetDoc: function(callback) {
+                            onGetDoc: function (callback) {
                                 events.on(this.EV_GET_ITEM, callback);
                             },
-                            offGetDoc: function(callback) {
+                            offGetDoc: function (callback) {
                                 events.off(this.EV_GET_ITEM, callback);
                             },
-                            getDocumentType: function(itemId) {
-                                return this.getItemField(itemId,'docType');
+                            getDocumentType: function (itemId) {
+                                return this.getItemField(itemId, 'docType');
                             },
-                            getDocumentDesc: function(itemId) {
-                                return this.getItemField(itemId,'description');
+                            getDocumentDesc: function (itemId) {
+                                return this.getItemField(itemId, 'description');
                             }
-                            
+
                         });
 
 
 
             }])
-        .factory('DocumentTypes', ['$http', 'Events', function($http, events) {
+        .factory('DocumentTypes', ['$http', 'Events', function ($http, events) {
                 return new RestStorage($http, events,
                         'rst/doctype',
                         'doctype');
 
             }])
-        .factory('Colors', ['$http', 'Events', function($http, events) {
+        .factory('Colors', ['$http', 'Events', function ($http, events) {
                 return new RestStorage($http, events,
                         'rst/color',
                         'color');
 
             }])
-        .factory('Formats', ['$http', 'Events', function($http, events) {
+        .factory('Formats', ['$http', 'Events', function ($http, events) {
                 return new RestStorage($http, events,
                         'rst/format',
                         'format');
