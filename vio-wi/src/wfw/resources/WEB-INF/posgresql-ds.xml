@@ -7,8 +7,8 @@
         <connection-url>${postgresql.db.url}</connection-url>
         <driver>postgresql</driver>
         <security>
-            <user-name>vio</user-name>
-            <password></password>
+            <user-name>${postgresql.db.username}</user-name>
+            <password>${postgresql.db.password}</password>
         </security>
         <validation>
             <valid-connection-checker 
