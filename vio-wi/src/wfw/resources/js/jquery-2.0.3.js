@@ -1,1 +1,0 @@
-/opt/javascript/jquery/203/dist/jquery.js
