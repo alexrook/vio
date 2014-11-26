@@ -87,16 +87,13 @@
                 <filters>
                     <filter>local.properties</filter>
                 </filters>
-                
+              
+                <finalName>vio</finalName>
+               
                 <plugins>
                     <plugin>
-                        <!-- 
-                            this plugin don't support maven 3.1.0
-                            see more https://cwiki.apache.org/confluence/display/MAVEN/AetherClassNotFound
-                        -->
                         <groupId>org.jboss.as.plugins</groupId>
                         <artifactId>jboss-as-maven-plugin</artifactId>
-                        <!-- 7.4 version has  local jboss start&stop feature-->
                         <version>7.4.Final</version>
                     </plugin>
                     <plugin>
