@@ -4,26 +4,21 @@
 
 angular.module('vio.controllers', [])
         .controller('MainCtrl',
-                ['$scope', 'Documents', 'Shared', function($scope, documents, shared) {
+                ['$scope', 'Shared', function ($scope, shared) {
 
                         $scope.shared = shared;
-
-                        $scope.searchQuery='Белый';
                         
-                        $scope.setSearch = function() {
-                            
-                            for(var i in $scope){
-                                console.log(i);
-                            }
-                            
-                            console.log($scope.searchQuery);
-                        //    $scope.searchQuery = $scope.searchQueryText;
+                        $scope.setSearch = function () {
+                            //ng-include  create a new child scope
+                            //'this' refer to the current scope (new child scope for search form include)
+                            console.log(this.searchQueryTxt);
+                            $scope.searchQuery = this.searchQueryTxt;
                             $scope.$emit('getdocs', 'setsearch');
                             console.log('in MainCtrl');
                         };
 
 
-                        $scope.docCheck = function(doc) {
+                        $scope.docCheck = function (doc) {
                             return doc.document ? doc.document : doc;
                         };
 
@@ -31,11 +26,11 @@ angular.module('vio.controllers', [])
                     }])
         .controller('DocListCtrl',
                 ['$scope', 'Documents', 'Shared',
-                    function($scope, documents, shared) {
+                    function ($scope, documents, shared) {
 
                         shared.state = 'list';
 
-                        var listDocsHndl = function(success) {
+                        var listDocsHndl = function (success) {
                             if (success) {
                                 console.log('in DocListCtrl');
                                 $scope.$emit('getdocs');
@@ -64,7 +59,7 @@ angular.module('vio.controllers', [])
 
                         $scope.documents = documents;
 
-                        $scope.$on('$destroy', function() {
+                        $scope.$on('$destroy', function () {
                             documents.offListDocs(listDocsHndl);
                         });
                         //$scope.$emit('getdocs');
@@ -72,52 +67,52 @@ angular.module('vio.controllers', [])
                     }])
         .controller('DocEditCtrl',
                 ['$scope', '$routeParams',
-		 'Documents', 'DocumentTypes', 'Colors','Formats',
-		 'Shared',
-                    function($scope, $routeParams,
-			     documents, doctypes, colors,formats,
-			     shared) {
-			
+                    'Documents', 'DocumentTypes', 'Colors', 'Formats',
+                    'Shared',
+                    function ($scope, $routeParams,
+                            documents, doctypes, colors, formats,
+                            shared) {
+
                         shared.state = 'edit';
                         $scope.legend = 'Редактирование';
                         $scope.routeParams = $routeParams;
-			
+
                         $scope.documents = documents;
                         $scope.doctypes = doctypes;
                         $scope.colors = colors;
-			$scope.formats = formats;
-						
+                        $scope.formats = formats;
+
                         $scope.documents.getItem($routeParams.docId);
-			
+
                         $scope.doctypes.refreshItemsList();
                         $scope.colors.refreshItemsList();
-			$scope.formats.refreshItemsList();
-			
-			$scope.documents.getDocumentType($routeParams.docId);
-			$scope.documents.getDocumentDesc($routeParams.docId);
+                        $scope.formats.refreshItemsList();
+
+                        $scope.documents.getDocumentType($routeParams.docId);
+                        $scope.documents.getDocumentDesc($routeParams.docId);
 
                     }])
         .controller('DocNewCtrl',
                 ['$scope',
-		'Documents', 'DocumentTypes', 'Colors','Formats',
-		'Shared',
-		 function($scope,
-			  documents, doctypes, colors,formats,
-			  shared) {
+                    'Documents', 'DocumentTypes', 'Colors', 'Formats',
+                    'Shared',
+                    function ($scope,
+                            documents, doctypes, colors, formats,
+                            shared) {
                         shared.state = 'new';
                         $scope.legend = 'Новый';
-			
+
                         $scope.documents = documents;
                         $scope.doctypes = doctypes;
                         $scope.colors = colors;
-			$scope.formats = formats;
-			
-			$scope.documents.item={};
-			
+                        $scope.formats = formats;
+
+                        $scope.documents.item = {};
+
                         $scope.doctypes.refreshItemsList();
                         $scope.colors.refreshItemsList();
-			$scope.formats.refreshItemsList();
-			
-			
+                        $scope.formats.refreshItemsList();
+
+
 
                     }]);

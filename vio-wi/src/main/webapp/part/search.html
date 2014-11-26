@@ -1,11 +1,10 @@
  <form data-ng-show="shared.isListState()"
        class="navbar-form navbar-right col-lg-6 vio-filter-form">
      <fieldset>
-         <label>{{searchQuery}}</label>
      <div class="input-group">
             <input type="text" 
                class="form-control"
-               data-ng-model="searchQuery"
+               data-ng-model="searchQueryTxt"
                placeholder="поиск">
             <span class="input-group-btn">
                 <button class="btn btn-primary" data-ng-click="setSearch()">
