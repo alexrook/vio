@@ -11,10 +11,10 @@ angular.module('vio.controllers', [])
                         $scope.setSearch = function () {
                             //ng-include  create a new child scope
                             //'this' refer to the current scope (new child scope for search form include)
-                            console.log(this.searchQueryTxt);
+                         //   console.log(this.searchQueryTxt);
                             $scope.searchQuery = this.searchQueryTxt;
                             $scope.$emit('getdocs', 'setsearch');
-                            console.log('in MainCtrl');
+                       //     console.log('in MainCtrl');
                         };
 
 
@@ -32,7 +32,7 @@ angular.module('vio.controllers', [])
 
                         var listDocsHndl = function (success) {
                             if (success) {
-                                console.log('in DocListCtrl');
+                         //       console.log('in DocListCtrl');
                                 $scope.$emit('getdocs');
                             }
                         };

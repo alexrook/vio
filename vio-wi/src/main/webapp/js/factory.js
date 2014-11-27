@@ -1,5 +1,7 @@
 'use strict';
 
+var TEXT_PLAIN = "text/plain";
+
 var RestStorage = function ($http, events, url,
         itemCheckName, paramsFunc) {
 
@@ -57,14 +59,32 @@ RestStorage.prototype.getItemField = function (itemId, fieldName) {
 
     var Url = this.baseUrl + '/' + itemId + '/' + fieldName.toLowerCase();
 
-    return this.http.get(Url)
+
+    //see: https://docs.angularjs.org/api/ng/service/$http
+    var defTransformResponse = angular.isArray(this.http.defaults.transformResponse) ?
+            this.http.defaults.transformResponse[0] : this.http.defaults.transformResponse;
+
+    var config = {
+        transformResponse: function (data, headers) {
+             // see: 
+             // https://github.com/angular/angular.js/blob/e9b9421cdb6086a35faa99fc5377171eb66d1fa4/src/ng/http.js#L88
+             // https://github.com/angular/angular.js/blob/e9b9421cdb6086a35faa99fc5377171eb66d1fa4/src/ng/http.js#L9
+            var contentType = headers('Content-Type');
+
+            if (!(contentType && contentType.indexOf(TEXT_PLAIN) === 0)) {
+                data = defTransformResponse(data, headers);
+            }
+
+            return data;
+        }
+    }
+
+
+    return this.http.get(Url, config)
             .then(function (response) {
 
-                //    console.log(response.headers("Content-Type"));
-
                 this.item[fieldName] = response.data[fieldName] ?
-                        response.data[fieldName] :
-                        (response.headers("Content-Type") === "text/plain" ? response.data.toString() : response.data);
+                        response.data[fieldName] : response.data;
 
                 this.events.fire(this.EV_FILL_ITEM, this.item);
 
